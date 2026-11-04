@@ -1,0 +1,12 @@
+{
+  "video": "free_throw_02.mp4",
+  "shot_id": 1,
+  "start_frame": 0,
+  "release_frame": 25,
+  "end_frame": 78,
+  "start_time_ms": 0,
+  "release_time_ms": 833,
+  "end_time_ms": 2600,
+  "shooting_arm": "right",
+  "outcome": "unknown"
+}

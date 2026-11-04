@@ -1,0 +1,2 @@
+video,shot_id,shooting_arm,start_frame,release_frame,end_frame,shooting_motion_ms,min_knee_angle,max_elbow_angle,release_elbow_angle,knee_angle_range,elbow_angle_range,elbow_extension_after_release,valid_knee_frames,valid_elbow_frames,knee_coverage_pct,elbow_coverage_pct,release_angle_valid,measurement_quality,outcome
+free_throw_01.mp4,1,right,20,49,110,966,88.82,177.34,131.2,74.61,130.61,46.14,30,25,100.0,69.44,True,review,missed

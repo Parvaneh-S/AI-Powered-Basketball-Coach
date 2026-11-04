@@ -1,22 +1,72 @@
 
 from pathlib import Path
+import csv
+
 import cv2
 import mediapipe as mp
 
+from backend.app.measurements.joint_angles import calculate_angle
 
-# Connections between important body landmarks
+
 SKELETON_CONNECTIONS = [
-    (11, 13), (13, 15),  # Left arm
-    (12, 14), (14, 16),  # Right arm
-    (11, 12),            # Shoulders
-    (11, 23), (12, 24),  # Torso
-    (23, 24),            # Hips
-    (23, 25), (25, 27),  # Left leg
-    (24, 26), (26, 28),  # Right leg
+    (11, 13), (13, 15),
+    (12, 14), (14, 16),
+    (11, 12),
+    (11, 23), (12, 24),
+    (23, 24),
+    (23, 25), (25, 27),
+    (24, 26), (26, 28),
 ]
 
 
-def process_video(input_path, output_path, model_path):
+
+def get_joint_angle(
+    landmarks, a, b, c, width, height, min_visibility=0.5
+):
+    """
+    Calculate the 2D joint angle using pixel coordinates.
+
+    a, b, c: MediaPipe landmark indices
+    b: angle vertex
+    width, height: video dimensions
+    """
+    points = [landmarks[i] for i in (a, b, c)]
+
+    if any(p.visibility < min_visibility for p in points):
+        return None
+
+    return calculate_angle(
+        (points[0].x * width, points[0].y * height),
+        (points[1].x * width, points[1].y * height),
+        (points[2].x * width, points[2].y * height),
+    )
+
+
+
+def draw_angle(frame, landmarks, landmark_index, angle, label):
+    """Draw a joint-angle label beside the joint."""
+    if angle is None:
+        return
+
+    height, width = frame.shape[:2]
+    joint = landmarks[landmark_index]
+
+    x = int(joint.x * width)
+    y = int(joint.y * height)
+
+    cv2.putText(
+        frame,
+        f"{label}: {angle:.1f} deg",
+        (x + 12, y - 12),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        0.6,
+        (255, 255, 0),
+        2,
+        cv2.LINE_AA,
+    )
+
+
+def process_video(input_path, output_path, model_path, csv_path):
     cap = cv2.VideoCapture(str(input_path))
 
     if not cap.isOpened():
@@ -31,7 +81,10 @@ def process_video(input_path, output_path, model_path):
         raise RuntimeError("Invalid video properties")
 
     output_path = Path(output_path)
+    csv_path = Path(csv_path)
+
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    csv_path.parent.mkdir(parents=True, exist_ok=True)
 
     writer = cv2.VideoWriter(
         str(output_path),
@@ -52,6 +105,7 @@ def process_video(input_path, output_path, model_path):
         num_poses=1,
     )
 
+    measurements = []
     frame_index = 0
     detected_frames = 0
 
@@ -66,7 +120,8 @@ def process_video(input_path, output_path, model_path):
                 if not success:
                     break
 
-                # OpenCV uses BGR; MediaPipe expects RGB.
+                timestamp_ms = round(frame_index * 1000 / fps)
+
                 rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
                 mp_image = mp.Image(
@@ -74,31 +129,63 @@ def process_video(input_path, output_path, model_path):
                     data=rgb,
                 )
 
-                timestamp_ms = round(frame_index * 1000 / fps)
-
                 result = landmarker.detect_for_video(
                     mp_image, timestamp_ms
                 )
+
+                # Default: no valid measurements for this frame
+                left_elbow = None
+                right_elbow = None
+                left_knee = None
+                right_knee = None
 
                 if result.pose_landmarks:
                     detected_frames += 1
                     landmarks = result.pose_landmarks[0]
 
-                    # Draw body connections
+                    # MediaPipe landmark indices:
+                    # Left shoulder=11, elbow=13, wrist=15
+                    # Right shoulder=12, elbow=14, wrist=16
+                    # Left hip=23, knee=25, ankle=27
+                    # Right hip=24, knee=26, ankle=28
+                    
+                    left_elbow = get_joint_angle(
+                        landmarks, 11, 13, 15, width, height
+                    )
+
+                    right_elbow = get_joint_angle(
+                        landmarks, 12, 14, 16, width, height
+                    )
+
+                    left_knee = get_joint_angle(
+                        landmarks, 23, 25, 27, width, height
+                    )
+
+                    right_knee = get_joint_angle(
+                        landmarks, 24, 26, 28, width, height
+                    )
+
+
+                    # Draw skeleton
                     for start, end in SKELETON_CONNECTIONS:
                         a = landmarks[start]
                         b = landmarks[end]
 
                         if a.visibility > 0.5 and b.visibility > 0.5:
-                            point_a = (int(a.x * width), int(a.y * height))
-                            point_b = (int(b.x * width), int(b.y * height))
+                            point_a = (
+                                int(a.x * width),
+                                int(a.y * height),
+                            )
+                            point_b = (
+                                int(b.x * width),
+                                int(b.y * height),
+                            )
 
                             cv2.line(
                                 frame, point_a, point_b,
                                 (0, 255, 0), 3
                             )
 
-                    # Draw visible landmarks
                     for landmark in landmarks:
                         if landmark.visibility > 0.5:
                             x = int(landmark.x * width)
@@ -109,6 +196,34 @@ def process_video(input_path, output_path, model_path):
                                 (0, 0, 255), -1
                             )
 
+                    # Draw measured joint angles
+                    draw_angle(
+                        frame, landmarks, 13,
+                        left_elbow, "L Elbow"
+                    )
+                    draw_angle(
+                        frame, landmarks, 14,
+                        right_elbow, "R Elbow"
+                    )
+                    draw_angle(
+                        frame, landmarks, 25,
+                        left_knee, "L Knee"
+                    )
+                    draw_angle(
+                        frame, landmarks, 26,
+                        right_knee, "R Knee"
+                    )
+
+                # Store one record for every frame
+                measurements.append({
+                    "frame": frame_index,
+                    "timestamp_ms": timestamp_ms,
+                    "left_elbow_angle": left_elbow,
+                    "right_elbow_angle": right_elbow,
+                    "left_knee_angle": left_knee,
+                    "right_knee_angle": right_knee,
+                })
+
                 writer.write(frame)
                 frame_index += 1
 
@@ -116,16 +231,60 @@ def process_video(input_path, output_path, model_path):
         cap.release()
         writer.release()
 
+    # Save measurements after processing
+    with open(csv_path, "w", newline="", encoding="utf-8") as file:
+        columns = [
+            "frame",
+            "timestamp_ms",
+            "left_elbow_angle",
+            "right_elbow_angle",
+            "left_knee_angle",
+            "right_knee_angle",
+        ]
+
+        csv_writer = csv.DictWriter(file, fieldnames=columns)
+        csv_writer.writeheader()
+        csv_writer.writerows(measurements)
+
     print(f"Processed frames: {frame_index}")
     print(f"Frames with detected pose: {detected_frames}")
-    print(f"Output saved to: {output_path}")
+    print(f"Annotated video: {output_path}")
+    print(f"Measurements CSV: {csv_path}")
+
 
 
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Analyze basketball video with MediaPipe"
+    )
+
+    parser.add_argument(
+        "video",
+        help="Video filename inside sample_videos/"
+    )
+
+    args = parser.parse_args()
+
     project_root = Path(__file__).resolve().parents[3]
 
+    video_name = Path(args.video).name
+    video_stem = Path(video_name).stem
+
+    input_path = project_root / "sample_videos" / video_name
+    output_dir = project_root / "outputs" / video_stem
+
+    if not input_path.is_file():
+        parser.error(f"Video not found: {input_path}")
+
     process_video(
-        input_path=project_root / "sample_videos/free_throw_01.mp4",
-        output_path=project_root / "outputs/annotated_video.mp4",
-        model_path=project_root / "backend/models/pose_landmarker_lite.task",
+        input_path=input_path,
+        output_path=output_dir / "annotated_angles.mp4",
+        model_path=(
+            project_root
+            / "backend/models/pose_landmarker_lite.task"
+        ),
+        csv_path=output_dir / "joint_angles.csv",
     )
+
