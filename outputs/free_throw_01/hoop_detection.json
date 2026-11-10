@@ -1,0 +1,20 @@
+{
+    "video": "free_throw_01.mp4",
+    "method": "roboflow_hosted_inference",
+    "model_id": "basketball-hoop-images/2",
+    "reference_frame": 40,
+    "class": "rim",
+    "confidence": 0.8451,
+    "rim_bbox": [
+        153.0,
+        107.0,
+        211.0,
+        164.0
+    ],
+    "rim_center": [
+        182.0,
+        135.5
+    ],
+    "rim_width_px": 58.0,
+    "rim_height_px": 57.0
+}
