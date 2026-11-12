@@ -2,6 +2,9 @@
 import os
 import sys
 import time
+from backend.app.rag.knowledge_retriever import (
+    search_coaching_knowledge,
+)
 
 from dotenv import load_dotenv
 from google import genai
@@ -58,9 +61,24 @@ Rules:
 10. Keep feedback clear, concise, constructive,
     and appropriate for a basketball player.
 
-11. RAG knowledge retrieval is not implemented yet.
-    Do not claim recommendations come from retrieved
-    coaching sources.
+11. When the player asks for coaching recommendations or
+explanations of shooting mechanics, call coaching_knowledge
+to retrieve relevant basketball coaching references.
+
+Use the retrieved coaching knowledge together with
+the player's actual biomechanical measurements.
+
+Clearly distinguish measured player data from general
+coaching guidance.
+
+Include source names and URLs when presenting
+knowledge-based recommendations.
+
+Do not invent coaching sources or claim that retrieved
+knowledge proves a specific joint angle is optimal.
+
+If retrieval returns irrelevant information, do not use
+it as evidence.
 
 12. shooting_motion_ms measures the time between detected
     shot start and ball release, not total shot duration.
@@ -197,6 +215,30 @@ def ask_coach(player_name: str, question: str) -> str:
 
         return compare_player_shots(player_name)
 
+
+    # --------------------------------------------------
+    # Tool 4: Semantic coaching knowledge retrieval
+    # --------------------------------------------------
+
+    def coaching_knowledge(query: str) -> dict:
+        """
+        Search source-referenced basketball coaching
+        knowledge using local semantic embeddings.
+
+        Args:
+            query: A basketball shooting mechanics topic
+                or coaching question.
+        """
+
+        print(
+            f"[Tool called: coaching_knowledge({query})]"
+        )
+
+        return search_coaching_knowledge(
+            query=query,
+            top_k=2,
+        )
+
     # --------------------------------------------------
     # Initialize Gemini chat session
     # --------------------------------------------------
@@ -210,6 +252,7 @@ def ask_coach(player_name: str, question: str) -> str:
                     shot_analysis,
                     player_history,
                     shot_comparison,
+                    coaching_knowledge,
                 ],
                 automatic_function_calling=(
                     types.AutomaticFunctionCallingConfig(
