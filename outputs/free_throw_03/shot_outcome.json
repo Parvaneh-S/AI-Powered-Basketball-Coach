@@ -1,0 +1,14 @@
+{
+    "video": "free_throw_03.mp4",
+    "method": "2d_trajectory_rim_crossing_v1",
+    "outcome": "unknown",
+    "observation": "no_downward_crossing",
+    "rim_center": [
+        202.0,
+        144.5
+    ],
+    "rim_width_px": 50.0,
+    "crossings_found": 0,
+    "selected_crossing": null,
+    "note": "Experimental 2D heuristic. A crossing near the hoop does not establish a made basket. Miss predictions also require visual validation."
+}

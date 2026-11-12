@@ -1,0 +1,51 @@
+{
+  "video_id": "free_throw_03",
+  "shot_id": "free_throw_03_shot_1",
+  "shot_type": "free_throw",
+  "shot_events": {
+    "start_frame": 28,
+    "release_frame": 76,
+    "end_frame": 82,
+    "end_frame_source": "provisional_follow_through_window",
+    "segmentation_method": "pose_angle_heuristic_v1",
+    "segmentation_status": "experimental_review_required"
+  },
+  "biomechanics": {
+    "shooting_arm": "right",
+    "shooting_motion_ms": 1600,
+    "min_knee_angle": 168.24,
+    "max_elbow_angle": 175.59,
+    "release_elbow_angle": 129.01,
+    "knee_angle_range": 6.63,
+    "elbow_angle_range": 97.75,
+    "elbow_extension_after_release": 46.58,
+    "knee_coverage_pct": 100.0,
+    "elbow_coverage_pct": 100.0,
+    "measurement_quality": "pass"
+  },
+  "ball_tracking": {
+    "tracked_frames": 113,
+    "first_tracked_frame": 0,
+    "last_tracked_frame": 191,
+    "tracking_coverage_pct": 58.85
+  },
+  "hoop_detection": {
+    "rim_center": [
+      202.0,
+      144.5
+    ],
+    "rim_bbox": [
+      177.0,
+      118.0,
+      227.0,
+      171.0
+    ],
+    "confidence": 0.8124
+  },
+  "shot_outcome": {
+    "prediction": "unknown",
+    "observation": "no_downward_crossing",
+    "method": "2d_trajectory_rim_crossing_v1"
+  },
+  "analysis_status": "experimental"
+}

@@ -1,0 +1,2 @@
+video,shot_id,shooting_arm,start_frame,release_frame,end_frame,end_frame_source,shooting_motion_ms,min_knee_angle,max_elbow_angle,release_elbow_angle,knee_angle_range,elbow_angle_range,elbow_extension_after_release,valid_knee_frames,valid_elbow_frames,knee_coverage_pct,elbow_coverage_pct,release_angle_valid,measurement_quality,outcome
+free_throw_03,free_throw_03_shot_1,right,28,76,82,provisional_follow_through_window,1600,168.24,175.59,129.01,6.63,97.75,46.58,49,55,100.0,100.0,True,pass,unknown

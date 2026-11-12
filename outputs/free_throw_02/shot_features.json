@@ -1,0 +1,23 @@
+{
+  "video": "free_throw_02",
+  "shot_id": "free_throw_02_shot_1",
+  "shooting_arm": "right",
+  "start_frame": 0,
+  "release_frame": 25,
+  "end_frame": 31,
+  "end_frame_source": "provisional_follow_through_window",
+  "shooting_motion_ms": 833,
+  "min_knee_angle": 67.99,
+  "max_elbow_angle": 176.82,
+  "release_elbow_angle": 126.27,
+  "knee_angle_range": 98.72,
+  "elbow_angle_range": 129.45,
+  "elbow_extension_after_release": 50.56,
+  "valid_knee_frames": 26,
+  "valid_elbow_frames": 24,
+  "knee_coverage_pct": 100.0,
+  "elbow_coverage_pct": 75.0,
+  "release_angle_valid": true,
+  "measurement_quality": "review",
+  "outcome": "unknown"
+}
