@@ -1,0 +1,20 @@
+{
+    "video": "shot_b8a4046d9f91.mp4",
+    "method": "roboflow_hosted_inference",
+    "model_id": "basketball-hoop-images/2",
+    "reference_frame": 40,
+    "class": "rim",
+    "confidence": 0.8093,
+    "rim_bbox": [
+        268.0,
+        183.0,
+        343.0,
+        265.0
+    ],
+    "rim_center": [
+        305.5,
+        224.0
+    ],
+    "rim_width_px": 75.0,
+    "rim_height_px": 82.0
+}

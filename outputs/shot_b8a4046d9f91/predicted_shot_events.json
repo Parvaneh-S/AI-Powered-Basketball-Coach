@@ -1,0 +1,13 @@
+{
+  "video": "joint_angles",
+  "method": "pose_angle_heuristic_v1",
+  "start_frame": 11,
+  "start_time_ms": 367,
+  "knee_min_frame": 36,
+  "release_frame": 59,
+  "release_time_ms": 1967,
+  "max_elbow_change_deg_per_frame": 0.71,
+  "end_frame": null,
+  "outcome": "unknown",
+  "status": "experimental_review_required"
+}

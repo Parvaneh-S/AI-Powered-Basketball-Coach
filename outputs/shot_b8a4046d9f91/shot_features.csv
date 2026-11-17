@@ -1,0 +1,2 @@
+video,shot_id,shooting_arm,start_frame,release_frame,end_frame,end_frame_source,shooting_motion_ms,min_knee_angle,max_elbow_angle,release_elbow_angle,knee_angle_range,elbow_angle_range,elbow_extension_after_release,valid_knee_frames,valid_elbow_frames,knee_coverage_pct,elbow_coverage_pct,release_angle_valid,measurement_quality,outcome
+shot_b8a4046d9f91,shot_b8a4046d9f91_shot_1,right,11,59,65,provisional_follow_through_window,1600,168.21,82.58,80.22,3.56,3.25,0.95,49,55,100.0,100.0,True,pass,unknown
