@@ -1,5 +1,6 @@
 import tempfile
-
+from pydantic import BaseModel, Field
+from backend.app.agent.coaching_agent import ask_coach
 from fastapi import File, Form, UploadFile
 from starlette.concurrency import run_in_threadpool
 
@@ -171,3 +172,48 @@ async def upload_shot(
 
         if temporary_path is not None:
             temporary_path.unlink(missing_ok=True)
+
+
+
+class CoachingRequest(BaseModel):
+    player_name: str = Field(min_length=1)
+    question: str = Field(min_length=1)
+
+
+@app.post("/api/coach/ask")
+async def ask_coaching_agent(request: CoachingRequest):
+    """
+    Ask the Gemini agent a question about a player's
+    shots, measurements, history, or shooting technique.
+    """
+
+    player_name = request.player_name.strip()
+    question = request.question.strip()
+
+    if not player_name or not question:
+        raise HTTPException(
+            status_code=400,
+            detail="Player name and question cannot be empty.",
+        )
+
+    try:
+        answer = await run_in_threadpool(
+            ask_coach,
+            player_name,
+            question,
+        )
+
+        return {
+            "player_name": player_name,
+            "question": question,
+            "answer": answer,
+        }
+
+    except Exception as exc:
+        import logging
+        logging.exception("Gemini coaching request failed")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to generate coaching feedback.",
+        ) from exc
