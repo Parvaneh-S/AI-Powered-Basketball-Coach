@@ -44,6 +44,15 @@ def fetch_analysis(video_id):
     return response.json()
 
 
+def fetch_player_history(player_name):
+    response = requests.get(
+        f"{API_URL}/api/players/{player_name}/shots",
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
 def upload_video(file, player_name, shooting_arm):
     response = requests.post(
         f"{API_URL}/api/shots/upload",
@@ -246,39 +255,120 @@ with upload_tab:
 
     st.divider()
 
-    st.subheader("Open an existing analysis")
+    
+    # ---------------------------------------------------
+    # Previous shots
+    # ---------------------------------------------------
 
-    with st.form("load_form"):
-        existing_video_id = st.text_input(
-            "Video ID",
-            placeholder="shot_b8a4046d9f91",
-        )
+    st.subheader("My Previous Shots")
 
-        load_clicked = st.form_submit_button(
-            "Load Shot"
-        )
+    if not player_name.strip():
+        st.info("Enter a player name to view previous shots.")
 
-    if load_clicked:
+    else:
+        try:
+            history = fetch_player_history(
+                player_name.strip()
+            )
 
-        if not existing_video_id.strip():
-            st.warning("Enter a video ID first.")
+            if isinstance(history, list):
+                shots = history
 
-        else:
-            try:
-                analysis = fetch_analysis(
-                    existing_video_id.strip()
+            elif isinstance(history, dict):
+                shots = history.get("shots", [])
+
+            else:
+                shots = []
+
+            st.write(f"Saved shot records: {len(shots)}")
+
+            if not shots:
+                st.info(
+                    "No previous shots found for this player."
                 )
 
-                set_current_shot(
-                    existing_video_id.strip(),
-                    analysis,
-                    player_name.strip(),
-                )
+            else:
+                # Create descriptive names for each shot.
+                # Video IDs remain internal.
+                shot_options = []
 
-                st.success("Shot analysis loaded.")
+                for index, shot in enumerate(shots, start=1):
 
-            except requests.exceptions.RequestException as error:
-                show_request_error(error)
+                    session = shot.get(
+                        "session_id", "Unknown"
+                    )
+
+                    knee = shot.get("min_knee_angle")
+                    elbow = shot.get("release_elbow_angle")
+                    outcome = shot.get("outcome", "unknown")
+
+                    knee_text = (
+                        f"{knee}°"
+                        if knee is not None
+                        else "N/A"
+                    )
+
+                    elbow_text = (
+                        f"{elbow}°"
+                        if elbow is not None
+                        else "N/A"
+                    )
+
+                    label = (
+                        f"Record {index} | "
+                        f"Session {session} | "
+                        f"Knee: {knee_text} | "
+                        f"Elbow: {elbow_text} | "
+                        f"Outcome: {outcome}"
+                    )
+
+                    shot_options.append({
+                        "label": label,
+                        "video_id": shot["video_id"],
+                    })
+
+                with st.form("previous_shots_form"):
+
+                    selected_index = st.selectbox(
+                        "Select a previous shot",
+                        options=range(len(shot_options)),
+                        format_func=lambda i: (
+                            shot_options[i]["label"]
+                        ),
+                    )
+
+                    load_clicked = st.form_submit_button(
+                        "View Shot Analysis",
+                        type="primary",
+                    )
+
+                if load_clicked:
+
+                    selected_video_id = (
+                        shot_options[selected_index]["video_id"]
+                    )
+
+                    analysis = fetch_analysis(
+                        selected_video_id
+                    )
+
+                    set_current_shot(
+                        selected_video_id,
+                        analysis,
+                        player_name.strip(),
+                    )
+
+                    st.success(
+                        "Shot analysis loaded successfully!"
+                    )
+
+        except requests.exceptions.RequestException as error:
+            show_request_error(error)
+
+        except (KeyError, IndexError, TypeError) as error:
+            st.error(
+                f"Unexpected player-history data: {error}"
+            )
 
     # ---------------------------------------------------
     # Display shot analysis
@@ -392,7 +482,7 @@ with upload_tab:
         with video_left:
             st.write("**Pose and joint angles**")
 
-            pose_video = output_dir / "annotated_angles.mp4"
+            pose_video = output_dir / "annotated_angles_web.mp4"
 
             if pose_video.is_file():
                 st.video(str(pose_video))
@@ -402,7 +492,7 @@ with upload_tab:
         with video_right:
             st.write("**Basketball tracking**")
 
-            ball_video = output_dir / "ball_tracking.mp4"
+            ball_video = output_dir / "ball_tracking_web.mp4"
 
             if ball_video.is_file():
                 st.video(str(ball_video))

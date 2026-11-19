@@ -1,4 +1,6 @@
 
+import subprocess
+import imageio_ffmpeg
 import argparse
 import json
 import shutil
@@ -53,6 +55,46 @@ def require_file(path: Path):
             f"Expected output was not created: {path}"
         )
 
+
+def convert_video_for_web(source_path: Path) -> Path:
+    """
+    Convert an OpenCV-generated MP4 into a browser-compatible
+    H.264 MP4 without modifying the original file.
+    """
+    source_path = Path(source_path)
+
+    if not source_path.is_file():
+        raise FileNotFoundError(
+            f"Video not found: {source_path}"
+        )
+
+    destination = source_path.with_name(
+        f"{source_path.stem}_web.mp4"
+    )
+
+    ffmpeg = imageio_ffmpeg.get_ffmpeg_exe()
+
+    subprocess.run(
+        [
+            ffmpeg,
+            "-y",
+            "-i", str(source_path),
+            "-c:v", "libx264",
+            "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart",
+            str(destination),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+    if not destination.is_file() or destination.stat().st_size == 0:
+        raise RuntimeError(
+            f"Converted video was not created: {destination}"
+        )
+
+    return destination
 
 def process_uploaded_video(
     video_path: str,
@@ -251,6 +293,39 @@ def process_uploaded_video(
         player_name=player_name,
     )
 
+
+    # --------------------------------------------------
+    # 10. Convert visual feedback videos for browsers
+    # --------------------------------------------------
+
+    print("\nConverting visual feedback videos for browsers...")
+
+    pose_web_video = output_dir / "annotated_angles_web.mp4"
+    ball_web_video = output_dir / "ball_tracking_web.mp4"
+
+    # Conversion is optional for the shot analysis.
+    # If conversion fails, the analysis remains valid
+    # and the shot is still saved in SQLite.
+    try:
+        pose_web_video = convert_video_for_web(
+            output_dir / "annotated_angles.mp4"
+        )
+        print(f"Pose video converted: {pose_web_video}")
+
+    except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
+        print(f"WARNING: Pose video conversion failed: {error}")
+        pose_web_video = None
+
+    try:
+        ball_web_video = convert_video_for_web(
+            output_dir / "ball_tracking.mp4"
+        )
+        print(f"Ball tracking video converted: {ball_web_video}")
+
+    except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
+        print(f"WARNING: Ball tracking video conversion failed: {error}")
+        ball_web_video = None
+
     print("\n=== PIPELINE COMPLETED ===")
 
     result = {
@@ -264,15 +339,30 @@ def process_uploaded_video(
             "shot_outcome", {}
         ),
         "analysis_file": str(analysis_path),
+
+        # Original OpenCV videos
         "annotated_video": str(
             output_dir / "annotated_angles.mp4"
         ),
         "ball_tracking_video": str(
             output_dir / "ball_tracking.mp4"
         ),
+
+        # Browser-compatible H.264 videos
+        "annotated_video_web": (
+            str(pose_web_video)
+            if pose_web_video is not None
+            else None
+        ),
+        "ball_tracking_video_web": (
+            str(ball_web_video)
+            if ball_web_video is not None
+            else None
+        ),
     }
 
     return result
+
 
 
 if __name__ == "__main__":

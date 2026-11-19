@@ -1,0 +1,2 @@
+video,shot_id,shooting_arm,start_frame,release_frame,end_frame,end_frame_source,shooting_motion_ms,min_knee_angle,max_elbow_angle,release_elbow_angle,knee_angle_range,elbow_angle_range,elbow_extension_after_release,valid_knee_frames,valid_elbow_frames,knee_coverage_pct,elbow_coverage_pct,release_angle_valid,measurement_quality,outcome
+shot_55ce5ca18a50,shot_55ce5ca18a50_shot_1,right,0,14,20,provisional_follow_through_window,467,161.29,179.82,133.69,11.93,129.19,46.13,4,21,26.67,100.0,True,review,unknown

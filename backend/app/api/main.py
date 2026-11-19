@@ -1,3 +1,6 @@
+from backend.app.database.shot_history import (
+    get_player_history,
+)
 import tempfile
 from pydantic import BaseModel, Field
 from backend.app.agent.coaching_agent import ask_coach
@@ -216,4 +219,47 @@ async def ask_coaching_agent(request: CoachingRequest):
         raise HTTPException(
             status_code=500,
             detail="Unable to generate coaching feedback.",
+        ) from exc
+
+
+
+
+
+@app.get("/api/players/{player_name}/shots")
+async def get_player_shots(player_name: str):
+    """
+    Return all saved shots for the specified player.
+    """
+
+    if not player_name.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Player name cannot be empty.",
+        )
+
+    try:
+        history = await run_in_threadpool(
+            get_player_history,
+            player_name.strip(),
+        )
+
+        return history
+
+    except Exception as exc:
+        import logging
+        logging.exception("Failed to retrieve player history")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to retrieve player history.",
+        ) from exc
+
+
+    except Exception as exc:
+        import logging
+        logging.exception("Failed to retrieve player history")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to retrieve player history.",
         ) from exc

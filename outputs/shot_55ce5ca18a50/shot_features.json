@@ -1,0 +1,23 @@
+{
+  "video": "shot_55ce5ca18a50",
+  "shot_id": "shot_55ce5ca18a50_shot_1",
+  "shooting_arm": "right",
+  "start_frame": 0,
+  "release_frame": 14,
+  "end_frame": 20,
+  "end_frame_source": "provisional_follow_through_window",
+  "shooting_motion_ms": 467,
+  "min_knee_angle": 161.29,
+  "max_elbow_angle": 179.82,
+  "release_elbow_angle": 133.69,
+  "knee_angle_range": 11.93,
+  "elbow_angle_range": 129.19,
+  "elbow_extension_after_release": 46.13,
+  "valid_knee_frames": 4,
+  "valid_elbow_frames": 21,
+  "knee_coverage_pct": 26.67,
+  "elbow_coverage_pct": 100.0,
+  "release_angle_valid": true,
+  "measurement_quality": "review",
+  "outcome": "unknown"
+}
