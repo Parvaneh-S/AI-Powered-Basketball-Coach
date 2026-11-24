@@ -1,6 +1,24 @@
+# Environment and secrets
 .venv/
 .env
 .env.*
+!.env.example
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Data specific to each machine
 data/uploads/
+data/shotcoach.db
+data/*.backup.db
 
-
+# Analysis outputs: only the shared demo set is tracked.
+# New uploads stay on the machine that processed them.
+outputs/*
+!outputs/.gitkeep
+!outputs/free_throw_01/
+!outputs/free_throw_02/
+!outputs/free_throw_03/
+!outputs/shot_b8a4046d9f91/
+!outputs/shot_55ce5ca18a50/
