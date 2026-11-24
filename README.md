@@ -74,6 +74,12 @@ python -m streamlit run frontend/app.py
 
 Then open http://localhost:8501. To check the backend on its own, open http://127.0.0.1:8000/api/health.
 
+## Running the tests
+
+```bash
+python -m pytest
+```
+
 ## Project structure
 
 | Path | Contents |
@@ -88,6 +94,8 @@ Then open http://localhost:8501. To check the backend on its own, open http://12
 | `backend/app/database/` | SQLite models, saving shots, player history |
 | `backend/app/agent/` | Gemini coaching agent and its tools |
 | `backend/app/rag/` | Coaching knowledge base and semantic search |
+| `backend/app/ml/` | Personal form profile (form-to-outcome model, stage 1) |
+| `tests/` | Automated tests |
 | `frontend/` | Streamlit user interface |
 | `sample_videos/` | Sample free-throw videos shared with the team |
 | `outputs/` | Analysis results per video |
