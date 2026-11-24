@@ -1,5 +1,11 @@
+from typing import Literal
+
 from backend.app.database.shot_history import (
     get_player_history,
+)
+from backend.app.database.outcome_labels import (
+    apply_outcome_label,
+    set_outcome_label,
 )
 import tempfile
 from pydantic import BaseModel, Field
@@ -9,6 +15,13 @@ from starlette.concurrency import run_in_threadpool
 
 from backend.app.pipeline.video_pipeline import (
     process_uploaded_video,
+)
+from backend.app.database.duplicates import (
+    DuplicateVideoError,
+)
+from backend.app.database.sessions import (
+    InvalidSessionError,
+    list_player_sessions,
 )
 
 import json
@@ -72,12 +85,41 @@ def get_shot_analysis(video_id: str):
         with analysis_path.open("r", encoding="utf-8") as f:
             analysis = json.load(f)
 
-        return analysis
-
     except (OSError, json.JSONDecodeError):
         raise HTTPException(
             status_code=500,
             detail="Unable to read shot analysis",
+        )
+
+    # Include any manual outcome label from the database.
+    return apply_outcome_label(analysis)
+
+
+class OutcomeUpdate(BaseModel):
+    # "auto" resets to the detector's result.
+    outcome: Literal["made", "missed", "auto"]
+
+
+@app.patch("/api/shots/{shot_id}/outcome")
+def update_shot_outcome(shot_id: str, update: OutcomeUpdate):
+    """
+    Set a shot's outcome manually, or reset it to the
+    automatic detector result.
+    """
+
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,150}", shot_id):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid shot ID",
+        )
+
+    try:
+        return set_outcome_label(shot_id, update.outcome)
+
+    except LookupError:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Shot not found: {shot_id}",
         )
 
 MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100 MB
@@ -88,10 +130,13 @@ async def upload_shot(
     file: UploadFile = File(...),
     player_name: str = Form(...),
     shooting_arm: str = Form("right"),
+    session_id: int | None = Form(None),
 ):
     """
     Upload one free-throw video, run the complete
     analysis pipeline, and save the result to SQLite.
+    Without session_id the shot starts a new practice
+    session; with it, the shot joins that session.
     """
 
     if not player_name.strip():
@@ -149,12 +194,26 @@ async def upload_shot(
             str(temporary_path),
             player_name.strip(),
             shooting_arm,
+            Path(file.filename).name,
+            session_id,
         )
 
         return result
 
     except HTTPException:
         raise
+
+    except InvalidSessionError as exc:
+        raise HTTPException(
+            status_code=400,
+            detail=str(exc),
+        ) from exc
+
+    except DuplicateVideoError as exc:
+        raise HTTPException(
+            status_code=409,
+            detail=str(exc),
+        ) from exc
 
     except Exception as exc:
         # Record the error in the server terminal.
@@ -223,6 +282,25 @@ async def ask_coaching_agent(request: CoachingRequest):
 
 
 
+
+
+@app.get("/api/players/{player_name}/sessions")
+async def get_player_sessions(player_name: str):
+    """
+    Return the player's practice sessions, newest first,
+    with their date and number of shots.
+    """
+
+    if not player_name.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Player name cannot be empty.",
+        )
+
+    return await run_in_threadpool(
+        list_player_sessions,
+        player_name.strip(),
+    )
 
 
 @app.get("/api/players/{player_name}/shots")

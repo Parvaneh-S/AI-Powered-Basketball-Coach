@@ -10,6 +10,7 @@ from backend.app.database.models import (
     Shot,
     SessionLocal,
 )
+from backend.app.database.sessions import local_date
 
 
 def get_player_history(player_name):
@@ -48,11 +49,19 @@ def get_player_history(player_name):
                 "biomechanics", {}
             )
 
+            session_date = local_date(session.created_at)
+
             history.append({
                 "session_id": session.id,
+                "session_date": (
+                    session_date.isoformat()
+                    if session_date
+                    else None
+                ),
                 "shot_id": shot.shot_id,
                 "video_id": shot.video_id,
                 "outcome": shot.outcome,
+                "outcome_source": shot.outcome_source,
                 "release_elbow_angle": (
                     biomechanics.get(
                         "release_elbow_angle"

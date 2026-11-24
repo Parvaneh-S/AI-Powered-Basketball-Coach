@@ -53,7 +53,25 @@ def fetch_player_history(player_name):
     return response.json()
 
 
-def upload_video(file, player_name, shooting_arm):
+def fetch_sessions(player_name):
+    response = requests.get(
+        f"{API_URL}/api/players/{player_name}/sessions",
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def upload_video(file, player_name, shooting_arm, session_id=None):
+    form_data = {
+        "player_name": player_name,
+        "shooting_arm": shooting_arm,
+    }
+
+    # Without a session ID the backend starts a new session.
+    if session_id is not None:
+        form_data["session_id"] = str(session_id)
+
     response = requests.post(
         f"{API_URL}/api/shots/upload",
         files={
@@ -63,11 +81,18 @@ def upload_video(file, player_name, shooting_arm):
                 "video/mp4",
             )
         },
-        data={
-            "player_name": player_name,
-            "shooting_arm": shooting_arm,
-        },
+        data=form_data,
         timeout=900,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def update_outcome(shot_id, outcome):
+    response = requests.patch(
+        f"{API_URL}/api/shots/{shot_id}/outcome",
+        json={"outcome": outcome},
+        timeout=30,
     )
     response.raise_for_status()
     return response.json()
@@ -183,6 +208,43 @@ with upload_tab:
 
     st.header("Analyze a free throw")
 
+    # ---------------------------------------------------
+    # Practice session choice
+    # ---------------------------------------------------
+
+    # None means "start a new session".
+    session_choices = [None]
+    session_labels = {None: "Start a new session"}
+    default_session_index = 0
+
+    if player_name.strip():
+        try:
+            sessions = fetch_sessions(player_name.strip())
+        except requests.exceptions.RequestException:
+            sessions = []
+
+        for session in sessions:
+            session_id = session["session_id"]
+            shot_word = (
+                "shot" if session["shot_count"] == 1 else "shots"
+            )
+            day = (
+                "today"
+                if session["is_today"]
+                else session["date"]
+            )
+
+            session_choices.append(session_id)
+            session_labels[session_id] = (
+                f"Continue session {session_id} "
+                f"({day}, {session['shot_count']} {shot_word})"
+            )
+
+        # Default: keep adding to today's latest session.
+        # The list is newest first, so index 1 is the latest.
+        if sessions and sessions[0]["is_today"]:
+            default_session_index = 1
+
     with st.form("upload_form"):
 
         uploaded_file = st.file_uploader(
@@ -193,6 +255,17 @@ with upload_tab:
         shooting_arm = st.selectbox(
             "Shooting arm",
             ["right", "left"],
+        )
+
+        chosen_session = st.selectbox(
+            "Practice session",
+            options=session_choices,
+            index=default_session_index,
+            format_func=lambda choice: session_labels[choice],
+            help=(
+                "Shots from the same practice belong in one "
+                "session. Start a new session for a new practice."
+            ),
         )
 
         submit_upload = st.form_submit_button(
@@ -223,6 +296,7 @@ with upload_tab:
                         uploaded_file,
                         player_name.strip(),
                         shooting_arm,
+                        chosen_session,
                     )
 
                     video_id = result["video_id"]
@@ -298,9 +372,15 @@ with upload_tab:
                         "session_id", "Unknown"
                     )
 
+                    if shot.get("session_date"):
+                        session = f"{session} ({shot['session_date']})"
+
                     knee = shot.get("min_knee_angle")
                     elbow = shot.get("release_elbow_angle")
                     outcome = shot.get("outcome", "unknown")
+
+                    if shot.get("outcome_source") == "manual":
+                        outcome = f"{outcome} (manual)"
 
                     knee_text = (
                         f"{knee}°"
@@ -433,10 +513,26 @@ with upload_tab:
 
         col7, col8, col9 = st.columns(3)
 
+        final_outcome = outcome.get(
+            "final_outcome",
+            outcome.get("prediction", "unknown"),
+        )
+        outcome_source = outcome.get("outcome_source", "auto")
+
         with col7:
             st.metric(
-                "Predicted outcome",
-                str(outcome.get("prediction", "unknown")).title(),
+                "Outcome",
+                str(final_outcome).title(),
+                help=(
+                    "Set manually by the player"
+                    if outcome_source == "manual"
+                    else "Automatic detection (experimental)"
+                ),
+            )
+            st.caption(
+                "Source: manual label"
+                if outcome_source == "manual"
+                else "Source: automatic detection"
             )
 
         with col8:
@@ -452,6 +548,54 @@ with upload_tab:
                 "Tracked ball frames",
                 tracking.get("tracked_frames", "N/A"),
             )
+
+        # ------------------------------------------------
+        # Manual outcome correction
+        # ------------------------------------------------
+
+        shot_id = analysis.get("shot_id")
+
+        if shot_id:
+            st.write(
+                "**Is the outcome wrong?** Set it yourself. "
+                "Manual labels are used by the coach and for "
+                "training the personal form model."
+            )
+
+            made_col, missed_col, reset_col, _ = st.columns(
+                [1, 1, 1.4, 3]
+            )
+
+            new_outcome = None
+
+            with made_col:
+                if st.button("✅ Made", key="label_made"):
+                    new_outcome = "made"
+
+            with missed_col:
+                if st.button("❌ Missed", key="label_missed"):
+                    new_outcome = "missed"
+
+            with reset_col:
+                if st.button(
+                    "↺ Reset to automatic",
+                    key="label_auto",
+                    disabled=outcome_source != "manual",
+                ):
+                    new_outcome = "auto"
+
+            if new_outcome is not None:
+                try:
+                    update_outcome(shot_id, new_outcome)
+
+                    # Reload so the page shows the new label.
+                    st.session_state.analysis = fetch_analysis(
+                        st.session_state.video_id
+                    )
+                    st.rerun()
+
+                except requests.exceptions.RequestException as error:
+                    show_request_error(error)
 
         st.warning(
             "Experimental analysis: measurement quality "

@@ -116,6 +116,14 @@ it as evidence.
 22. If two tools return conflicting measurements,
     explicitly report the inconsistency rather than
     choosing or inventing a value.
+
+23. Use shot_outcome.final_outcome (or "outcome" in history
+    and comparison results) as the shot's outcome.
+    If its source is "manual", the player labelled it
+    themselves and it overrides the automatic prediction.
+    If its source is "auto", it comes from the experimental
+    trajectory detector and may be wrong; say so when it
+    matters for your feedback.
 """
 
 

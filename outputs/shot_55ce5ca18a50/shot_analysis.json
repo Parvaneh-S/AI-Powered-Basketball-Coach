@@ -43,9 +43,9 @@
     "confidence": 0.8583
   },
   "shot_outcome": {
-    "prediction": "unknown",
-    "observation": "no_downward_crossing",
-    "method": "2d_trajectory_rim_crossing_v1"
+    "prediction": "made",
+    "observation": "made_bridged_gap",
+    "method": "2d_trajectory_rim_crossing_v2"
   },
   "analysis_status": "experimental"
 }

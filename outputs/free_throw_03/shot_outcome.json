@@ -1,14 +1,21 @@
 {
     "video": "free_throw_03.mp4",
-    "method": "2d_trajectory_rim_crossing_v1",
-    "outcome": "unknown",
-    "observation": "no_downward_crossing",
+    "method": "2d_trajectory_rim_crossing_v2",
+    "max_bridge_frames": 20,
+    "outcome": "made",
+    "observation": "made_bridged_gap",
     "rim_center": [
         202.0,
         144.5
     ],
     "rim_width_px": 50.0,
-    "crossings_found": 0,
-    "selected_crossing": null,
-    "note": "Experimental 2D heuristic. A crossing near the hoop does not establish a made basket. Miss predictions also require visual validation."
+    "crossings_found": 1,
+    "selected_crossing": {
+        "frame_before": 165,
+        "frame_after": 178,
+        "crossing_x": 192.85,
+        "distance_from_rim_center_px": 9.15,
+        "bridged_gap_frames": 12
+    },
+    "note": "Experimental 2D heuristic. A made result means the ball crossed the rim height inside the rim opening, possibly across a short detection gap. Rim bounces cannot be told apart in 2D, so results should be confirmed visually or corrected manually."
 }

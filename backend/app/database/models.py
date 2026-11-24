@@ -1,4 +1,6 @@
 
+import os
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -9,6 +11,8 @@ from sqlalchemy import (
     String,
     Text,
     create_engine,
+    inspect,
+    text,
 )
 from sqlalchemy.orm import (
     DeclarativeBase,
@@ -23,7 +27,19 @@ ROOT = Path(__file__).resolve().parents[3]
 DB_DIR = ROOT / "data"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 
-DATABASE_URL = f"sqlite:///{(DB_DIR / 'shotcoach.db').as_posix()}"
+# Each machine keeps its own live database (not tracked by git).
+# The seed database (tracked by git) holds the shared demo shots.
+SEED_DB_PATH = DB_DIR / "seed_shotcoach.db"
+
+DB_PATH = Path(
+    os.getenv("SHOTCOACH_DB_PATH", DB_DIR / "shotcoach.db")
+)
+
+# On first run, start the live database from the demo shots.
+if not DB_PATH.exists() and SEED_DB_PATH.is_file():
+    shutil.copy2(SEED_DB_PATH, DB_PATH)
+
+DATABASE_URL = f"sqlite:///{DB_PATH.resolve().as_posix()}"
 
 engine = create_engine(DATABASE_URL)
 
@@ -82,10 +98,34 @@ class Shot(Base):
         String(150), unique=True
     )
     video_id: Mapped[str] = mapped_column(String(150))
+    # The outcome used everywhere (history, comparison, agent).
     outcome: Mapped[str] = mapped_column(
         String(20), default="unknown"
     )
+    # "auto" when it comes from the detector,
+    # "manual" when a user set it.
+    outcome_source: Mapped[str] = mapped_column(
+        String(20), default="auto"
+    )
+    # The detector's own result, kept so a manual label can be
+    # reset and the detector's accuracy can be measured later.
+    auto_outcome: Mapped[str] = mapped_column(
+        String(20), default="unknown"
+    )
     analysis_json: Mapped[str] = mapped_column(Text)
+
+    # Fingerprint of the source video file, used to detect
+    # the same video being uploaded twice. Empty for shots
+    # whose original video is not available.
+    video_sha256: Mapped[str | None] = mapped_column(
+        String(64), nullable=True, index=True
+    )
+    original_filename: Mapped[str | None] = mapped_column(
+        String(255), nullable=True
+    )
+    uploaded_at: Mapped[datetime | None] = mapped_column(
+        DateTime, nullable=True
+    )
 
     session: Mapped["PracticeSession"] = relationship(
         back_populates="shots"
@@ -94,7 +134,60 @@ class Shot(Base):
 
 def create_tables():
     Base.metadata.create_all(engine)
-    print(f"Database initialized: {DB_DIR / 'shotcoach.db'}")
+    print(f"Database initialized: {DB_PATH}")
+
+
+def ensure_shot_columns():
+    """
+    Add columns introduced after a database was created.
+    Existing outcomes count as automatic.
+    """
+
+    if "shots" not in inspect(engine).get_table_names():
+        return
+
+    existing = {
+        column["name"]
+        for column in inspect(engine).get_columns("shots")
+    }
+
+    with engine.begin() as connection:
+        if "outcome_source" not in existing:
+            connection.execute(text(
+                "ALTER TABLE shots ADD COLUMN "
+                "outcome_source VARCHAR(20) NOT NULL "
+                "DEFAULT 'auto'"
+            ))
+
+        if "auto_outcome" not in existing:
+            connection.execute(text(
+                "ALTER TABLE shots ADD COLUMN "
+                "auto_outcome VARCHAR(20)"
+            ))
+            connection.execute(text(
+                "UPDATE shots SET auto_outcome = outcome"
+            ))
+
+        new_optional_columns = {
+            "video_sha256": "VARCHAR(64)",
+            "original_filename": "VARCHAR(255)",
+            "uploaded_at": "DATETIME",
+        }
+
+        for name, column_type in new_optional_columns.items():
+            if name not in existing:
+                connection.execute(text(
+                    f"ALTER TABLE shots ADD COLUMN "
+                    f"{name} {column_type}"
+                ))
+
+        connection.execute(text(
+            "CREATE INDEX IF NOT EXISTS "
+            "ix_shots_video_sha256 ON shots (video_sha256)"
+        ))
+
+
+ensure_shot_columns()
 
 
 if __name__ == "__main__":

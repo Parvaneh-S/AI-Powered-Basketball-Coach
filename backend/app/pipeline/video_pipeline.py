@@ -37,6 +37,14 @@ from backend.app.analysis.shot_analysis import (
 from backend.app.database.save_shot import (
     save_shot,
 )
+from backend.app.database.duplicates import (
+    DuplicateVideoError,
+    file_sha256,
+    find_duplicate,
+)
+from backend.app.database.sessions import (
+    validate_session,
+)
 
 
 # Project root: AI-Powered-Basketball-Coach/
@@ -100,6 +108,8 @@ def process_uploaded_video(
     video_path: str,
     player_name: str,
     shooting_arm: str = "right",
+    original_filename: str | None = None,
+    session_id: int | None = None,
 ) -> dict:
     """
     Run the complete basketball video-analysis pipeline
@@ -128,6 +138,21 @@ def process_uploaded_video(
         raise ValueError(
             "shooting_arm must be 'left' or 'right'."
         )
+
+    if original_filename is None:
+        original_filename = source_video.name
+
+    # A chosen session must exist and belong to this player.
+    # None starts a new session.
+    validate_session(player_name, session_id)
+
+    # Stop early if this player already has this exact video,
+    # before spending minutes on the analysis.
+    video_sha256 = file_sha256(source_video)
+    existing = find_duplicate(player_name, video_sha256)
+
+    if existing is not None:
+        raise DuplicateVideoError(existing)
 
     # Create a unique identifier for this upload.
     video_id = f"shot_{uuid4().hex[:12]}"
@@ -291,6 +316,9 @@ def process_uploaded_video(
     save_shot(
         video_id=video_id,
         player_name=player_name,
+        session_id=session_id,
+        video_sha256=video_sha256,
+        original_filename=original_filename,
     )
 
 
@@ -390,12 +418,21 @@ if __name__ == "__main__":
         default="right",
     )
 
+    parser.add_argument(
+        "--session-id",
+        type=int,
+        default=None,
+        help="Add the shot to this practice session "
+             "(default: start a new session)",
+    )
+
     args = parser.parse_args()
 
     result = process_uploaded_video(
         video_path=args.video_path,
         player_name=args.player_name,
         shooting_arm=args.shooting_arm,
+        session_id=args.session_id,
     )
 
     print("\n=== RESULT ===")

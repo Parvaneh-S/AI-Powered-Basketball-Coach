@@ -6,6 +6,14 @@ from pathlib import Path
 import pandas as pd
 
 
+# The ball is often hidden by the rim and net while it
+# passes through the hoop. A missing stretch of up to this
+# many frames is bridged with a straight line between the
+# last point above the rim and the first point below it.
+# At 30 fps, 20 frames is about 0.67 seconds.
+MAX_BRIDGE_FRAMES = 20
+
+
 def analyze_outcome(video_name, output_dir):
     output_dir = Path(output_dir)
 
@@ -35,15 +43,16 @@ def analyze_outcome(video_name, output_dir):
 
     candidates = []
 
-    # Find consecutive observations where the ball
+    # Find neighbouring observations where the ball
     # crosses the rim's approximate height downward.
     for previous, current in zip(points, points[1:]):
         frame_gap = int(
             current["frame"] - previous["frame"]
         )
 
-        # Never interpolate across missing frames.
-        if frame_gap != 1:
+        # Bridge short detection gaps only. Longer gaps
+        # could hide a rim bounce or a rebound.
+        if frame_gap < 1 or frame_gap > MAX_BRIDGE_FRAMES:
             continue
 
         px = float(previous["center_x"])
@@ -72,6 +81,9 @@ def analyze_outcome(video_name, output_dir):
             "distance_from_rim_center_px": round(
                 horizontal_distance, 2
             ),
+            # Frames without a detection between the two
+            # points, 0 when they are consecutive frames.
+            "bridged_gap_frames": frame_gap - 1,
         })
 
     outcome = "unknown"
@@ -96,8 +108,12 @@ def analyze_outcome(video_name, output_dir):
         safety_margin = rim_width * 0.5
 
         if distance <= possible_opening_half_width:
-            observation = "possible_made"
-            outcome = "unknown"
+            outcome = "made"
+
+            if selected_crossing["bridged_gap_frames"] > 0:
+                observation = "made_bridged_gap"
+            else:
+                observation = "made_crossing_inside_rim"
 
         elif distance > (
             possible_opening_half_width + safety_margin
@@ -111,7 +127,8 @@ def analyze_outcome(video_name, output_dir):
 
     result = {
         "video": video_name,
-        "method": "2d_trajectory_rim_crossing_v1",
+        "method": "2d_trajectory_rim_crossing_v2",
+        "max_bridge_frames": MAX_BRIDGE_FRAMES,
         "outcome": outcome,
         "observation": observation,
         "rim_center": [rim_x, rim_y],
@@ -119,10 +136,12 @@ def analyze_outcome(video_name, output_dir):
         "crossings_found": len(candidates),
         "selected_crossing": selected_crossing,
         "note": (
-            "Experimental 2D heuristic. A crossing "
-            "near the hoop does not establish a made "
-            "basket. Miss predictions also require "
-            "visual validation."
+            "Experimental 2D heuristic. A made result "
+            "means the ball crossed the rim height inside "
+            "the rim opening, possibly across a short "
+            "detection gap. Rim bounces cannot be told "
+            "apart in 2D, so results should be confirmed "
+            "visually or corrected manually."
         ),
     }
 

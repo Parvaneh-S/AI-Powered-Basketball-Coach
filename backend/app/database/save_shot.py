@@ -1,6 +1,7 @@
 
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from sqlalchemy import select
@@ -16,7 +17,13 @@ from backend.app.database.models import (
 ROOT = Path(__file__).resolve().parents[3]
 
 
-def save_shot(video_id, player_name, session_id=None):
+def save_shot(
+    video_id,
+    player_name,
+    session_id=None,
+    video_sha256=None,
+    original_filename=None,
+):
     analysis_path = (
         ROOT / "outputs" / video_id / "shot_analysis.json"
     )
@@ -81,7 +88,12 @@ def save_shot(video_id, player_name, session_id=None):
             shot_id=shot_id,
             video_id=video_id,
             outcome=outcome,
+            outcome_source="auto",
+            auto_outcome=outcome,
             analysis_json=json.dumps(analysis),
+            video_sha256=video_sha256,
+            original_filename=original_filename,
+            uploaded_at=datetime.now(timezone.utc),
         )
 
         db.add(shot)

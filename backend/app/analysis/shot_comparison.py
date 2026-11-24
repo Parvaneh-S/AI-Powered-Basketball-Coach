@@ -97,7 +97,13 @@ def compare_shots(player_name):
             "previous_shot": shots[-2].shot_id,
             "latest_shot": shots[-1].shot_id,
             "previous_outcome": shots[-2].outcome,
+            "previous_outcome_source": (
+                shots[-2].outcome_source
+            ),
             "latest_outcome": shots[-1].outcome,
+            "latest_outcome_source": (
+                shots[-1].outcome_source
+            ),
             "differences": differences,
         }
 

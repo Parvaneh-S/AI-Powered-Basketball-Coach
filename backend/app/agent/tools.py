@@ -8,6 +8,9 @@ from backend.app.database.shot_history import (
 from backend.app.analysis.shot_comparison import (
     compare_shots,
 )
+from backend.app.database.outcome_labels import (
+    apply_outcome_label,
+)
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -40,7 +43,10 @@ def get_shot_analysis(video_id: str) -> dict:
         }
 
     with path.open(encoding="utf-8") as file:
-        return json.load(file)
+        analysis = json.load(file)
+
+    # Include any manual outcome label from the database.
+    return apply_outcome_label(analysis)
 
 
 def get_player_shot_history(player_name: str) -> dict:
