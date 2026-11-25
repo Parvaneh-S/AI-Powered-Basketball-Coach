@@ -45,6 +45,9 @@ from backend.app.database.duplicates import (
 from backend.app.database.sessions import (
     validate_session,
 )
+from backend.app.pipeline.video_input import (
+    prepare_video,
+)
 
 
 # Project root: AI-Powered-Basketball-Coach/
@@ -157,18 +160,22 @@ def process_uploaded_video(
     # Create a unique identifier for this upload.
     video_id = f"shot_{uuid4().hex[:12]}"
 
-    output_dir = ROOT / "outputs" / video_id
-    output_dir.mkdir(parents=True, exist_ok=False)
-
-    # Keep a processing copy in a predictable location.
+    # Keep a processing copy in a predictable location,
+    # always as an H.264 MP4 that OpenCV can read. MOV and
+    # unreadable MP4 files (e.g. HEVC from iPhones) are
+    # converted; readable MP4 files are copied unchanged.
     upload_dir = ROOT / "data" / "uploads"
     upload_dir.mkdir(parents=True, exist_ok=True)
 
-    stored_video = (
-        upload_dir / f"{video_id}{source_video.suffix}"
-    )
+    stored_video = upload_dir / f"{video_id}.mp4"
 
-    shutil.copy2(source_video, stored_video)
+    converted = prepare_video(source_video, stored_video)
+
+    if converted:
+        print(f"Converted {original_filename} to H.264 MP4")
+
+    output_dir = ROOT / "outputs" / video_id
+    output_dir.mkdir(parents=True, exist_ok=False)
 
     print("\n=== BASKETBALL VIDEO PIPELINE ===")
     print(f"Player: {player_name}")

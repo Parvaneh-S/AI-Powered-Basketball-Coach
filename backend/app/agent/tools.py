@@ -11,6 +11,9 @@ from backend.app.analysis.shot_comparison import (
 from backend.app.database.outcome_labels import (
     apply_outcome_label,
 )
+from backend.app.ml.form_profile import (
+    build_form_profile,
+)
 
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -87,6 +90,14 @@ def compare_player_shots(player_name: str) -> dict:
             "and experimental segmentation results."
         ),
     }
+
+
+def get_personal_form_profile(player_name: str) -> dict:
+    """
+    Compare the player's form on made and missed shots
+    across all of their sessions.
+    """
+    return build_form_profile(player_name)
 
 
 if __name__ == "__main__":

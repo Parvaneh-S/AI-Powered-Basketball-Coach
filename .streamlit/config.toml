@@ -1,0 +1,4 @@
+[server]
+# Multi-shot practice videos can be several hundred MB.
+# Size in MB; must match MAX_UPLOAD_SIZE in backend/app/api/main.py.
+maxUploadSize = 1024

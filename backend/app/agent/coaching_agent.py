@@ -15,6 +15,7 @@ from backend.app.agent.tools import (
     get_shot_analysis,
     get_player_shot_history,
     compare_player_shots,
+    get_personal_form_profile,
 )
 
 
@@ -93,11 +94,17 @@ it as evidence.
 15. Do not claim that a shot was made or missed unless
     the available outcome data supports that conclusion.
 
-16. Do not prescribe specific ideal joint-angle ranges
-    unless supported by retrieved coaching knowledge.
+16. The player's own personal_form_profile (rule 24) is the
+    main source of numerical targets. A commonly cited range
+    may also be mentioned only if it comes from retrieved
+    coaching knowledge, with its source, and clearly labelled
+    as general guidance that is not personalised to this
+    player. Never invent ranges or present any angle as
+    correct for everyone.
 
-17. Until RAG is implemented, provide general technique
-    suggestions without unsupported numerical targets.
+17. Without a personal pattern or a retrieved, sourced
+    range, give general technique suggestions without
+    numerical targets.
 
 18. If a tool returns an error, do not invent its result.
     Use available evidence or explain the limitation.
@@ -124,6 +131,28 @@ it as evidence.
     If its source is "auto", it comes from the experimental
     trajectory detector and may be wrong; say so when it
     matters for your feedback.
+
+24. When the player asks what to improve, what works for
+    them, or why they miss, call personal_form_profile.
+    It compares this player's made and missed shots across
+    all their sessions.
+    - If status is "insufficient_data", say that personal
+      patterns are not available yet, quote the message
+      (how many shots and makes/misses are needed), and
+      give only general guidance.
+    - Only features with result "likely_pattern" are
+      personal patterns. Describe them as what tends to
+      happen on this player's makes, using mean_made and
+      mean_missed, never as a universal ideal.
+    - Always state how many made and missed shots the
+      pattern is based on.
+    - Do not present "no_clear_difference" features as
+      problems or strengths.
+    - When useful, compare the current shot's value with
+      the player's mean_made to suggest a direction.
+    - A pattern shows an association in this player's
+      recorded shots, not proof that the feature causes
+      makes.
 """
 
 
@@ -135,6 +164,8 @@ def ask_coach(player_name: str, question: str) -> str:
     - Shot analysis
     - Player history
     - Shot comparison
+    - Coaching knowledge (RAG)
+    - Personal form profile
     """
 
     if not os.getenv("GEMINI_API_KEY"):
@@ -248,6 +279,23 @@ def ask_coach(player_name: str, question: str) -> str:
         )
 
     # --------------------------------------------------
+    # Tool 5: Personal form profile (form-to-outcome)
+    # --------------------------------------------------
+
+    def personal_form_profile() -> dict:
+        """
+        Compare the current player's form on made shots with
+        their form on missed shots, across all sessions.
+        Returns likely personal patterns with confidence
+        intervals, or insufficient_data when there are not
+        enough labelled makes and misses yet.
+        """
+
+        print("[Tool called: personal_form_profile]")
+
+        return get_personal_form_profile(player_name)
+
+    # --------------------------------------------------
     # Initialize Gemini chat session
     # --------------------------------------------------
 
@@ -261,6 +309,7 @@ def ask_coach(player_name: str, question: str) -> str:
                     player_history,
                     shot_comparison,
                     coaching_knowledge,
+                    personal_form_profile,
                 ],
                 automatic_function_calling=(
                     types.AutomaticFunctionCallingConfig(

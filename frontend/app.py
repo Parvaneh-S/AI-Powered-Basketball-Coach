@@ -78,7 +78,11 @@ def upload_video(file, player_name, shooting_arm, session_id=None):
             "file": (
                 file.name,
                 file.getvalue(),
-                "video/mp4",
+                (
+                    "video/quicktime"
+                    if file.name.lower().endswith(".mov")
+                    else "video/mp4"
+                ),
             )
         },
         data=form_data,
@@ -248,8 +252,12 @@ with upload_tab:
     with st.form("upload_form"):
 
         uploaded_file = st.file_uploader(
-            "Choose an MP4 video",
-            type=["mp4"],
+            "Choose an MP4 or MOV video",
+            type=["mp4", "mov"],
+            help=(
+                "iPhone MOV videos are converted automatically. "
+                "Side view, whole body and hoop visible."
+            ),
         )
 
         shooting_arm = st.selectbox(
@@ -279,10 +287,10 @@ with upload_tab:
             st.warning("Please enter a player name.")
 
         elif uploaded_file is None:
-            st.warning("Please select an MP4 video.")
+            st.warning("Please select an MP4 or MOV video.")
 
-        elif uploaded_file.size > 100 * 1024 * 1024:
-            st.error("The maximum upload size is 100 MB.")
+        elif uploaded_file.size > 1024 * 1024 * 1024:
+            st.error("The maximum upload size is 1 GB.")
 
         else:
 

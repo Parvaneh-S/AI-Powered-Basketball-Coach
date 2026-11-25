@@ -23,6 +23,13 @@ from backend.app.database.sessions import (
     InvalidSessionError,
     list_player_sessions,
 )
+from backend.app.ml.form_profile import (
+    build_form_profile,
+)
+from backend.app.pipeline.video_input import (
+    SUPPORTED_EXTENSIONS,
+    UnsupportedVideoError,
+)
 
 import json
 import re
@@ -122,7 +129,7 @@ def update_shot_outcome(shot_id: str, update: OutcomeUpdate):
             detail=f"Shot not found: {shot_id}",
         )
 
-MAX_UPLOAD_SIZE = 100 * 1024 * 1024  # 100 MB
+MAX_UPLOAD_SIZE = 1024 * 1024 * 1024  # 1 GB, for multi-shot videos
 
 
 @app.post("/api/shots/upload")
@@ -151,12 +158,16 @@ async def upload_shot(
             detail="Shooting arm must be left or right.",
         )
 
-    if not file.filename or (
-        Path(file.filename).suffix.lower() != ".mp4"
-    ):
+    suffix = (
+        Path(file.filename).suffix.lower()
+        if file.filename
+        else ""
+    )
+
+    if suffix not in SUPPORTED_EXTENSIONS:
         raise HTTPException(
             status_code=400,
-            detail="Only MP4 videos are supported.",
+            detail="Only MP4 and MOV videos are supported.",
         )
 
     temporary_path = None
@@ -164,7 +175,7 @@ async def upload_shot(
     try:
         # Store the upload temporarily while processing.
         with tempfile.NamedTemporaryFile(
-            suffix=".mp4",
+            suffix=suffix,
             prefix="shotcoach_",
             delete=False,
         ) as temporary_file:
@@ -177,7 +188,7 @@ async def upload_shot(
                 if total_size > MAX_UPLOAD_SIZE:
                     raise HTTPException(
                         status_code=413,
-                        detail="Video exceeds the 100 MB limit.",
+                        detail="Video exceeds the 1 GB limit.",
                     )
 
                 temporary_file.write(chunk)
@@ -203,7 +214,7 @@ async def upload_shot(
     except HTTPException:
         raise
 
-    except InvalidSessionError as exc:
+    except (InvalidSessionError, UnsupportedVideoError) as exc:
         raise HTTPException(
             status_code=400,
             detail=str(exc),
@@ -299,6 +310,25 @@ async def get_player_sessions(player_name: str):
 
     return await run_in_threadpool(
         list_player_sessions,
+        player_name.strip(),
+    )
+
+
+@app.get("/api/players/{player_name}/form-profile")
+async def get_form_profile(player_name: str):
+    """
+    Return the player's personal form profile: how their
+    form differs between made and missed shots.
+    """
+
+    if not player_name.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Player name cannot be empty.",
+        )
+
+    return await run_in_threadpool(
+        build_form_profile,
         player_name.strip(),
     )
 
