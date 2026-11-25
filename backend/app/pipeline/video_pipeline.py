@@ -16,6 +16,9 @@ from backend.app.computer_vision.pose_estimator import (
 from backend.app.shot_detection.auto_segment import (
     detect_shot_events,
 )
+from backend.app.shot_detection.release import (
+    refine_release,
+)
 from backend.app.ball_detection.ball_detector import (
     detect_basketball,
 )
@@ -24,6 +27,9 @@ from backend.app.ball_detection.ball_tracker import (
 )
 from backend.app.ball_detection.hoop_detector import (
     detect_hoop,
+)
+from backend.app.ball_detection.hoop_tracker import (
+    track_hoop,
 )
 from backend.app.ball_detection.shot_outcome import (
     analyze_outcome,
@@ -231,26 +237,11 @@ def process_uploaded_video(
     )
 
     # --------------------------------------------------
-    # 4. Ball tracking
+    # 4. Hoop detection (before ball tracking, which
+    #    uses the hoop to correct for camera movement)
     # --------------------------------------------------
 
-    print("\n[4/9] Tracking basketball...")
-
-    track_ball(
-        video_path=stored_video,
-        csv_path=output_dir / "ball_detections.csv",
-        output_dir=output_dir,
-    )
-
-    require_file(
-        output_dir / "ball_trajectory.csv"
-    )
-
-    # --------------------------------------------------
-    # 5. Hoop detection
-    # --------------------------------------------------
-
-    print("\n[5/9] Detecting basketball hoop...")
+    print("\n[4/9] Detecting basketball hoop...")
 
     detect_hoop(
         video_path=stored_video,
@@ -259,6 +250,49 @@ def process_uploaded_video(
 
     require_file(
         output_dir / "hoop_detection.json"
+    )
+
+    # Follow the hoop in every frame, in case the camera
+    # moves (runs locally; nothing is sent to Roboflow).
+    track_hoop(
+        video_path=stored_video,
+        hoop_json_path=output_dir / "hoop_detection.json",
+        output_csv=output_dir / "hoop_track.csv",
+    )
+
+    # --------------------------------------------------
+    # 5. Ball tracking
+    # --------------------------------------------------
+
+    print("\n[5/9] Tracking basketball...")
+
+    # Follow only this shot's ball, from the knee dip on
+    # (in the hands, then in flight).
+    events_path = output_dir / "predicted_shot_events.json"
+    knee_min_frame = json.loads(
+        events_path.read_text(encoding="utf-8")
+    )["knee_min_frame"]
+
+    track_ball(
+        video_path=stored_video,
+        csv_path=output_dir / "ball_detections.csv",
+        output_dir=output_dir,
+        start_frame=knee_min_frame,
+        hoop_track_path=output_dir / "hoop_track.csv",
+    )
+
+    require_file(
+        output_dir / "ball_trajectory.csv"
+    )
+
+    # Correct the release frame with the moment the ball
+    # leaves the hands (the pose-only estimate can be late
+    # when the shooter hops).
+    refine_release(
+        events_path=events_path,
+        angles_csv=output_dir / "joint_angles.csv",
+        trajectory_csv=output_dir / "ball_trajectory.csv",
+        detections_csv=output_dir / "ball_detections.csv",
     )
 
     # --------------------------------------------------

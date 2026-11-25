@@ -138,6 +138,7 @@ def process_video(input_path, output_path, model_path, csv_path):
                 right_elbow = None
                 left_knee = None
                 right_knee = None
+                wrists = {}
 
                 if result.pose_landmarks:
                     detected_frames += 1
@@ -164,6 +165,18 @@ def process_video(input_path, output_path, model_path, csv_path):
                     right_knee = get_joint_angle(
                         landmarks, 24, 26, 28, width, height
                     )
+
+                    # Wrist positions in pixels, used to find the
+                    # moment the ball leaves the hands.
+                    for side, index in (("left", 15), ("right", 16)):
+                        wrist = landmarks[index]
+                        if wrist.visibility >= 0.5:
+                            wrists[f"{side}_wrist_x"] = round(
+                                wrist.x * width, 1
+                            )
+                            wrists[f"{side}_wrist_y"] = round(
+                                wrist.y * height, 1
+                            )
 
 
                     # Draw skeleton
@@ -222,6 +235,7 @@ def process_video(input_path, output_path, model_path, csv_path):
                     "right_elbow_angle": right_elbow,
                     "left_knee_angle": left_knee,
                     "right_knee_angle": right_knee,
+                    **wrists,
                 })
 
                 writer.write(frame)
@@ -240,6 +254,10 @@ def process_video(input_path, output_path, model_path, csv_path):
             "right_elbow_angle",
             "left_knee_angle",
             "right_knee_angle",
+            "left_wrist_x",
+            "left_wrist_y",
+            "right_wrist_x",
+            "right_wrist_y",
         ]
 
         csv_writer = csv.DictWriter(file, fieldnames=columns)
