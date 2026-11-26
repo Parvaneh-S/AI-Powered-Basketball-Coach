@@ -23,6 +23,12 @@ FastAPI backend (backend/app/api/main.py)
    │     8. Combined analysis                  ─► outputs/<video_id>/shot_analysis.json
    │     9. Save to SQLite                     ─► data/shotcoach.db
    │
+   ├─ Upload a practice video with several shots
+   │     ─► background job (backend/app/pipeline/multi_shot_pipeline.py)
+   │        convert to 30 fps / 1080p ─► find every shot (MediaPipe)
+   │        ─► cut one clip per shot ─► steps 0–9 for each clip,
+   │           all shots saved in one practice session
+   │
    └─ Ask the coach ─► Gemini agent (backend/app/agent/coaching_agent.py)
          tools: shot analysis, player history, shot comparison,
                 coaching knowledge (RAG, backend/app/rag/knowledge_retriever.py),
@@ -82,7 +88,9 @@ Then open http://localhost:8501. To check the backend on its own, open http://12
 
 ## Recording tips
 
-- Record **one free throw per video** (see the limitations below).
+- Upload **one free throw**, or a **practice video with several free throws** (choose "Several shots" in the app). In a practice video every shot is found automatically (the moment the hands go above the head), cut into its own clip and analysed. This takes several minutes for a long video.
+- Choose the matching option: a video with several shots uploaded as "One shot", or a video with one shot uploaded as "Several shots", is refused with a message.
+- Only one video is analysed at a time; uploads are refused until the current analysis has finished.
 - Film from the **side**, with the player's **whole body and the hoop** in the picture for the whole shot.
 - A **steady camera** (tripod or a fixed stand) gives the most reliable results. A handheld camera is supported, but sudden zooms can make the made/missed result `unknown`.
 - MP4 and MOV (including iPhone HEVC) are accepted, up to 1 GB. MOV and unreadable MP4 videos are converted to H.264 MP4 automatically.
@@ -140,14 +148,14 @@ To share real recorded data with the team, use a private shared folder for the v
 
 ## Privacy
 
-- **Roboflow:** for each uploaded video, **one frame** is sent to Roboflow's hosted model to find the hoop. Everything else (pose, ball, hoop tracking) runs on your computer.
+- **Roboflow:** for each analysed shot, **one frame** is sent to Roboflow's hosted model to find the hoop (a practice video with 20 shots sends 20 frames). Everything else (pose, ball, hoop tracking) runs on your computer.
 - **Gemini:** when you ask the coach a question, the question and the player's measurements, history and form profile are sent to Google's Gemini API.
 - **Uploaded videos** are stored on your computer in `data/uploads/` and are not deleted automatically. They are never committed to git.
 - Only record and upload other people with their **consent**, and upload each player under their own name.
 
 ## Current limitations
 
-- Each uploaded video is analysed as a single shot; splitting a video with several shots is in progress.
+- Practice videos: one player at a time in the picture. A shot is only found if the hands go above the head. This works when the player is large in the picture (22 of 22 shots in one test video), but misses shots when the player is small or releases at head height, and can count catching the ball overhead as a shot (about 9 of 21 real shots found in another test video). A shot finder based on the ball's flight is being tested. The progress of a running practice video is lost if the backend restarts.
 - Shot outcome is a 2D heuristic: balls falling just in front of or behind the rim are reported as `unknown`. The made rule was checked on 27 real shots (no wrong results, 11 `unknown`); more varied recordings are needed to confirm it.
 - The release frame comes from the ball leaving the hands and is accurate to about one frame (33 ms at 30 fps); without a visible ball the pose-only estimate is used.
 - Shots analysed before an analysis improvement keep their stored results until they are analysed again.

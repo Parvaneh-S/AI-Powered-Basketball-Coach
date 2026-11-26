@@ -22,7 +22,14 @@ from backend.app.database.duplicates import (
 from backend.app.database.sessions import (
     InvalidSessionError,
     list_player_sessions,
+    validate_session,
 )
+from backend.app.pipeline.multi_shot_pipeline import (
+    NoShotsFoundError,
+    process_multi_shot_video,
+)
+import threading
+from uuid import uuid4
 from backend.app.ml.form_profile import (
     build_form_profile,
 )
@@ -132,6 +139,38 @@ def update_shot_outcome(shot_id: str, update: OutcomeUpdate):
 MAX_UPLOAD_SIZE = 1024 * 1024 * 1024  # 1 GB, for multi-shot videos
 
 
+# Only one video is analysed at a time. Two analyses at once
+# slow each other down, and the same video could be saved twice
+# (the duplicate check only sees finished videos).
+_analysis_busy = False
+_analysis_busy_lock = threading.Lock()
+
+
+def claim_analysis_slot():
+    """Reserve the analysis slot or refuse the upload."""
+
+    global _analysis_busy
+
+    with _analysis_busy_lock:
+        if _analysis_busy:
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    "Another video is still being analysed. "
+                    "Please wait until it has finished."
+                ),
+            )
+
+        _analysis_busy = True
+
+
+def release_analysis_slot():
+    global _analysis_busy
+
+    with _analysis_busy_lock:
+        _analysis_busy = False
+
+
 @app.post("/api/shots/upload")
 async def upload_shot(
     file: UploadFile = File(...),
@@ -169,6 +208,8 @@ async def upload_shot(
             status_code=400,
             detail="Only MP4 and MOV videos are supported.",
         )
+
+    claim_analysis_slot()
 
     temporary_path = None
 
@@ -246,6 +287,211 @@ async def upload_shot(
         if temporary_path is not None:
             temporary_path.unlink(missing_ok=True)
 
+        release_analysis_slot()
+
+
+
+# -------------------------------------------------------
+# Multi-shot videos
+# -------------------------------------------------------
+#
+# Analysing many shots takes minutes, longer than a browser
+# request should wait. The upload starts a background job and
+# returns its ID at once; the app then asks for its progress.
+# Jobs are kept in memory, so they are lost if the server
+# restarts. The job holds the analysis slot (see
+# claim_analysis_slot) until it has finished.
+
+jobs = {}
+jobs_lock = threading.Lock()
+
+
+def update_job(job_id, **fields):
+    with jobs_lock:
+        jobs[job_id].update(fields)
+
+
+def run_multi_shot_job(job_id, video_path, player_name,
+                       shooting_arm, original_filename, session_id):
+
+    def progress(stage, done=0, total=0):
+        update_job(job_id, stage=stage, done=done, total=total)
+
+    try:
+        update_job(job_id, status="running")
+
+        summary = process_multi_shot_video(
+            video_path,
+            player_name,
+            shooting_arm,
+            original_filename,
+            session_id,
+            progress=progress,
+        )
+
+        update_job(job_id, status="completed", result=summary)
+
+    except (InvalidSessionError, UnsupportedVideoError,
+            DuplicateVideoError, NoShotsFoundError) as exc:
+        update_job(job_id, status="failed", error=str(exc))
+
+    except Exception:
+        import logging
+        logging.exception("Multi-shot processing failed")
+
+        update_job(
+            job_id,
+            status="failed",
+            error=(
+                "Video processing failed. "
+                "Check the server logs for details."
+            ),
+        )
+
+    finally:
+        Path(video_path).unlink(missing_ok=True)
+        release_analysis_slot()
+
+
+@app.post("/api/shots/upload-multi")
+async def upload_multi_shot(
+    file: UploadFile = File(...),
+    player_name: str = Form(...),
+    shooting_arm: str = Form("right"),
+    session_id: int | None = Form(None),
+):
+    """
+    Upload a video with several free throws. Every shot is
+    found, cut and analysed in the background, and saved in
+    one practice session. Returns a job ID; follow the
+    progress with GET /api/jobs/{job_id}.
+    """
+
+    if not player_name.strip():
+        raise HTTPException(
+            status_code=400,
+            detail="Player name cannot be empty.",
+        )
+
+    if shooting_arm not in ("left", "right"):
+        raise HTTPException(
+            status_code=400,
+            detail="Shooting arm must be left or right.",
+        )
+
+    suffix = (
+        Path(file.filename).suffix.lower()
+        if file.filename
+        else ""
+    )
+
+    if suffix not in SUPPORTED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400,
+            detail="Only MP4 and MOV videos are supported.",
+        )
+
+    # Check the session now, so a wrong choice is reported
+    # before the upload is processed.
+    try:
+        validate_session(player_name.strip(), session_id)
+    except InvalidSessionError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+    # Held by the background job until it finishes; released
+    # here only if the job is never started.
+    claim_analysis_slot()
+    job_started = False
+
+    temporary_path = None
+
+    try:
+        with tempfile.NamedTemporaryFile(
+            suffix=suffix,
+            prefix="shotcoach_multi_",
+            delete=False,
+        ) as temporary_file:
+            temporary_path = Path(temporary_file.name)
+            total_size = 0
+
+            while chunk := await file.read(1024 * 1024):
+                total_size += len(chunk)
+
+                if total_size > MAX_UPLOAD_SIZE:
+                    raise HTTPException(
+                        status_code=413,
+                        detail="Video exceeds the 1 GB limit.",
+                    )
+
+                temporary_file.write(chunk)
+
+        if total_size == 0:
+            raise HTTPException(
+                status_code=400,
+                detail="Uploaded video is empty.",
+            )
+
+        job_id = f"job_{uuid4().hex[:12]}"
+
+        with jobs_lock:
+            jobs[job_id] = {
+                "job_id": job_id,
+                "status": "queued",
+                "stage": "Starting",
+                "done": 0,
+                "total": 0,
+                "player_name": player_name.strip(),
+                "original_filename": Path(file.filename).name,
+            }
+
+        # The background job deletes the temporary file and
+        # releases the analysis slot when done.
+        start_job_thread(
+            job_id,
+            str(temporary_path),
+            player_name.strip(),
+            shooting_arm,
+            Path(file.filename).name,
+            session_id,
+        )
+        job_started = True
+
+    finally:
+        await file.close()
+
+        if not job_started:
+            if temporary_path is not None:
+                temporary_path.unlink(missing_ok=True)
+            release_analysis_slot()
+
+    return {"job_id": job_id}
+
+
+def start_job_thread(*args):
+    threading.Thread(
+        target=run_multi_shot_job,
+        args=args,
+        daemon=True,
+    ).start()
+
+
+@app.get("/api/jobs/{job_id}")
+def get_job(job_id: str):
+    """Progress and, when finished, the result of a job."""
+
+    with jobs_lock:
+        job = jobs.get(job_id)
+
+        if job is None:
+            raise HTTPException(
+                status_code=404,
+                detail=(
+                    "Job not found. It may have been lost "
+                    "if the server restarted."
+                ),
+            )
+
+        return dict(job)
 
 
 class CoachingRequest(BaseModel):

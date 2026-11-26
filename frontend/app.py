@@ -1,4 +1,5 @@
 
+import time
 from pathlib import Path
 
 import requests
@@ -24,11 +25,18 @@ if "analysis" not in st.session_state:
 if "video_id" not in st.session_state:
     st.session_state.video_id = None
 
+# The player whose shot, results and coach chat are shown.
+# None at first, so the first page load shows the default
+# player's most recent shot.
 if "player_name" not in st.session_state:
-    st.session_state.player_name = "TestPlayer"
+    st.session_state.player_name = None
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
+
+# Summary of the last multi-shot video, shown as a table.
+if "multi_result" not in st.session_state:
+    st.session_state.multi_result = None
 
 
 # -------------------------------------------------------
@@ -92,6 +100,70 @@ def upload_video(file, player_name, shooting_arm, session_id=None):
     return response.json()
 
 
+def start_multi_shot_upload(file, player_name, shooting_arm,
+                            session_id=None):
+    form_data = {
+        "player_name": player_name,
+        "shooting_arm": shooting_arm,
+    }
+
+    if session_id is not None:
+        form_data["session_id"] = str(session_id)
+
+    response = requests.post(
+        f"{API_URL}/api/shots/upload-multi",
+        files={
+            "file": (
+                file.name,
+                file.getvalue(),
+                (
+                    "video/quicktime"
+                    if file.name.lower().endswith(".mov")
+                    else "video/mp4"
+                ),
+            )
+        },
+        data=form_data,
+        timeout=900,
+    )
+    response.raise_for_status()
+    return response.json()["job_id"]
+
+
+def fetch_job(job_id):
+    response = requests.get(
+        f"{API_URL}/api/jobs/{job_id}",
+        timeout=30,
+    )
+    response.raise_for_status()
+    return response.json()
+
+
+def wait_for_job(job_id):
+    """Show the job's progress until it finishes."""
+
+    status_text = st.empty()
+    bar = st.progress(0.0)
+
+    while True:
+        job = fetch_job(job_id)
+
+        total = job.get("total") or 0
+        done = job.get("done") or 0
+
+        status_text.info(f"⏳ {job.get('stage', 'Working')}...")
+
+        if total:
+            bar.progress(min(done / total, 1.0))
+
+        if job["status"] in ("completed", "failed"):
+            status_text.empty()
+            bar.empty()
+            return job
+
+        time.sleep(2)
+
+
 def update_outcome(shot_id, outcome):
     response = requests.patch(
         f"{API_URL}/api/shots/{shot_id}/outcome",
@@ -141,10 +213,10 @@ def show_request_error(error):
         )
 
 
-def set_current_shot(video_id, analysis, player_name):
+def set_current_shot(video_id, analysis):
+    """Show this shot (of the current player) and start a new chat."""
     st.session_state.video_id = video_id
     st.session_state.analysis = analysis
-    st.session_state.player_name = player_name
     st.session_state.messages = []
 
 
@@ -159,12 +231,64 @@ with st.sidebar:
     st.divider()
 
     st.subheader("Current player")
+
+    # First visit (or page refresh): start with the player in
+    # the page address, or the player of a running practice
+    # video, so a refresh keeps showing the same player.
+    if "player_input" not in st.session_state:
+        start_player = st.query_params.get("player")
+
+        if not start_player and st.query_params.get("job"):
+            try:
+                start_player = fetch_job(
+                    st.query_params["job"]
+                )["player_name"]
+            except (requests.exceptions.RequestException, KeyError):
+                start_player = None
+
+        st.session_state.player_input = start_player or "TestPlayer"
+
     player_name = st.text_input(
         "Player name",
-        value=st.session_state.player_name,
+        key="player_input",
+        help="Press Enter after typing a name.",
     )
 
     st.caption("Use the same name for all of a player's shots.")
+
+    # The shown shot, results table and coach chat belong to
+    # one player. When the name changes, switch everything to
+    # the new player and show their most recent shot.
+    if player_name.strip() and (
+        player_name.strip() != st.session_state.player_name
+    ):
+        new_player = player_name.strip()
+
+        st.session_state.player_name = new_player
+        st.session_state.video_id = None
+        st.session_state.analysis = None
+        st.session_state.messages = []
+        st.session_state.multi_result = None
+        st.query_params["player"] = new_player
+
+        try:
+            history = fetch_player_history(new_player)
+            shots = (
+                history.get("shots", [])
+                if isinstance(history, dict)
+                else history or []
+            )
+
+            # The history is oldest first.
+            if shots:
+                latest = shots[-1]["video_id"]
+                st.session_state.video_id = latest
+                st.session_state.analysis = fetch_analysis(latest)
+
+        except (requests.exceptions.RequestException, KeyError):
+            # The page still works; the player can pick a shot
+            # under My Previous Shots.
+            pass
 
     st.divider()
 
@@ -221,6 +345,10 @@ with upload_tab:
     session_labels = {None: "Start a new session"}
     default_session_index = 0
 
+    # Database session ID -> the player's own session number
+    # (1 = their first session), which is what the player sees.
+    session_numbers = {}
+
     if player_name.strip():
         try:
             sessions = fetch_sessions(player_name.strip())
@@ -238,9 +366,10 @@ with upload_tab:
                 else session["date"]
             )
 
+            session_numbers[session_id] = session["session_number"]
             session_choices.append(session_id)
             session_labels[session_id] = (
-                f"Continue session {session_id} "
+                f"Continue session {session['session_number']} "
                 f"({day}, {session['shot_count']} {shot_word})"
             )
 
@@ -257,6 +386,16 @@ with upload_tab:
             help=(
                 "iPhone MOV videos are converted automatically. "
                 "Side view, whole body and hoop visible."
+            ),
+        )
+
+        video_kind = st.radio(
+            "What is in the video?",
+            ["One shot", "Several shots (practice video)"],
+            horizontal=True,
+            help=(
+                "For a practice video every shot is found, cut "
+                "and analysed separately (about 15 s per shot)."
             ),
         )
 
@@ -292,6 +431,26 @@ with upload_tab:
         elif uploaded_file.size > 1024 * 1024 * 1024:
             st.error("The maximum upload size is 1 GB.")
 
+        elif video_kind.startswith("Several"):
+            try:
+                with st.spinner("Uploading the video..."):
+                    job_id = start_multi_shot_upload(
+                        uploaded_file,
+                        player_name.strip(),
+                        shooting_arm,
+                        chosen_session,
+                    )
+
+                # Remember the job, in this browser session and in
+                # the page address, so its progress is shown again
+                # after a click or a page refresh (see below).
+                st.session_state.job_id = job_id
+                st.query_params["job"] = job_id
+                st.session_state.multi_result = None
+
+            except requests.exceptions.RequestException as error:
+                show_request_error(error)
+
         else:
 
             with st.spinner(
@@ -311,11 +470,7 @@ with upload_tab:
 
                     analysis = fetch_analysis(video_id)
 
-                    set_current_shot(
-                        video_id,
-                        analysis,
-                        player_name.strip(),
-                    )
+                    set_current_shot(video_id, analysis)
 
                     st.success(
                         "Video processed and saved successfully!"
@@ -335,9 +490,121 @@ with upload_tab:
                             f"Unexpected API response: {error}"
                         )
 
+    # ---------------------------------------------------
+    # Running practice-video job: show its progress, also
+    # after a click or a page refresh
+    # ---------------------------------------------------
+
+    running_job = (
+        st.session_state.get("job_id")
+        or st.query_params.get("job")
+    )
+
+    if running_job:
+        try:
+            job = wait_for_job(running_job)
+
+            if job["status"] == "failed":
+                st.error(job.get("error", "Processing failed."))
+
+            elif job["player_name"] != st.session_state.player_name:
+                # The player was changed while the video was being
+                # analysed: don't show their results here.
+                st.info(
+                    f"The practice video for {job['player_name']} "
+                    "is finished. Enter that name to see the shots."
+                )
+
+            else:
+                summary = job["result"]
+
+                # The session may have been created during the
+                # job, so look up its number now.
+                numbers = {
+                    s["session_id"]: s["session_number"]
+                    for s in fetch_sessions(job["player_name"])
+                }
+                summary["session_number"] = numbers.get(
+                    summary["session_id"], summary["session_id"]
+                )
+                st.session_state.multi_result = summary
+
+                # Show the first analysed shot below.
+                analysed = [
+                    s for s in summary["shots"]
+                    if s["status"] == "success"
+                ]
+
+                if analysed:
+                    first_id = analysed[0]["video_id"]
+                    set_current_shot(first_id, fetch_analysis(first_id))
+
+        except requests.exceptions.HTTPError as error:
+            if error.response is not None and error.response.status_code == 404:
+                st.warning(
+                    "The progress of this practice video was lost "
+                    "because the backend restarted. Shots finished "
+                    "before the restart are saved under My Previous "
+                    "Shots."
+                )
+            else:
+                show_request_error(error)
+
+        except requests.exceptions.RequestException as error:
+            show_request_error(error)
+
+        # The job is finished (or lost): stop following it.
+        st.session_state.job_id = None
+        st.query_params.pop("job", None)
+
+    # ---------------------------------------------------
+    # Result of the last multi-shot video
+    # ---------------------------------------------------
+
+    summary = st.session_state.multi_result
+
+    if summary:
+        made = sum(1 for s in summary["shots"] if s.get("outcome") == "made")
+        missed = sum(
+            1 for s in summary["shots"] if s.get("outcome") == "missed"
+        )
+
+        st.success(
+            f"{summary['shots_analysed']} of {summary['shots_found']} "
+            f"shots analysed in {summary['processing_seconds'] // 60} min "
+            f"{summary['processing_seconds'] % 60} s and saved in "
+            f"session {summary.get('session_number', summary['session_id'])}: "
+            f"{made} made, {missed} missed, "
+            f"{summary['shots_analysed'] - made - missed} unknown."
+        )
+
+        st.dataframe(
+            [
+                {
+                    "Shot": s["shot"],
+                    "Time in video": s["time_in_video"],
+                    "Outcome": (
+                        s.get("outcome", "")
+                        if s["status"] == "success"
+                        else "analysis failed"
+                    ),
+                    "Video ID": s.get("video_id", ""),
+                }
+                for s in summary["shots"]
+            ],
+            hide_index=True,
+            width="stretch",
+        )
+
+        st.caption(
+            "Open any shot under My Previous Shots below. "
+            "Correct unknown or wrong outcomes there with "
+            "✅ Made / ❌ Missed."
+        )
+
     st.divider()
 
-    
+
     # ---------------------------------------------------
     # Previous shots
     # ---------------------------------------------------
@@ -376,8 +643,9 @@ with upload_tab:
 
                 for index, shot in enumerate(shots, start=1):
 
-                    session = shot.get(
-                        "session_id", "Unknown"
+                    session = session_numbers.get(
+                        shot.get("session_id"),
+                        shot.get("session_id", "Unknown"),
                     )
 
                     if shot.get("session_date"):
@@ -440,11 +708,7 @@ with upload_tab:
                         selected_video_id
                     )
 
-                    set_current_shot(
-                        selected_video_id,
-                        analysis,
-                        player_name.strip(),
-                    )
+                    set_current_shot(selected_video_id, analysis)
 
                     st.success(
                         "Shot analysis loaded successfully!"

@@ -47,7 +47,7 @@ def save_shot(
 
         if existing_shot is not None:
             print(f"Shot already exists: {shot_id}")
-            return
+            return existing_shot.session_id
 
         # Find or create the player.
         player = db.scalar(
@@ -104,6 +104,10 @@ def save_shot(
         print(f"Session ID: {practice_session.id}")
         print(f"Shot ID: {shot.shot_id}")
         print(f"Outcome: {shot.outcome}")
+
+        # The session the shot was saved in (new or chosen), so
+        # further shots from the same video can join it.
+        return practice_session.id
 
 
 if __name__ == "__main__":

@@ -34,6 +34,10 @@ def list_player_sessions(player_name):
     """
     Return the player's practice sessions, newest first,
     with their local date and number of shots.
+
+    session_id is unique across all players (used by the
+    API); session_number counts the player's own sessions
+    from 1 (oldest), for showing in the app.
     """
 
     with SessionLocal() as db:
@@ -61,11 +65,15 @@ def list_player_sessions(player_name):
         today = date.today()
         sessions = []
 
-        for session, shot_count in db.execute(statement).all():
+        rows = db.execute(statement).all()
+
+        for index, (session, shot_count) in enumerate(rows):
             session_date = local_date(session.created_at)
 
             sessions.append({
                 "session_id": session.id,
+                # Newest first, so the oldest gets number 1.
+                "session_number": len(rows) - index,
                 "date": (
                     session_date.isoformat()
                     if session_date

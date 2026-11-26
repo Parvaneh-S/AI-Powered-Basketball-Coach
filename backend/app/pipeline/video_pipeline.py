@@ -52,8 +52,13 @@ from backend.app.database.sessions import (
     validate_session,
 )
 from backend.app.pipeline.video_input import (
+    WrongUploadModeError,
     prepare_video,
 )
+from backend.app.shot_detection.multi_shot import (
+    find_shots_in_video,
+)
+import tempfile
 
 
 # Project root: AI-Powered-Basketball-Coach/
@@ -113,12 +118,36 @@ def convert_video_for_web(source_path: Path) -> Path:
 
     return destination
 
+def refuse_multi_shot_video(video_path):
+    """
+    Raise WrongUploadModeError if the video contains more than
+    one shot. Uses the practice-video shot finder on a 30 fps
+    copy (a few seconds for a short video). If no shot is found
+    the video is still accepted: the single-shot analysis has
+    its own way of finding the shot.
+    """
+
+    work_dir = Path(tempfile.mkdtemp(prefix="shotcoach_check_"))
+
+    try:
+        _, _, shots = find_shots_in_video(video_path, work_dir)
+    finally:
+        shutil.rmtree(work_dir, ignore_errors=True)
+
+    if len(shots) >= 2:
+        raise WrongUploadModeError(
+            f"This video contains {len(shots)} shots. Please "
+            "upload it as 'Several shots (practice video)'."
+        )
+
+
 def process_uploaded_video(
     video_path: str,
     player_name: str,
     shooting_arm: str = "right",
     original_filename: str | None = None,
     session_id: int | None = None,
+    source_sha256: str | None = None,
 ) -> dict:
     """
     Run the complete basketball video-analysis pipeline
@@ -126,6 +155,11 @@ def process_uploaded_video(
 
     Uses a unique video ID to prevent overwriting
     previous analysis results.
+
+    source_sha256: for a clip cut from a multi-shot video,
+    the fingerprint of the uploaded video. It is stored with
+    the shot instead of the clip's own fingerprint, and the
+    duplicate check is skipped (the caller already did it).
     """
 
     source_video = Path(video_path).resolve()
@@ -157,11 +191,19 @@ def process_uploaded_video(
 
     # Stop early if this player already has this exact video,
     # before spending minutes on the analysis.
-    video_sha256 = file_sha256(source_video)
-    existing = find_duplicate(player_name, video_sha256)
+    if source_sha256 is not None:
+        video_sha256 = source_sha256
+    else:
+        video_sha256 = file_sha256(source_video)
+        existing = find_duplicate(player_name, video_sha256)
 
-    if existing is not None:
-        raise DuplicateVideoError(existing)
+        if existing is not None:
+            raise DuplicateVideoError(existing)
+
+        # A direct "One shot" upload must contain one shot.
+        # (Clips cut from a practice video skip this: they were
+        # already found as single shots.)
+        refuse_multi_shot_video(source_video)
 
     # Create a unique identifier for this upload.
     video_id = f"shot_{uuid4().hex[:12]}"
@@ -354,7 +396,7 @@ def process_uploaded_video(
 
     print("\n[9/9] Saving shot to database...")
 
-    save_shot(
+    saved_session_id = save_shot(
         video_id=video_id,
         player_name=player_name,
         session_id=session_id,
@@ -401,6 +443,7 @@ def process_uploaded_video(
         "status": "success",
         "player_name": player_name,
         "video_id": video_id,
+        "session_id": saved_session_id,
         "analysis_status": analysis.get(
             "analysis_status", "unknown"
         ),
