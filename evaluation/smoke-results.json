@@ -1,0 +1,35 @@
+{
+  "api_ready": true,
+  "streamlit_ready": true,
+  "demo_video": "free_throw_03",
+  "decoded_frames": [
+    {
+      "id": "frame:free_throw_03_shot_1:release:76",
+      "video_id": "free_throw_03",
+      "shot_id": "free_throw_03_shot_1",
+      "frame": 76,
+      "timestamp_s": 2.533,
+      "phase": "release",
+      "uncertainty": "Estimated release",
+      "source": "sample video",
+      "outcome": "made",
+      "outcome_source": "auto"
+    },
+    {
+      "id": "frame:free_throw_03_shot_1:follow_through:82",
+      "video_id": "free_throw_03",
+      "shot_id": "free_throw_03_shot_1",
+      "frame": 82,
+      "timestamp_s": 2.733,
+      "phase": "follow_through",
+      "uncertainty": "Early post-release frame, not a confirmed shot end",
+      "source": "sample video",
+      "outcome": "made",
+      "outcome_source": "auto"
+    }
+  ],
+  "cross_player_frame_rejected": true,
+  "practice_logged": true,
+  "fresh_upload": "not run in this smoke test",
+  "live_gemini_requests": 0
+}

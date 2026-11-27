@@ -1,0 +1,2384 @@
+{
+  "model": "gpt-6.1-terra",
+  "budget_usd": 0.25,
+  "reasoning_effort": "medium",
+  "fixture": "free_throw_01_shot_1",
+  "fixture_outcome_source_note": "The replay fixture supplied the display value player label where production expects manual. The model saw experimental detector. The saved annotation is a manual miss. The trace preserves the live response unchanged.",
+  "turns": [
+    {
+      "question": "Analyze my shooting form. What should I improve?",
+      "response_text": "Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s worth keeping if it feels comfortable; the clip doesn’t show that you need a deeper or shallower dip.\n\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. This clip also can’t tell us what you repeat.\n\n**Next step:** Record a set of free throws from a steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.",
+      "elapsed_ms": 18616.033,
+      "response": {
+        "response_type": "shot",
+        "message": "Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s worth keeping if it feels comfortable; the clip doesn’t show that you need a deeper or shallower dip.\n\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. This clip also can’t tell us what you repeat.\n\n**Next step:** Record a set of free throws from a steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [
+          {
+            "id": "frame:free_throw_01_shot_1:knee_dip:38:knee:",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 38,
+            "timestamp_s": 1.267,
+            "phase": "knee_dip",
+            "uncertainty": "Deepest measured knee bend",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "knee",
+              "side": "right",
+              "angle_deg": 89.9,
+              "angle_source": "saved_landmarks",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc"
+              ]
+            },
+            "outcome": "missed",
+            "outcome_source": "player label"
+          },
+          {
+            "id": "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 49,
+            "timestamp_s": 1.633,
+            "phase": "knee_extension",
+            "uncertainty": "Straightest measured knee after loading through release",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "knee",
+              "side": "right",
+              "angle_deg": 163.4,
+              "angle_source": "saved_angle",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc",
+                "image_plane_displacement"
+              ],
+              "from_phase": "knee_dip"
+            },
+            "outcome": "missed",
+            "outcome_source": "player label"
+          }
+        ],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_repaired",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "knees",
+          "supporting_evidence_ids": [
+            "shot:free_throw_01_shot_1",
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [
+            "narrative_validation_failed"
+          ],
+          "discarded_components": [],
+          "request_usage": {
+            "total_requests": 4,
+            "estimated_cost_usd": null,
+            "requests": [
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "planning",
+                "input_tokens": 3416,
+                "cached_input_tokens": 0,
+                "output_tokens": 53,
+                "estimated_cost_usd": null,
+                "latency_ms": 2654.629
+              },
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "planning",
+                "input_tokens": 4393,
+                "cached_input_tokens": 3413,
+                "output_tokens": 50,
+                "estimated_cost_usd": null,
+                "latency_ms": 1707.416
+              },
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "generation",
+                "input_tokens": 5943,
+                "cached_input_tokens": 4390,
+                "output_tokens": 337,
+                "estimated_cost_usd": null,
+                "latency_ms": 5758.478
+              },
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "repair",
+                "input_tokens": 5822,
+                "cached_input_tokens": 0,
+                "output_tokens": 327,
+                "estimated_cost_usd": null,
+                "latency_ms": 5157.178
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "text": "Your knee angle changes between the start of the shot and estimated release.",
+              "evidence_ids": [
+                "shot:free_throw_01_shot_1:knee_angle_range"
+              ],
+              "video_reference_ids": [],
+              "technical": {
+                "field": "knee_angle_range",
+                "unit": "degrees",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 100.0
+                },
+                "value": 74.61,
+                "sample_frames": 30,
+                "name": "Knee angle change across the shot",
+                "calculation": "Maximum minus minimum 2D knee angle over valid frames. Angle between the two limb segments in the image plane using pixel-scaled MediaPipe landmarks. The pipeline requires all three landmarks to pass its visibility check.",
+                "phase": "start through estimated release",
+                "reliability_indicator": "Sufficient knee coverage and ordered shot events",
+                "supported_interpretation": "Size of the measured knee angle range",
+                "unsupported_interpretation": "Ideal form, shooting effectiveness, force, power, or cause of a miss, movement direction or speed",
+                "shot_id": "free_throw_01_shot_1",
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "session_id": 1
+              },
+              "visual_focus": null
+            }
+          },
+          "citations": [
+            "shot:free_throw_01_shot_1",
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "numeric_facts": []
+        }
+      },
+      "calls": [
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 884.511,
+          "preflight_input_tokens": 3416,
+          "request_upper_bound_usd": 0.02507,
+          "api_ms": 2654.629,
+          "usage": {
+            "input_tokens": 3416,
+            "input_tokens_details": {
+              "cache_write_tokens": 3413,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 3413
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 53,
+            "output_tokens_details": {
+              "reasoning_tokens": 24
+            },
+            "total_tokens": 3469
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.003681,
+          "cost_upper_usd": 0.004535,
+          "cost_exact_usd": 0.00453425,
+          "output": [
+            {
+              "content": [],
+              "id": "rs_0268520e203f41f2016b08ea2e016887d1bd48e897c6320ed0",
+              "summary": [],
+              "type": "reasoning"
+            },
+            {
+              "arguments": "{\"shot_id\":\"free_throw_01_shot_1\"}",
+              "call_id": "call_6ec0eae79ec04e0dbaa946f896c9846a",
+              "id": "fc_0268520e203f41f2016b08ea2e1be487d1b7e43bfa4ca7c464",
+              "name": "retrieve_shot",
+              "status": "completed",
+              "type": "function_call"
+            }
+          ]
+        },
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 1,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 299.143,
+          "preflight_input_tokens": 4393,
+          "request_upper_bound_usd": 0.02629125,
+          "api_ms": 1707.416,
+          "usage": {
+            "input_tokens": 4393,
+            "input_tokens_details": {
+              "cache_write_tokens": 977,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 977
+              },
+              "cached_tokens": 3413
+            },
+            "output_tokens": 50,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4443
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.00140065,
+          "cost_upper_usd": 0.00164565,
+          "cost_exact_usd": 0.0016449,
+          "output": [
+            {
+              "arguments": "{\"shot_id\":\"free_throw_01_shot_1\",\"phases\":\"knee_dip,knee_extension\",\"focus\":\"knee\",\"from_phase\":\"knee_dip\"}",
+              "call_id": "call_c3f10277ad3445309ef8d6a4c07a1eac",
+              "id": "fc_0268520e203f41f2016b08ea300cfc87d1bf65028ecc144c47",
+              "name": "retrieve_frames",
+              "status": "completed",
+              "type": "function_call"
+            }
+          ]
+        },
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 2,
+          "replayed_reasoning_items": 1,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 603.518,
+          "preflight_input_tokens": 5943,
+          "request_upper_bound_usd": 0.02822875,
+          "api_ms": 5758.478,
+          "usage": {
+            "input_tokens": 5943,
+            "input_tokens_details": {
+              "cache_write_tokens": 1550,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 1550
+              },
+              "cached_tokens": 4390
+            },
+            "output_tokens": 337,
+            "output_tokens_details": {
+              "reasoning_tokens": 68
+            },
+            "total_tokens": 6280
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0034575,
+          "cost_upper_usd": 0.00384575,
+          "cost_exact_usd": 0.003845,
+          "output": [
+            {
+              "content": [],
+              "id": "rs_0268520e203f41f2016b08ea34b75087d1bbed2db4d21fef1d",
+              "summary": [],
+              "type": "reasoning"
+            },
+            {
+              "content": [
+                {
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s a useful part of the motion to keep if it feels comfortable; this clip alone doesn’t show that you need a deeper or shallower dip.\\n\\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. One attempt also can’t tell us what you repeat.\\n\\n**Next step:** Record a small set of free throws from the same steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\",\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\"}",
+                  "type": "output_text"
+                }
+              ],
+              "id": "msg_0268520e203f41f2016b08ea34da1c87d191e50fed2cffc206",
+              "phase": "final_answer",
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
+            }
+          ]
+        },
+        {
+          "purpose": "repair_generation",
+          "output_cap": 4096,
+          "tool_names": [],
+          "image_count": 2,
+          "replayed_reasoning_items": 2,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 404.609,
+          "preflight_input_tokens": 5822,
+          "request_upper_bound_usd": 0.0280775,
+          "api_ms": 5157.178,
+          "usage": {
+            "input_tokens": 5822,
+            "input_tokens_details": {
+              "cache_write_tokens": 5819,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 5819
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 327,
+            "output_tokens_details": {
+              "reasoning_tokens": 67
+            },
+            "total_tokens": 6149
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.007457,
+          "cost_upper_usd": 0.0089125,
+          "cost_exact_usd": 0.00891175,
+          "output": [
+            {
+              "content": [],
+              "id": "rs_0268520e203f41f2016b08ea3aab8087d1934717f99dd37dbe",
+              "summary": [],
+              "type": "reasoning"
+            },
+            {
+              "content": [
+                {
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s worth keeping if it feels comfortable; the clip doesn’t show that you need a deeper or shallower dip.\\n\\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. This clip also can’t tell us what you repeat.\\n\\n**Next step:** Record a set of free throws from a steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\",\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\"}",
+                  "type": "output_text"
+                }
+              ],
+              "id": "msg_0268520e203f41f2016b08ea3af6d887d1b1c3b7195d3fdc54",
+              "phase": "final_answer",
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "generation_evidence",
+          "evidence": {
+            "shot:free_throw_01_shot_1": {
+              "shot_id": "free_throw_01_shot_1",
+              "session_id": 1,
+              "shot_number": 1,
+              "outcome": "missed",
+              "outcome_source": "experimental detector",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "SQLite shot analysis snapshot and current outcome label",
+              "ball_flight": {
+                "status": "unavailable",
+                "tracking": {},
+                "rim_crossing_estimate": null,
+                "detector_method": null,
+                "observation": null,
+                "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+              },
+              "events": {
+                "start_frame": 20,
+                "release_frame": 49,
+                "end_frame": 110,
+                "segmentation_status": "experimental_review_required"
+              },
+              "measurements": {
+                "min_knee_angle": {
+                  "status": "valid",
+                  "value": 88.82,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "knee_angle_range": {
+                  "status": "valid",
+                  "value": 74.61,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "release_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "max_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_angle_range": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_extension_after_release": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": null
+                },
+                "shooting_motion_ms": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "ms",
+                  "sample_frames": null
+                },
+                "knee_coverage_pct": {
+                  "status": "valid",
+                  "value": 100.0,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "elbow_coverage_pct": {
+                  "status": "valid",
+                  "value": 69.44,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "tracking_coverage_pct": {
+                  "status": "missing",
+                  "value": null,
+                  "unit": "%",
+                  "sample_frames": null
+                }
+              }
+            },
+            "history:outcome_counts": {
+              "made": 0,
+              "missed": 1,
+              "unknown": 0
+            },
+            "profile:current": {
+              "status": "insufficient_data",
+              "counts": {
+                "total_shots": 1,
+                "labelled_shots": 1,
+                "made": 0,
+                "missed": 1,
+                "unlabelled_shots": 0
+              },
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "observation_ids": [],
+              "features": {}
+            }
+          },
+          "knowledge": {
+            "mechanics": {
+              "topic": "Shooting mechanics",
+              "principle": "A balanced setup, coordinated lift and comfortable finish give you useful checkpoints for a repeatable shot.",
+              "use_when": "When learning the movement or establishing a baseline.",
+              "avoid_when": "When a comfortable, effective movement already serves the player’s goal.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "arm": {
+              "topic": "Shooting arm",
+              "principle": "The shooting hand and arm guide the ball on delivery.",
+              "use_when": "When exploring shooting-arm delivery.",
+              "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "finish": {
+              "topic": "Follow-through",
+              "principle": "A repeatable finish gives you something easy to check after each shot.",
+              "use_when": "When testing an early finish cue.",
+              "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "individual": {
+              "topic": "Individual technique",
+              "principle": "Different players can make effective shots with different comfortable mechanics.",
+              "use_when": "When appearance is the main concern.",
+              "avoid_when": "When a painful movement needs qualified assessment.",
+              "evidence_basis": "observational_study"
+            },
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "recording": {
+              "topic": "Recording quality",
+              "principle": "A steady side view with the whole body visible makes pose review easier.",
+              "use_when": "When clips are hard to interpret or compare.",
+              "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+              "evidence_basis": "measurement_guidance"
+            },
+            "knee_dip_depth": {
+              "topic": "Choosing a comfortable knee dip",
+              "principle": "Treat knee-dip depth as specific to the player and shooting task.",
+              "use_when": "When deciding whether to test a bigger or smaller dip.",
+              "avoid_when": "Depth alone says little about timing, power or whether a change helps.",
+              "evidence_basis": "observational_study",
+              "purpose": "The loading seen in professional long-range attempts can differ from the loading in shorter shots.",
+              "application": "Compare only matched-distance attempts and record both comfort and outcomes."
+            }
+          },
+          "eligible_practice": {
+            "focused_shooting": {
+              "title": "One-focus shooting experiment",
+              "eligible_topics": [
+                "mechanics",
+                "arm",
+                "finish",
+                "individual",
+                "routine"
+              ],
+              "required_equipment": [
+                "ball",
+                "hoop"
+              ]
+            },
+            "shadow_rehearsal": {
+              "title": "No-release movement rehearsal",
+              "eligible_topics": [
+                "mechanics",
+                "arm",
+                "finish",
+                "individual",
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "close_delivery": {
+              "title": "Close-range delivery rehearsal",
+              "eligible_topics": [
+                "arm",
+                "finish"
+              ],
+              "required_equipment": [
+                "ball",
+                "hoop"
+              ]
+            },
+            "steady_setup": {
+              "title": "Comfortable setup rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "recording_check": {
+              "title": "Matched-view recording check",
+              "eligible_topics": [
+                "recording"
+              ],
+              "required_equipment": [
+                "camera"
+              ]
+            }
+          },
+          "selected_attempt_observations": {
+            "shot:free_throw_01_shot_1:min_knee_angle": {
+              "field": "min_knee_angle",
+              "value": 88.82,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            },
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "field": "knee_angle_range",
+              "value": 74.61,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            }
+          }
+        },
+        {
+          "stage": "coaching_tool",
+          "tool": "retrieve_shot",
+          "evidence_id": "tool:1:retrieve_shot",
+          "result": {
+            "id": "shot:free_throw_01_shot_1",
+            "player": "Demo player",
+            "session_id": 1,
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "shot_number": 1,
+            "events": {
+              "start_frame": 20,
+              "release_frame": 49,
+              "end_frame": 110,
+              "segmentation_status": "experimental_review_required"
+            },
+            "conditions": {
+              "shot_type": "free_throw",
+              "shooting_arm": "right"
+            },
+            "sample_shots": 1,
+            "provenance": "SQLite shot analysis snapshot and current outcome label",
+            "outcome": "missed",
+            "outcome_source": "experimental detector",
+            "outcome_observation": null,
+            "ball_flight": {
+              "status": "unavailable",
+              "tracking": {},
+              "rim_crossing_estimate": null,
+              "detector_method": null,
+              "observation": null,
+              "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+            },
+            "measurements": {
+              "min_knee_angle": {
+                "field": "min_knee_angle",
+                "unit": "degrees",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 100.0
+                },
+                "value": 88.82,
+                "sample_frames": 30
+              },
+              "knee_angle_range": {
+                "field": "knee_angle_range",
+                "unit": "degrees",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 100.0
+                },
+                "value": 74.61,
+                "sample_frames": 30
+              },
+              "release_elbow_angle": {
+                "field": "release_elbow_angle",
+                "unit": "degrees",
+                "status": "unreliable",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 69.44
+                },
+                "value": null,
+                "sample_frames": 25
+              },
+              "max_elbow_angle": {
+                "field": "max_elbow_angle",
+                "unit": "degrees",
+                "status": "unreliable",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 69.44
+                },
+                "value": null,
+                "sample_frames": 25
+              },
+              "elbow_angle_range": {
+                "field": "elbow_angle_range",
+                "unit": "degrees",
+                "status": "unreliable",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 69.44
+                },
+                "value": null,
+                "sample_frames": 25
+              },
+              "elbow_extension_after_release": {
+                "field": "elbow_extension_after_release",
+                "unit": "degrees",
+                "status": "unreliable",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 69.44
+                },
+                "value": null,
+                "sample_frames": null
+              },
+              "shooting_motion_ms": {
+                "field": "shooting_motion_ms",
+                "unit": "ms",
+                "status": "unreliable",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": null
+                },
+                "value": null,
+                "sample_frames": null
+              },
+              "knee_coverage_pct": {
+                "field": "knee_coverage_pct",
+                "unit": "%",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": null
+                },
+                "value": 100.0,
+                "sample_frames": null
+              },
+              "elbow_coverage_pct": {
+                "field": "elbow_coverage_pct",
+                "unit": "%",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": null
+                },
+                "value": 69.44,
+                "sample_frames": null
+              },
+              "tracking_coverage_pct": {
+                "field": "tracking_coverage_pct",
+                "unit": "%",
+                "status": "missing",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": null
+                },
+                "value": null,
+                "sample_frames": null
+              }
+            },
+            "limitations": [
+              "Angles are 2D camera estimates. Coverage describes availability, not accuracy.",
+              "Start and release are estimated. Early follow-through can be a provisional window.",
+              "Outcomes and form observations do not establish causes or shooting power."
+            ],
+            "observation_ids": [
+              "shot:free_throw_01_shot_1:outcome",
+              "shot:free_throw_01_shot_1:min_knee_angle",
+              "shot:free_throw_01_shot_1:knee_angle_range",
+              "shot:free_throw_01_shot_1:knee_coverage_pct",
+              "shot:free_throw_01_shot_1:elbow_coverage_pct",
+              "shot:free_throw_01_shot_1:limited"
+            ]
+          }
+        },
+        {
+          "stage": "coaching_tool",
+          "tool": "retrieve_frames",
+          "evidence_id": "tool:2:retrieve_frames",
+          "result": {
+            "frames": [
+              {
+                "id": "frame:free_throw_01_shot_1:knee_dip:38:knee:",
+                "video_id": "free_throw_01",
+                "shot_id": "free_throw_01_shot_1",
+                "frame": 38,
+                "timestamp_s": 1.267,
+                "phase": "knee_dip",
+                "uncertainty": "Deepest measured knee bend",
+                "source": "sample video",
+                "shot_number": 1,
+                "session_id": 1,
+                "playback_end_s": null,
+                "annotation": {
+                  "focus": "knee",
+                  "side": "right",
+                  "angle_deg": 89.9,
+                  "angle_source": "saved_landmarks",
+                  "marks": [
+                    "alignment_lines",
+                    "joint_markers",
+                    "angle_arc"
+                  ]
+                }
+              },
+              {
+                "id": "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip",
+                "video_id": "free_throw_01",
+                "shot_id": "free_throw_01_shot_1",
+                "frame": 49,
+                "timestamp_s": 1.633,
+                "phase": "knee_extension",
+                "uncertainty": "Straightest measured knee after loading through release",
+                "source": "sample video",
+                "shot_number": 1,
+                "session_id": 1,
+                "playback_end_s": null,
+                "annotation": {
+                  "focus": "knee",
+                  "side": "right",
+                  "angle_deg": 163.4,
+                  "angle_source": "saved_angle",
+                  "marks": [
+                    "alignment_lines",
+                    "joint_markers",
+                    "angle_arc",
+                    "image_plane_displacement"
+                  ],
+                  "from_phase": "knee_dip"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "model_draft",
+          "attempt": 1,
+          "raw": "{\"message\":\"Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s a useful part of the motion to keep if it feels comfortable; this clip alone doesn’t show that you need a deeper or shallower dip.\\n\\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. One attempt also can’t tell us what you repeat.\\n\\n**Next step:** Record a small set of free throws from the same steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\",\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\"}"
+        },
+        {
+          "stage": "validation_failure",
+          "attempt": 1,
+          "reason": [
+            {
+              "field": "message",
+              "reason": "message: numerical claim 1 cannot be verified (scope, meaning, or unit is ambiguous).",
+              "kind": "substantive",
+              "allowed_values": null,
+              "evidence_ids": []
+            }
+          ]
+        },
+        {
+          "stage": "model_draft",
+          "attempt": 2,
+          "raw": "{\"message\":\"Your clearest starting point is your **leg motion**: in this free throw, you bend your knee and straighten it as you rise toward release. That’s worth keeping if it feels comfortable; the clip doesn’t show that you need a deeper or shallower dip.\\n\\nI wouldn’t prescribe a form change yet. The elbow measurements aren’t reliable enough to judge your arm, and the recorded miss comes from an experimental detector rather than a confirmed result. This clip also can’t tell us what you repeat.\\n\\n**Next step:** Record a set of free throws from a steady angle, with your whole body in view. Check whether your dip and rise feel comfortable and look similar across attempts, and record the results yourself. That will give us a better basis for choosing what to improve.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\",\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\"}"
+        },
+        {
+          "stage": "selected_focus",
+          "focus": null,
+          "evidence_ids": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ]
+        }
+      ],
+      "frame_files": {
+        "frame:free_throw_01_shot_1:knee_dip:38:knee:": "live-openai-terra-frames/turn-1-knee_dip-38-knee.jpg",
+        "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip": "live-openai-terra-frames/turn-1-knee_extension-49-knee.jpg"
+      }
+    },
+    {
+      "question": "Can you visually show me what you mean?",
+      "response_text": "Look at your right knee in the highlighted frames:\n\n- **Knee dip:** Your knee is bent as you load for the shot.\n- **Rise toward release:** Your knee is much straighter as you rise. The arrow shows its movement across the image, not the force of the movement.\n\nThat bend-and-straighten motion is what I meant by your leg motion. If it feels comfortable, there’s no reason from this clip alone to change how deep you dip. In a recorded set, check whether the motion looks similar and feels comfortable across attempts.",
+      "elapsed_ms": 7193.344,
+      "response": {
+        "response_type": "visual",
+        "message": "Look at your right knee in the highlighted frames:\n\n- **Knee dip:** Your knee is bent as you load for the shot.\n- **Rise toward release:** Your knee is much straighter as you rise. The arrow shows its movement across the image, not the force of the movement.\n\nThat bend-and-straighten motion is what I meant by your leg motion. If it feels comfortable, there’s no reason from this clip alone to change how deep you dip. In a recorded set, check whether the motion looks similar and feels comfortable across attempts.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [
+          {
+            "id": "frame:free_throw_01_shot_1:knee_dip:38:knee:",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 38,
+            "timestamp_s": 1.267,
+            "phase": "knee_dip",
+            "uncertainty": "Deepest measured knee bend",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "knee",
+              "side": "right",
+              "angle_deg": 89.9,
+              "angle_source": "saved_landmarks",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc"
+              ]
+            },
+            "outcome": "missed",
+            "outcome_source": "player label"
+          },
+          {
+            "id": "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 49,
+            "timestamp_s": 1.633,
+            "phase": "knee_extension",
+            "uncertainty": "Straightest measured knee after loading through release",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "knee",
+              "side": "right",
+              "angle_deg": 163.4,
+              "angle_source": "saved_angle",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc",
+                "image_plane_displacement"
+              ],
+              "from_phase": "knee_dip"
+            },
+            "outcome": "missed",
+            "outcome_source": "player label"
+          }
+        ],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_authored",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "knees",
+          "supporting_evidence_ids": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [],
+          "discarded_components": [],
+          "request_usage": {
+            "total_requests": 2,
+            "estimated_cost_usd": null,
+            "requests": [
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "planning",
+                "input_tokens": 3219,
+                "cached_input_tokens": 1936,
+                "output_tokens": 50,
+                "estimated_cost_usd": null,
+                "latency_ms": 1698.115
+              },
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "generation",
+                "input_tokens": 4769,
+                "cached_input_tokens": 3216,
+                "output_tokens": 228,
+                "estimated_cost_usd": null,
+                "latency_ms": 4529.484
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "text": "Your knee angle changes between the start of the shot and estimated release.",
+              "evidence_ids": [
+                "shot:free_throw_01_shot_1:knee_angle_range"
+              ],
+              "video_reference_ids": [],
+              "technical": {
+                "field": "knee_angle_range",
+                "unit": "degrees",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 100.0
+                },
+                "value": 74.61,
+                "sample_frames": 30,
+                "name": "Knee angle change across the shot",
+                "calculation": "Maximum minus minimum 2D knee angle over valid frames. Angle between the two limb segments in the image plane using pixel-scaled MediaPipe landmarks. The pipeline requires all three landmarks to pass its visibility check.",
+                "phase": "start through estimated release",
+                "reliability_indicator": "Sufficient knee coverage and ordered shot events",
+                "supported_interpretation": "Size of the measured knee angle range",
+                "unsupported_interpretation": "Ideal form, shooting effectiveness, force, power, or cause of a miss, movement direction or speed",
+                "shot_id": "free_throw_01_shot_1",
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "session_id": 1
+              },
+              "visual_focus": null
+            }
+          },
+          "citations": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "numeric_facts": []
+        }
+      },
+      "calls": [
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 388.299,
+          "preflight_input_tokens": 3219,
+          "request_upper_bound_usd": 0.02482375,
+          "api_ms": 1698.115,
+          "usage": {
+            "input_tokens": 3219,
+            "input_tokens_details": {
+              "cache_write_tokens": 1280,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 1280
+              },
+              "cached_tokens": 1936
+            },
+            "output_tokens": 50,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 3269
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0016298,
+          "cost_upper_usd": 0.00195055,
+          "cost_exact_usd": 0.0019498,
+          "output": [
+            {
+              "arguments": "{\"shot_id\":\"free_throw_01_shot_1\",\"phases\":\"knee_dip,knee_extension\",\"focus\":\"knee\",\"from_phase\":\"knee_dip\"}",
+              "call_id": "call_90b4943ded794bfba398f0a5cda208aa",
+              "id": "fc_00dd04126086558c016b08ea3f735087d1adbaf88c497ac049",
+              "name": "retrieve_frames",
+              "status": "completed",
+              "type": "function_call"
+            }
+          ]
+        },
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 2,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 336.93,
+          "preflight_input_tokens": 4769,
+          "request_upper_bound_usd": 0.02676125,
+          "api_ms": 4529.484,
+          "usage": {
+            "input_tokens": 4769,
+            "input_tokens_details": {
+              "cache_write_tokens": 1550,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 1550
+              },
+              "cached_tokens": 3216
+            },
+            "output_tokens": 228,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4997
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0028538,
+          "cost_upper_usd": 0.00324205,
+          "cost_exact_usd": 0.0032413,
+          "output": [
+            {
+              "content": [
+                {
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Look at your right knee in the highlighted frames:\\n\\n- **Knee dip:** Your knee is bent as you load for the shot.\\n- **Rise toward release:** Your knee is much straighter as you rise. The arrow shows its movement across the image, not the force of the movement.\\n\\nThat bend-and-straighten motion is what I meant by your leg motion. If it feels comfortable, there’s no reason from this clip alone to change how deep you dip. In a recorded set, check whether the motion looks similar and feels comfortable across attempts.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\",\"facts\":[],\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}",
+                  "type": "output_text"
+                }
+              ],
+              "id": "msg_00dd04126086558c016b08ea425df487d1961d71c1f1a1d91c",
+              "phase": "final_answer",
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "generation_evidence",
+          "evidence": {
+            "shot:free_throw_01_shot_1": {
+              "shot_id": "free_throw_01_shot_1",
+              "session_id": 1,
+              "shot_number": 1,
+              "outcome": "missed",
+              "outcome_source": "experimental detector",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "SQLite shot analysis snapshot and current outcome label",
+              "ball_flight": {
+                "status": "unavailable",
+                "tracking": {},
+                "rim_crossing_estimate": null,
+                "detector_method": null,
+                "observation": null,
+                "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+              },
+              "events": {
+                "start_frame": 20,
+                "release_frame": 49,
+                "end_frame": 110,
+                "segmentation_status": "experimental_review_required"
+              },
+              "measurements": {
+                "min_knee_angle": {
+                  "status": "valid",
+                  "value": 88.82,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "knee_angle_range": {
+                  "status": "valid",
+                  "value": 74.61,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "release_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "max_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_angle_range": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_extension_after_release": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": null
+                },
+                "shooting_motion_ms": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "ms",
+                  "sample_frames": null
+                },
+                "knee_coverage_pct": {
+                  "status": "valid",
+                  "value": 100.0,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "elbow_coverage_pct": {
+                  "status": "valid",
+                  "value": 69.44,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "tracking_coverage_pct": {
+                  "status": "missing",
+                  "value": null,
+                  "unit": "%",
+                  "sample_frames": null
+                }
+              }
+            },
+            "history:outcome_counts": {
+              "made": 0,
+              "missed": 1,
+              "unknown": 0
+            },
+            "profile:current": {
+              "status": "insufficient_data",
+              "counts": {
+                "total_shots": 1,
+                "labelled_shots": 1,
+                "made": 0,
+                "missed": 1,
+                "unlabelled_shots": 0
+              },
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "observation_ids": [],
+              "features": {}
+            }
+          },
+          "knowledge": {
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "recording": {
+              "topic": "Recording quality",
+              "principle": "A steady side view with the whole body visible makes pose review easier.",
+              "use_when": "When clips are hard to interpret or compare.",
+              "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+              "evidence_basis": "measurement_guidance"
+            }
+          },
+          "eligible_practice": {
+            "focused_shooting": {
+              "title": "One-focus shooting experiment",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": [
+                "ball",
+                "hoop"
+              ]
+            },
+            "shadow_rehearsal": {
+              "title": "No-release movement rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "steady_setup": {
+              "title": "Comfortable setup rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "recording_check": {
+              "title": "Matched-view recording check",
+              "eligible_topics": [
+                "recording"
+              ],
+              "required_equipment": [
+                "camera"
+              ]
+            }
+          },
+          "selected_attempt_observations": {
+            "shot:free_throw_01_shot_1:min_knee_angle": {
+              "field": "min_knee_angle",
+              "value": 88.82,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            },
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "field": "knee_angle_range",
+              "value": 74.61,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            }
+          }
+        },
+        {
+          "stage": "coaching_tool",
+          "tool": "retrieve_frames",
+          "evidence_id": "tool:1:retrieve_frames",
+          "result": {
+            "frames": [
+              {
+                "id": "frame:free_throw_01_shot_1:knee_dip:38:knee:",
+                "video_id": "free_throw_01",
+                "shot_id": "free_throw_01_shot_1",
+                "frame": 38,
+                "timestamp_s": 1.267,
+                "phase": "knee_dip",
+                "uncertainty": "Deepest measured knee bend",
+                "source": "sample video",
+                "shot_number": 1,
+                "session_id": 1,
+                "playback_end_s": null,
+                "annotation": {
+                  "focus": "knee",
+                  "side": "right",
+                  "angle_deg": 89.9,
+                  "angle_source": "saved_landmarks",
+                  "marks": [
+                    "alignment_lines",
+                    "joint_markers",
+                    "angle_arc"
+                  ]
+                }
+              },
+              {
+                "id": "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip",
+                "video_id": "free_throw_01",
+                "shot_id": "free_throw_01_shot_1",
+                "frame": 49,
+                "timestamp_s": 1.633,
+                "phase": "knee_extension",
+                "uncertainty": "Straightest measured knee after loading through release",
+                "source": "sample video",
+                "shot_number": 1,
+                "session_id": 1,
+                "playback_end_s": null,
+                "annotation": {
+                  "focus": "knee",
+                  "side": "right",
+                  "angle_deg": 163.4,
+                  "angle_source": "saved_angle",
+                  "marks": [
+                    "alignment_lines",
+                    "joint_markers",
+                    "angle_arc",
+                    "image_plane_displacement"
+                  ],
+                  "from_phase": "knee_dip"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "stage": "model_draft",
+          "attempt": 1,
+          "raw": "{\"message\":\"Look at your right knee in the highlighted frames:\\n\\n- **Knee dip:** Your knee is bent as you load for the shot.\\n- **Rise toward release:** Your knee is much straighter as you rise. The arrow shows its movement across the image, not the force of the movement.\\n\\nThat bend-and-straighten motion is what I meant by your leg motion. If it feels comfortable, there’s no reason from this clip alone to change how deep you dip. In a recorded set, check whether the motion looks similar and feels comfortable across attempts.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1:knee_angle_range\"],\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:knee:\",\"frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip\"],\"visual\":\"knee_straightens\",\"facts\":[],\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+        },
+        {
+          "stage": "selected_focus",
+          "focus": null,
+          "evidence_ids": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ]
+        }
+      ],
+      "frame_files": {
+        "frame:free_throw_01_shot_1:knee_dip:38:knee:": "live-openai-terra-frames/turn-2-knee_dip-38-knee.jpg",
+        "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip": "live-openai-terra-frames/turn-2-knee_extension-49-knee.jpg"
+      }
+    },
+    {
+      "question": "Can you recommend a specific instructional video and explain what I should focus on?",
+      "response_text": "**Watch the player’s knee bend and rise** as the ball moves toward the release—not to copy the exact depth, but to see how the legs extend through the shot.\n\nIn your clip, your knee bends and then straightens as you rise. If that feels comfortable, keep it for now. On your next recorded set of free throws, check whether your dip and rise feel comfortable and look similar across attempts.\n\nForm Shooting-2 Hands · Jr. NBA\nhttps://jr.nba.com/video/form-shooting-2-hands/\n\nWatch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.\n\nUse this example alongside your measured knee angle change across the shot.\n\nTake a short set at the same spot and repeat the same comfortable bend. Compare how similar the bend looks across the set and record makes separately.",
+      "elapsed_ms": 6294.58,
+      "response": {
+        "response_type": "general",
+        "message": "**Watch the player’s knee bend and rise** as the ball moves toward the release—not to copy the exact depth, but to see how the legs extend through the shot.\n\nIn your clip, your knee bends and then straightens as you rise. If that feels comfortable, keep it for now. On your next recorded set of free throws, check whether your dip and rise feel comfortable and look similar across attempts.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "knees",
+            "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+            "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+            "kind": "supporting_source"
+          }
+        ],
+        "instructional_resource": {
+          "id": "jrnba_two_hand_form",
+          "kind": "video",
+          "title": "Form Shooting-2 Hands",
+          "organization": "Jr. NBA",
+          "creator": "Dale Ellis",
+          "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+          "section": null,
+          "verified_on": "2026-11-26",
+          "watch_for": "Watch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.",
+          "relevance": "Use this example alongside your measured knee angle change across the shot.",
+          "exercise": "Take a short set at the same spot and repeat the same comfortable bend. Compare how similar the bend looks across the set and record makes separately.",
+          "skill_levels": [
+            "beginner",
+            "intermediate",
+            "advanced"
+          ]
+        },
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_authored",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "knees",
+          "supporting_evidence_ids": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [],
+          "discarded_components": [
+            {
+              "field": "message",
+              "reason": "Unverified external recommendation removed"
+            }
+          ],
+          "request_usage": {
+            "total_requests": 2,
+            "estimated_cost_usd": null,
+            "requests": [
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "planning",
+                "input_tokens": 3379,
+                "cached_input_tokens": 1936,
+                "output_tokens": 31,
+                "estimated_cost_usd": null,
+                "latency_ms": 1892.375
+              },
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "generation",
+                "input_tokens": 4333,
+                "cached_input_tokens": 3376,
+                "output_tokens": 165,
+                "estimated_cost_usd": null,
+                "latency_ms": 3743.94
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "text": "Your knee angle changes between the start of the shot and estimated release.",
+              "evidence_ids": [
+                "shot:free_throw_01_shot_1:knee_angle_range"
+              ],
+              "video_reference_ids": [],
+              "technical": {
+                "field": "knee_angle_range",
+                "unit": "degrees",
+                "status": "valid",
+                "reliability": {
+                  "pipeline_quality": "review",
+                  "event_status": "experimental_review_required",
+                  "joint_coverage_pct": 100.0
+                },
+                "value": 74.61,
+                "sample_frames": 30,
+                "name": "Knee angle change across the shot",
+                "calculation": "Maximum minus minimum 2D knee angle over valid frames. Angle between the two limb segments in the image plane using pixel-scaled MediaPipe landmarks. The pipeline requires all three landmarks to pass its visibility check.",
+                "phase": "start through estimated release",
+                "reliability_indicator": "Sufficient knee coverage and ordered shot events",
+                "supported_interpretation": "Size of the measured knee angle range",
+                "unsupported_interpretation": "Ideal form, shooting effectiveness, force, power, or cause of a miss, movement direction or speed",
+                "shot_id": "free_throw_01_shot_1",
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "session_id": 1
+              },
+              "visual_focus": null
+            }
+          },
+          "citations": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ],
+          "numeric_facts": []
+        }
+      },
+      "calls": [
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 262.707,
+          "preflight_input_tokens": 3379,
+          "request_upper_bound_usd": 0.02502375,
+          "api_ms": 1892.375,
+          "usage": {
+            "input_tokens": 3379,
+            "input_tokens_details": {
+              "cache_write_tokens": 1440,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 1440
+              },
+              "cached_tokens": 1936
+            },
+            "output_tokens": 31,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 3410
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0016948,
+          "cost_upper_usd": 0.00205555,
+          "cost_exact_usd": 0.0020548,
+          "output": [
+            {
+              "arguments": "{\"topic\":\"shooting leg motion knee dip and rise\",\"resource_kind\":\"video\"}",
+              "call_id": "call_90130c5644cc417c88610797bf21046a",
+              "id": "fc_01122cb1d70a39dd016b08ea4712f087d1a12986b4c536b511",
+              "name": "retrieve_knowledge",
+              "status": "completed",
+              "type": "function_call"
+            }
+          ]
+        },
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 341.646,
+          "preflight_input_tokens": 4333,
+          "request_upper_bound_usd": 0.02621625,
+          "api_ms": 3743.94,
+          "usage": {
+            "input_tokens": 4333,
+            "input_tokens_details": {
+              "cache_write_tokens": 954,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 954
+              },
+              "cached_tokens": 3376
+            },
+            "output_tokens": 165,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4498
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0019508,
+          "cost_upper_usd": 0.00219005,
+          "cost_exact_usd": 0.0021893,
+          "output": [
+            {
+              "content": [
+                {
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"I recommend this form-shooting video. **Watch the player’s knee bend and rise** as the ball moves toward the release—not to copy the exact depth, but to see how the legs extend through the shot.\\n\\nIn your clip, your knee bends and then straightens as you rise. If that feels comfortable, keep it for now. On your next recorded set of free throws, check whether your dip and rise feel comfortable and look similar across attempts.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1:knee_angle_range\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"knees\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"practice\":null,\"adaptation\":null}",
+                  "type": "output_text"
+                }
+              ],
+              "id": "msg_01122cb1d70a39dd016b08ea496f0487d1bd1151bf37666934",
+              "phase": "final_answer",
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "generation_evidence",
+          "evidence": {
+            "shot:free_throw_01_shot_1": {
+              "shot_id": "free_throw_01_shot_1",
+              "session_id": 1,
+              "shot_number": 1,
+              "outcome": "missed",
+              "outcome_source": "experimental detector",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "SQLite shot analysis snapshot and current outcome label",
+              "ball_flight": {
+                "status": "unavailable",
+                "tracking": {},
+                "rim_crossing_estimate": null,
+                "detector_method": null,
+                "observation": null,
+                "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+              },
+              "events": {
+                "start_frame": 20,
+                "release_frame": 49,
+                "end_frame": 110,
+                "segmentation_status": "experimental_review_required"
+              },
+              "measurements": {
+                "min_knee_angle": {
+                  "status": "valid",
+                  "value": 88.82,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "knee_angle_range": {
+                  "status": "valid",
+                  "value": 74.61,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "release_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "max_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_angle_range": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_extension_after_release": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": null
+                },
+                "shooting_motion_ms": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "ms",
+                  "sample_frames": null
+                },
+                "knee_coverage_pct": {
+                  "status": "valid",
+                  "value": 100.0,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "elbow_coverage_pct": {
+                  "status": "valid",
+                  "value": 69.44,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "tracking_coverage_pct": {
+                  "status": "missing",
+                  "value": null,
+                  "unit": "%",
+                  "sample_frames": null
+                }
+              }
+            },
+            "history:outcome_counts": {
+              "made": 0,
+              "missed": 1,
+              "unknown": 0
+            },
+            "profile:current": {
+              "status": "insufficient_data",
+              "counts": {
+                "total_shots": 1,
+                "labelled_shots": 1,
+                "made": 0,
+                "missed": 1,
+                "unlabelled_shots": 0
+              },
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "observation_ids": [],
+              "features": {}
+            }
+          },
+          "knowledge": {
+            "recording": {
+              "topic": "Recording quality",
+              "principle": "A steady side view with the whole body visible makes pose review easier.",
+              "use_when": "When clips are hard to interpret or compare.",
+              "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+              "evidence_basis": "measurement_guidance"
+            },
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "evidence_basis": "coaching_guidance"
+            }
+          },
+          "eligible_practice": {
+            "recording_check": {
+              "title": "Matched-view recording check",
+              "eligible_topics": [
+                "recording"
+              ],
+              "required_equipment": [
+                "camera"
+              ]
+            },
+            "focused_shooting": {
+              "title": "One-focus shooting experiment",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": [
+                "ball",
+                "hoop"
+              ]
+            },
+            "shadow_rehearsal": {
+              "title": "No-release movement rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "steady_setup": {
+              "title": "Comfortable setup rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            }
+          },
+          "selected_attempt_observations": {
+            "shot:free_throw_01_shot_1:min_knee_angle": {
+              "field": "min_knee_angle",
+              "value": 88.82,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            },
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "field": "knee_angle_range",
+              "value": 74.61,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            }
+          },
+          "instructional_resources": [],
+          "requested_resource_kind": "video"
+        },
+        {
+          "stage": "coaching_tool",
+          "tool": "retrieve_knowledge",
+          "evidence_id": "tool:1:retrieve_knowledge",
+          "result": {
+            "status": "available",
+            "principles": {
+              "knees": {
+                "topic": "Knee bend",
+                "principle": "A comfortable knee bend can help you find a repeatable setup.",
+                "cue": "Let your knees soften slightly before you lift the ball.",
+                "purpose": "Keep the setup comfortable and repeatable.",
+                "use_when": "When testing a more repeatable preparation.",
+                "avoid_when": "When deeper bending causes discomfort or the player already has a reliable setup.",
+                "exercise": "Same-spot knee bend",
+                "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+                "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+                "metric": "min_knee_angle",
+                "evidence_basis": "coaching_guidance"
+              },
+              "arm": {
+                "topic": "Shooting arm",
+                "principle": "The shooting hand and arm guide the ball on delivery.",
+                "cue": "Lift the ball with your shooting hand underneath and let the arm extend toward the basket.",
+                "purpose": "Give the ball a repeatable lift.",
+                "use_when": "When exploring shooting-arm delivery.",
+                "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+                "exercise": "Close one-hand form shots",
+                "source": "Jr. NBA — Form Shooting-2 Hands",
+                "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+                "metric": "release_elbow_angle",
+                "evidence_basis": "coaching_guidance"
+              }
+            },
+            "resources": [
+              {
+                "id": "jrnba_two_hand_form",
+                "kind": "video",
+                "title": "Form Shooting-2 Hands",
+                "organization": "Jr. NBA",
+                "topic": "knees",
+                "focus": "Watch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.",
+                "skill_levels": [
+                  "beginner",
+                  "intermediate",
+                  "advanced"
+                ]
+              },
+              {
+                "id": "jrnba_free_throw",
+                "kind": "video",
+                "title": "Fundamentals of the Free Throw",
+                "organization": "Jr. NBA",
+                "topic": "timing",
+                "focus": "Watch the sequence before the shot and how a repeatable routine sets up its rhythm.",
+                "skill_levels": [
+                  "beginner",
+                  "intermediate",
+                  "advanced"
+                ]
+              }
+            ],
+            "resource_status": "available"
+          }
+        },
+        {
+          "stage": "model_draft",
+          "attempt": 1,
+          "raw": "{\"message\":\"I recommend this form-shooting video. **Watch the player’s knee bend and rise** as the ball moves toward the release—not to copy the exact depth, but to see how the legs extend through the shot.\\n\\nIn your clip, your knee bends and then straightens as you rise. If that feels comfortable, keep it for now. On your next recorded set of free throws, check whether your dip and rise feel comfortable and look similar across attempts.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1:knee_angle_range\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"knees\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"practice\":null,\"adaptation\":null}"
+        },
+        {
+          "stage": "optional_components_discarded",
+          "attempt": 1,
+          "details": [
+            {
+              "field": "message",
+              "reason": "Unverified external recommendation removed"
+            }
+          ]
+        },
+        {
+          "stage": "selected_focus",
+          "focus": "knees",
+          "evidence_ids": [
+            "shot:free_throw_01_shot_1:knee_angle_range"
+          ]
+        }
+      ],
+      "frame_files": {}
+    },
+    {
+      "question": "Is there anything about my current technique that I should keep rather than change?",
+      "response_text": "Yes—**keep your knee bend and rise**, provided they feel comfortable. In the free throw we reviewed, your knee bent as you loaded and straightened as you rose toward release. There’s no evidence in that clip that you need to change the depth of your dip.\n\nKeep it as your starting point, then check a comparable set of free throws to see whether that motion feels comfortable and looks similar across attempts. The single clip can’t tell us how consistently you repeat it.",
+      "elapsed_ms": 4153.866,
+      "response": {
+        "response_type": "strengths",
+        "message": "Yes—**keep your knee bend and rise**, provided they feel comfortable. In the free throw we reviewed, your knee bent as you loaded and straightened as you rose toward release. There’s no evidence in that clip that you need to change the depth of your dip.\n\nKeep it as your starting point, then check a comparable set of free throws to see whether that motion feels comfortable and looks similar across attempts. The single clip can’t tell us how consistently you repeat it.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_authored",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "strengths",
+          "supporting_evidence_ids": [
+            "shot:free_throw_01_shot_1"
+          ],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [],
+          "discarded_components": [],
+          "request_usage": {
+            "total_requests": 1,
+            "estimated_cost_usd": null,
+            "requests": [
+              {
+                "model": "gpt-6.1-terra",
+                "purpose": "generation",
+                "input_tokens": 3589,
+                "cached_input_tokens": 1936,
+                "output_tokens": 205,
+                "estimated_cost_usd": null,
+                "latency_ms": 3452.77
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {},
+          "citations": [
+            "shot:free_throw_01_shot_1"
+          ],
+          "numeric_facts": []
+        }
+      },
+      "calls": [
+        {
+          "purpose": "generation",
+          "output_cap": 4096,
+          "tool_names": [
+            "retrieve_shot",
+            "retrieve_frames",
+            "retrieve_knowledge",
+            "retrieve_memory",
+            "retrieve_history",
+            "retrieve_profile",
+            "retrieve_progress",
+            "retrieve_comparison",
+            "retrieve_make_miss",
+            "retrieve_historical_profile"
+          ],
+          "image_count": 0,
+          "replayed_reasoning_items": 0,
+          "request_reasoning": {
+            "effort": "medium"
+          },
+          "count_ms": 669.976,
+          "preflight_input_tokens": 3589,
+          "request_upper_bound_usd": 0.02528625,
+          "api_ms": 3452.77,
+          "usage": {
+            "input_tokens": 3589,
+            "input_tokens_details": {
+              "cache_write_tokens": 1650,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 1650
+              },
+              "cached_tokens": 1936
+            },
+            "output_tokens": 205,
+            "output_tokens_details": {
+              "reasoning_tokens": 46
+            },
+            "total_tokens": 3794
+          },
+          "status": "completed",
+          "model": "gpt-6.1-terra",
+          "service_tier": "default",
+          "reasoning": {
+            "context": "all_turns",
+            "effort": "medium",
+            "mode": "standard",
+            "summary": null
+          },
+          "cost_lower_usd": 0.0027748,
+          "cost_upper_usd": 0.00318805,
+          "cost_exact_usd": 0.0031873,
+          "output": [
+            {
+              "content": [],
+              "id": "rs_062f514f3c5ea522016b08ea4dedfc87d18da34badd1d1f988",
+              "summary": [],
+              "type": "reasoning"
+            },
+            {
+              "content": [
+                {
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Yes—**keep your knee bend and rise**, provided they feel comfortable. In the free throw we reviewed, your knee bent as you loaded and straightened as you rose toward release. There’s no evidence in that clip that you need to change the depth of your dip.\\n\\nKeep it as your starting point, then check a comparable set of free throws to see whether that motion feels comfortable and looks similar across attempts. The single clip can’t tell us how consistently you repeat it.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}",
+                  "type": "output_text"
+                }
+              ],
+              "id": "msg_062f514f3c5ea522016b08ea4e105487d18d80526cacd5ab1c",
+              "phase": "final_answer",
+              "role": "assistant",
+              "status": "completed",
+              "type": "message"
+            }
+          ]
+        }
+      ],
+      "diagnostics": [
+        {
+          "stage": "generation_evidence",
+          "evidence": {
+            "shot:free_throw_01_shot_1": {
+              "shot_id": "free_throw_01_shot_1",
+              "session_id": 1,
+              "shot_number": 1,
+              "outcome": "missed",
+              "outcome_source": "experimental detector",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "SQLite shot analysis snapshot and current outcome label",
+              "ball_flight": {
+                "status": "unavailable",
+                "tracking": {},
+                "rim_crossing_estimate": null,
+                "detector_method": null,
+                "observation": null,
+                "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+              },
+              "events": {
+                "start_frame": 20,
+                "release_frame": 49,
+                "end_frame": 110,
+                "segmentation_status": "experimental_review_required"
+              },
+              "measurements": {
+                "min_knee_angle": {
+                  "status": "valid",
+                  "value": 88.82,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "knee_angle_range": {
+                  "status": "valid",
+                  "value": 74.61,
+                  "unit": "degrees",
+                  "sample_frames": 30
+                },
+                "release_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "max_elbow_angle": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_angle_range": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": 25
+                },
+                "elbow_extension_after_release": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "degrees",
+                  "sample_frames": null
+                },
+                "shooting_motion_ms": {
+                  "status": "unreliable",
+                  "value": null,
+                  "unit": "ms",
+                  "sample_frames": null
+                },
+                "knee_coverage_pct": {
+                  "status": "valid",
+                  "value": 100.0,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "elbow_coverage_pct": {
+                  "status": "valid",
+                  "value": 69.44,
+                  "unit": "%",
+                  "sample_frames": null
+                },
+                "tracking_coverage_pct": {
+                  "status": "missing",
+                  "value": null,
+                  "unit": "%",
+                  "sample_frames": null
+                }
+              }
+            },
+            "history:outcome_counts": {
+              "made": 0,
+              "missed": 1,
+              "unknown": 0
+            },
+            "profile:current": {
+              "status": "insufficient_data",
+              "counts": {
+                "total_shots": 1,
+                "labelled_shots": 1,
+                "made": 0,
+                "missed": 1,
+                "unlabelled_shots": 0
+              },
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "observation_ids": [],
+              "features": {}
+            }
+          },
+          "knowledge": {
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "evidence_basis": "coaching_guidance"
+            },
+            "recording": {
+              "topic": "Recording quality",
+              "principle": "A steady side view with the whole body visible makes pose review easier.",
+              "use_when": "When clips are hard to interpret or compare.",
+              "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+              "evidence_basis": "measurement_guidance"
+            }
+          },
+          "eligible_practice": {
+            "focused_shooting": {
+              "title": "One-focus shooting experiment",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": [
+                "ball",
+                "hoop"
+              ]
+            },
+            "shadow_rehearsal": {
+              "title": "No-release movement rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "steady_setup": {
+              "title": "Comfortable setup rehearsal",
+              "eligible_topics": [
+                "routine"
+              ],
+              "required_equipment": []
+            },
+            "recording_check": {
+              "title": "Matched-view recording check",
+              "eligible_topics": [
+                "recording"
+              ],
+              "required_equipment": [
+                "camera"
+              ]
+            }
+          },
+          "selected_attempt_observations": {
+            "shot:free_throw_01_shot_1:min_knee_angle": {
+              "field": "min_knee_angle",
+              "value": 88.82,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            },
+            "shot:free_throw_01_shot_1:knee_angle_range": {
+              "field": "knee_angle_range",
+              "value": 74.61,
+              "unit": "degrees",
+              "phase": "start through estimated release"
+            }
+          }
+        },
+        {
+          "stage": "model_draft",
+          "attempt": 1,
+          "raw": "{\"message\":\"Yes—**keep your knee bend and rise**, provided they feel comfortable. In the free throw we reviewed, your knee bent as you loaded and straightened as you rose toward release. There’s no evidence in that clip that you need to change the depth of your dip.\\n\\nKeep it as your starting point, then check a comparable set of free throws to see whether that motion feels comfortable and looks similar across attempts. The single clip can’t tell us how consistently you repeat it.\",\"evidence_ids\":[\"shot:free_throw_01_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+        },
+        {
+          "stage": "selected_focus",
+          "focus": null,
+          "evidence_ids": []
+        }
+      ],
+      "frame_files": {}
+    }
+  ],
+  "reserved_upper_usd": 0.03156515000000001,
+  "failure": null
+}

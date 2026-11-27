@@ -1,0 +1,780 @@
+{
+  "model": "gpt-6.1-terra",
+  "turns": [
+    {
+      "question": "What do you remember about my shooting so far?",
+      "seconds": 19.81,
+      "player_text": "Here\u2019s what I remember:\n\n- You\u2019re an intermediate, right-handed shooter working toward your free-throw goal.\n- Across your 30 recorded free throws, you labelled 16 makes and 14 misses. Your latest recorded session was 8 makes in 10 attempts, up from 3 makes in 10 attempts in the first session. That\u2019s encouraging, though those small sets don\u2019t establish lasting improvement.\n- We suggested a comfortable knee bend before lifting the ball. Your recorded makes and misses haven\u2019t shown a clear difference in knee bend, so there\u2019s no reason to force a deeper dip.\n- We also talked about a repeatable setup and rhythm. I don\u2019t have a report yet on whether you tried the knee-bend cue or how it felt.\n\nHave you tried that cue, and did it feel comfortable?",
+      "progress": null,
+      "practice": null,
+      "memory_update": null,
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "history:outcome_counts",
+          "profile:current",
+          "progress:sessions:1:3:min_knee_angle"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 4.1,
+          "input_tokens": 4135,
+          "cached_tokens": 0,
+          "output_tokens": 102,
+          "reasoning_tokens": 23,
+          "cost_usd": 0.005679,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"focus_from_prior_turn\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_history",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_profile",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_progress",
+              "arguments": "{\"field\": \"min_knee_angle\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.56,
+          "input_tokens": 9545,
+          "cached_tokens": 4132,
+          "output_tokens": 309,
+          "reasoning_tokens": 55,
+          "cost_usd": 0.008518,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Here\u2019s what I remember:\\n\\n- You\u2019re an intermediate shooter working toward **7 of 10 free throws**, shooting right-handed.\\n- Across your 30 recorded free throws, you labelled 16 makes and 14 misses. Your latest recorded session was 8 of 10, up from 3 of 10 in the first session. That\u2019s encouraging, though those small sets don\u2019t establish lasting improvement.\\n- We suggested a comfortable knee bend before lifting the ball. Your recorded makes and misses haven\u2019t shown a clear difference in knee bend, so there\u2019s no reason to force a deeper dip.\\n- We also talked about a repeatable setup and rhythm. I don\u2019t have a report yet on whether you tried the knee-bend cue or how it felt.\\n\\nHave you tried that cue, and did it feel comfortable?\",\"evidence_ids\":[\"history:outcome_counts\",\"profile:current\",\"progress:sessions:1:3:min_knee_angle\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 9.89,
+          "input_tokens": 9918,
+          "cached_tokens": 0,
+          "output_tokens": 721,
+          "reasoning_tokens": 310,
+          "cost_usd": 0.016002,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Here\u2019s what I remember:\\n\\n- You\u2019re an intermediate, right-handed shooter working toward your free-throw goal.\\n- Across your {{fact:0}} recorded free throws, you labelled {{fact:1}} makes and {{fact:2}} misses. Your latest recorded session was {{fact:3}} makes in {{fact:4}} attempts, up from {{fact:5}} makes in {{fact:6}} attempts in the first session. That\u2019s encouraging, though those small sets don\u2019t establish lasting improvement.\\n- We suggested a comfortable knee bend before lifting the ball. Your recorded makes and misses haven\u2019t shown a clear difference in knee bend, so there\u2019s no reason to force a deeper dip.\\n- We also talked about a repeatable setup and rhythm. I don\u2019t have a report yet on whether you tried the knee-bend cue or how it felt.\\n\\nHave you tried that cue, and did it feel comfortable?\",\"evidence_ids\":[\"history:outcome_counts\",\"profile:current\",\"progress:sessions:1:3:min_knee_angle\"],\"facts\":[{\"evidence_id\":\"profile:current\",\"field\":\"counts.total_shots\"},{\"evidence_id\":\"history:outcome_counts\",\"field\":\"made\"},{\"evidence_id\":\"history:outcome_counts\",\"field\":\"missed\"},{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"after.made\"},{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"after.shot_count\"},{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"before.made\"},{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"before.shot_count\"}],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Did the knee drill you gave me help?",
+      "seconds": 14.21,
+      "player_text": "Your makes went up, but I can\u2019t tell whether the knee drill helped. Your measured smallest knee angle, from the start of the shot through estimated release, averaged 110\u00b0 in your first session and 110\u00b0 in your latest, with no measured spread in either. So the recordings don\u2019t show a change in knee bend. I also don\u2019t have a report that you tried the drill.\n\nFor now, there\u2019s no reason to force a deeper bend. Check whether your usual setup feels comfortable and repeatable. Did you try the drill, and if so, how did it feel?",
+      "progress": {
+        "status": "available",
+        "kind": "sessions",
+        "id": "progress:sessions:1:3:min_knee_angle",
+        "before_session_id": 1,
+        "after_session_id": 3,
+        "field": "min_knee_angle",
+        "before": {
+          "session_id": 1,
+          "shot_count": 10,
+          "made": 3,
+          "missed": 7,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 3,
+          "accuracy_pct": 30.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "after": {
+          "session_id": 3,
+          "shot_count": 10,
+          "made": 8,
+          "missed": 2,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 8,
+          "accuracy_pct": 80.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "intermediate": [
+          {
+            "session_id": 2,
+            "shot_count": 10,
+            "made": 5,
+            "missed": 5,
+            "unknown": 0,
+            "manual_labels": 10,
+            "manual_made": 5,
+            "accuracy_pct": 50.0,
+            "measurement_count": 10,
+            "mean": 110.0,
+            "spread": 0.0
+          }
+        ],
+        "before_shot_ids": [
+          "fixture_shot_1",
+          "fixture_shot_10",
+          "fixture_shot_2"
+        ],
+        "after_shot_ids": [
+          "fixture_shot_21",
+          "fixture_shot_22",
+          "fixture_shot_23"
+        ],
+        "conditions": {
+          "shot_type": "free_throw",
+          "shooting_arm": "right"
+        },
+        "completed": false,
+        "assessment": {
+          "accuracy": "higher",
+          "consistency": "similar",
+          "overall": "favorable",
+          "camera": "unknown",
+          "phase": "start through estimated release"
+        },
+        "provenance": "Owned session records in stored session order",
+        "limitations": [
+          "Shot type and shooting arm match. Distance, fatigue and camera setup may differ.",
+          "Accuracy direction uses player-confirmed outcomes. Movement direction describes spread in one measured phase.",
+          "Differences in these samples do not establish lasting improvement or the effect of a cue."
+        ]
+      },
+      "practice": null,
+      "memory_update": null,
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "progress:sessions:1:3:min_knee_angle"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.3,
+          "input_tokens": 4274,
+          "cached_tokens": 2425,
+          "output_tokens": 73,
+          "reasoning_tokens": 10,
+          "cost_usd": 0.002798,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"focus_from_prior_turn\", \"topic\": \"knee bend\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_progress",
+              "arguments": "{\"field\": \"min_knee_angle\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.21,
+          "input_tokens": 5414,
+          "cached_tokens": 4271,
+          "output_tokens": 401,
+          "reasoning_tokens": 227,
+          "cost_usd": 0.003647,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Your makes went up, but I can\u2019t tell whether the knee drill helped. Your measured smallest knee angle averaged 110\u00b0 in both sessions, with no measured spread in either, so the recordings don\u2019t show a change in knee bend. I also don\u2019t have a report that you tried the drill.\\n\\nFor now, there\u2019s no reason to force a deeper bend. Check whether your usual setup feels comfortable and repeatable. Did you try the drill, and if so, how did it feel?\",\"evidence_ids\":[\"progress:sessions:1:3:min_knee_angle\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.64,
+          "input_tokens": 5471,
+          "cached_tokens": 1962,
+          "output_tokens": 364,
+          "reasoning_tokens": 122,
+          "cost_usd": 0.006304,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Your makes went up, but I can\u2019t tell whether the knee drill helped. Your measured smallest knee angle, from the start of the shot through estimated release, averaged {{fact:0}}\u00b0 in your first session and {{fact:1}}\u00b0 in your latest, with no measured spread in either. So the recordings don\u2019t show a change in knee bend. I also don\u2019t have a report that you tried the drill.\\n\\nFor now, there\u2019s no reason to force a deeper bend. Check whether your usual setup feels comfortable and repeatable. Did you try the drill, and if so, how did it feel?\",\"evidence_ids\":[\"progress:sessions:1:3:min_knee_angle\"],\"facts\":[{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"before.mean\"},{\"evidence_id\":\"progress:sessions:1:3:min_knee_angle\",\"field\":\"after.mean\"}],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Honestly it didn't help, the knee cue felt awkward. What now?",
+      "seconds": 8.63,
+      "player_text": "Then let\u2019s drop the knee cue. Thanks for telling me\u2014it felt awkward and didn\u2019t help, so there\u2019s no reason to force it. Your recordings haven\u2019t shown a clear reason to change your bend either.\n\nOn your next few free throws, use your usual shot without thinking about your knees. Notice whether it feels natural again and how the shots go; that\u2019s a useful reset, not a verdict on your form.\n\nDid the cue feel awkward because of the timing, or did you feel discomfort in your knees?",
+      "progress": {
+        "before_session_id": 1,
+        "after_session_id": 3,
+        "pattern_comparison": [],
+        "status": "available",
+        "kind": "objective",
+        "id": "progress:focus_from_prior_turn",
+        "focus_id": "focus_from_prior_turn",
+        "field": "min_knee_angle",
+        "before": {
+          "shot_count": 10,
+          "made": 3,
+          "missed": 7,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 3,
+          "accuracy_pct": 30.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "after": {
+          "shot_count": 10,
+          "made": 8,
+          "missed": 2,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 8,
+          "accuracy_pct": 80.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "before_shot_ids": [
+          "fixture_shot_8",
+          "fixture_shot_9",
+          "fixture_shot_10"
+        ],
+        "after_shot_ids": [
+          "fixture_shot_28",
+          "fixture_shot_29",
+          "fixture_shot_30"
+        ],
+        "conditions": {
+          "shot_type": "free_throw",
+          "shooting_arm": "right"
+        },
+        "provenance": "Shot records added after the objective was assigned",
+        "sample_shots": 20,
+        "completed": false,
+        "player_reported_effect": null,
+        "assessment": {
+          "accuracy": "higher",
+          "consistency": "similar",
+          "overall": "favorable",
+          "camera": "unknown",
+          "phase": "start through estimated release"
+        },
+        "distance_mismatch": false,
+        "limitations": [
+          "Matched by recorded shot type and shooting arm. Distance, camera, fatigue and recording order may differ.",
+          "Reports of completing the drill are stored separately from uploaded clips.",
+          "Changes describe these samples and do not show that the advice caused a change."
+        ]
+      },
+      "practice": null,
+      "memory_update": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "knees",
+        "supporting_evidence_ids": [
+          "progress:focus_from_prior_turn",
+          "profile:current"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.3,
+          "input_tokens": 4547,
+          "cached_tokens": 2425,
+          "output_tokens": 82,
+          "reasoning_tokens": 13,
+          "cost_usd": 0.003184,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"focus_from_prior_turn\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_progress",
+              "arguments": "{\"field\": \"min_knee_angle\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_profile",
+              "arguments": "{}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.28,
+          "input_tokens": 6024,
+          "cached_tokens": 4544,
+          "output_tokens": 349,
+          "reasoning_tokens": 166,
+          "cost_usd": 0.003822,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Then let\u2019s drop the knee cue. Thanks for telling me\u2014it felt awkward and didn\u2019t help, so there\u2019s no reason to force it. Your recordings haven\u2019t shown a clear reason to change your bend either.\\n\\nOn your next few free throws, use your usual shot without thinking about your knees. Notice whether it feels natural again and how the shots go; that\u2019s a useful reset, not a verdict on your form.\\n\\nDid the cue feel awkward because of the timing, or did you feel discomfort in your knees?\",\"evidence_ids\":[\"progress:focus_from_prior_turn\",\"profile:current\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"knees\"],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":\"discontinue\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "My shot does feel smoother lately though. Have I actually improved?",
+      "seconds": 16.18,
+      "player_text": "Yes\u2014your **free-throw results have improved across the recorded sessions**. You labelled 3 makes in 10 attempts in the first session and 8 makes in 10 attempts in the latest, with the middle session in between. That latest set reached your goal.\n\nIt\u2019s encouraging that the shot feels smoother, too. That\u2019s your experience of the motion; the recordings don\u2019t independently establish that it became smoother or that the knee drill caused the better results. The sets are still small, so we can\u2019t yet call the improvement lasting.\n\nKeep using the shot that feels natural, without the awkward knee cue. Track your makes in a few more free-throw sets; regularly reaching your goal would be a stronger sign the improvement is holding.",
+      "progress": {
+        "before_session_id": 1,
+        "after_session_id": 3,
+        "pattern_comparison": [],
+        "status": "available",
+        "kind": "objective",
+        "id": "progress:focus_from_prior_turn",
+        "focus_id": "focus_from_prior_turn",
+        "field": "min_knee_angle",
+        "before": {
+          "shot_count": 10,
+          "made": 3,
+          "missed": 7,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 3,
+          "accuracy_pct": 30.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "after": {
+          "shot_count": 10,
+          "made": 8,
+          "missed": 2,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 8,
+          "accuracy_pct": 80.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "before_shot_ids": [
+          "fixture_shot_8",
+          "fixture_shot_9",
+          "fixture_shot_10"
+        ],
+        "after_shot_ids": [
+          "fixture_shot_28",
+          "fixture_shot_29",
+          "fixture_shot_30"
+        ],
+        "conditions": {
+          "shot_type": "free_throw",
+          "shooting_arm": "right"
+        },
+        "provenance": "Shot records added after the objective was assigned",
+        "sample_shots": 20,
+        "completed": false,
+        "player_reported_effect": "did_not_help",
+        "assessment": {
+          "accuracy": "higher",
+          "consistency": "similar",
+          "overall": "favorable",
+          "camera": "unknown",
+          "phase": "start through estimated release"
+        },
+        "distance_mismatch": false,
+        "limitations": [
+          "Matched by recorded shot type and shooting arm. Distance, camera, fatigue and recording order may differ.",
+          "Reports of completing the drill are stored separately from uploaded clips.",
+          "Changes describe these samples and do not show that the advice caused a change."
+        ]
+      },
+      "practice": null,
+      "memory_update": null,
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "progress:focus_from_prior_turn",
+          "tool:2:retrieve_historical_profile"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.12,
+          "input_tokens": 4603,
+          "cached_tokens": 2425,
+          "output_tokens": 87,
+          "reasoning_tokens": 13,
+          "cost_usd": 0.003279,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_progress",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_history",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"focus_from_prior_turn\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_profile",
+              "arguments": "{}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 1.84,
+          "input_tokens": 8044,
+          "cached_tokens": 4600,
+          "output_tokens": 56,
+          "reasoning_tokens": 38,
+          "cost_usd": 0.004815,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_historical_profile",
+              "arguments": "{}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.51,
+          "input_tokens": 9762,
+          "cached_tokens": 8041,
+          "output_tokens": 332,
+          "reasoning_tokens": 99,
+          "cost_usd": 0.004213,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Yes\u2014your **free-throw results have improved across the recorded sessions**: you labelled 3 of 10 makes in the first, 5 of 10 in the second, and 8 of 10 in the latest. That latest set reached your 7-of-10 goal.\\n\\nIt\u2019s encouraging that the shot feels smoother, too. That\u2019s your experience of the motion; the recordings don\u2019t independently establish that it became smoother or that the knee drill caused the better results. The sets are still small, so we can\u2019t yet call the improvement lasting.\\n\\nKeep using the shot that feels natural, without the awkward knee cue. Track your makes in a few more free-throw sets; regularly reaching your goal would be a stronger sign the improvement is holding.\",\"evidence_ids\":[\"progress:focus_from_prior_turn\",\"tool:2:retrieve_historical_profile\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.58,
+          "input_tokens": 10107,
+          "cached_tokens": 1962,
+          "output_tokens": 477,
+          "reasoning_tokens": 163,
+          "cost_usd": 0.012664,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Yes\u2014your **free-throw results have improved across the recorded sessions**. You labelled {{fact:0}} makes in {{fact:1}} attempts in the first session and {{fact:2}} makes in {{fact:3}} attempts in the latest, with the middle session in between. That latest set reached your goal.\\n\\nIt\u2019s encouraging that the shot feels smoother, too. That\u2019s your experience of the motion; the recordings don\u2019t independently establish that it became smoother or that the knee drill caused the better results. The sets are still small, so we can\u2019t yet call the improvement lasting.\\n\\nKeep using the shot that feels natural, without the awkward knee cue. Track your makes in a few more free-throw sets; regularly reaching your goal would be a stronger sign the improvement is holding.\",\"evidence_ids\":[\"progress:focus_from_prior_turn\",\"tool:2:retrieve_historical_profile\"],\"facts\":[{\"evidence_id\":\"progress:focus_from_prior_turn\",\"field\":\"before.manual_made\"},{\"evidence_id\":\"progress:focus_from_prior_turn\",\"field\":\"before.shot_count\"},{\"evidence_id\":\"progress:focus_from_prior_turn\",\"field\":\"after.manual_made\"},{\"evidence_id\":\"progress:focus_from_prior_turn\",\"field\":\"after.shot_count\"}],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I work on next?",
+      "player_text": "Next, work on **recognizing your miss pattern**, rather than changing your form. Your earlier makes and misses didn\u2019t show a clear mechanical difference, and your latest set had too few misses to point to a new correction.\n\nOn your next free throws, keep the natural shot that\u2019s feeling smoother. When you miss, notice whether the ball finishes short, long, left or right. If one direction shows up repeatedly, that gives us a useful starting point for what to work on next.\n\nDo your recent misses tend to go in one direction?",
+      "progress": {
+        "before_session_id": 1,
+        "after_session_id": 3,
+        "intermediate": [
+          {
+            "session_id": 2,
+            "shot_count": 10,
+            "made": 5,
+            "missed": 5,
+            "unknown": 0,
+            "manual_labels": 10,
+            "manual_made": 5,
+            "accuracy_pct": 50.0,
+            "measurement_count": 10,
+            "mean": 110.0,
+            "spread": 0.0
+          }
+        ],
+        "pattern_comparison": [],
+        "status": "available",
+        "kind": "objective",
+        "id": "progress:focus_from_prior_turn",
+        "focus_id": "focus_from_prior_turn",
+        "field": "min_knee_angle",
+        "before": {
+          "shot_count": 10,
+          "made": 3,
+          "missed": 7,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 3,
+          "accuracy_pct": 30.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "after": {
+          "shot_count": 10,
+          "made": 8,
+          "missed": 2,
+          "unknown": 0,
+          "manual_labels": 10,
+          "manual_made": 8,
+          "accuracy_pct": 80.0,
+          "measurement_count": 10,
+          "mean": 110.0,
+          "spread": 0.0
+        },
+        "before_shot_ids": [
+          "fixture_shot_1",
+          "fixture_shot_2",
+          "fixture_shot_3",
+          "fixture_shot_4",
+          "fixture_shot_5",
+          "fixture_shot_6",
+          "fixture_shot_7",
+          "fixture_shot_8",
+          "fixture_shot_9",
+          "fixture_shot_10"
+        ],
+        "after_shot_ids": [
+          "fixture_shot_21",
+          "fixture_shot_22",
+          "fixture_shot_23",
+          "fixture_shot_24",
+          "fixture_shot_25",
+          "fixture_shot_26",
+          "fixture_shot_27",
+          "fixture_shot_28",
+          "fixture_shot_29",
+          "fixture_shot_30"
+        ],
+        "conditions": {
+          "shot_type": "free_throw",
+          "shooting_arm": "right"
+        },
+        "provenance": "Shot records added after the objective was assigned",
+        "sample_shots": 20,
+        "completed": false,
+        "player_reported_effect": "did_not_help",
+        "assessment": {
+          "accuracy": "higher",
+          "consistency": "similar",
+          "overall": "favorable",
+          "camera": "unknown",
+          "phase": "start through estimated release"
+        },
+        "distance_mismatch": false,
+        "limitations": [
+          "Matched by recorded shot type and shooting arm. Distance, camera, fatigue and recording order may differ.",
+          "Reports of completing the drill are stored separately from uploaded clips.",
+          "Changes describe these samples and do not show that the advice caused a change."
+        ]
+      },
+      "practice": null,
+      "memory_update": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "profile:current"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 3.3,
+          "input_tokens": 4980,
+          "cached_tokens": 2425,
+          "output_tokens": 104,
+          "reasoning_tokens": 15,
+          "cost_usd": 0.003835,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_profile",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_historical_profile",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_progress",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_make_miss",
+              "arguments": "{\"shot_id\": \"fixture_shot_30\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 8.83,
+          "input_tokens": 7830,
+          "cached_tokens": 4977,
+          "output_tokens": 431,
+          "reasoning_tokens": 254,
+          "cost_usd": 0.00597,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Next, work on **recognizing your miss pattern**, rather than changing your form. Your earlier makes and misses didn\u2019t show a clear mechanical difference, and your latest set had too few misses to point to a new correction.\\n\\nOn your next free throws, keep the natural shot that\u2019s feeling smoother. When you miss, notice whether the ball finishes short, long, left or right. If one direction shows up repeatedly, that gives us a useful starting point for what to work on next.\\n\\nDo your recent misses tend to go in one direction?\",\"evidence_ids\":[\"profile:current\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"more_resources\":[],\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ],
+      "note": "rerun after the first run's budget guard stopped turn 5"
+    }
+  ],
+  "estimated_cost_usd": 0.074926,
+  "turn_5_rerun_cost_usd": 0.009805
+}

@@ -1,0 +1,2492 @@
+{
+  "shot": "free_throw_01_shot_1",
+  "shot_evidence": {
+    "id": "shot:free_throw_01_shot_1",
+    "player": "Demo player",
+    "session_id": 1,
+    "video_id": "free_throw_01",
+    "shot_id": "free_throw_01_shot_1",
+    "shot_number": 1,
+    "events": {
+      "start_frame": 20,
+      "release_frame": 49,
+      "end_frame": 110,
+      "segmentation_status": "experimental_review_required"
+    },
+    "conditions": {
+      "shot_type": "free_throw",
+      "shooting_arm": "right"
+    },
+    "sample_shots": 1,
+    "provenance": "SQLite shot analysis snapshot and current outcome label",
+    "outcome": "missed",
+    "outcome_source": "player label",
+    "outcome_observation": null,
+    "ball_flight": {
+      "status": "unavailable",
+      "tracking": {},
+      "rim_crossing_estimate": null,
+      "detector_method": null,
+      "observation": null,
+      "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+    },
+    "measurements": {
+      "min_knee_angle": {
+        "field": "min_knee_angle",
+        "unit": "degrees",
+        "status": "valid",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 100.0
+        },
+        "value": 88.82,
+        "sample_frames": 30
+      },
+      "knee_angle_range": {
+        "field": "knee_angle_range",
+        "unit": "degrees",
+        "status": "valid",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 100.0
+        },
+        "value": 74.61,
+        "sample_frames": 30
+      },
+      "release_elbow_angle": {
+        "field": "release_elbow_angle",
+        "unit": "degrees",
+        "status": "unreliable",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 69.44
+        },
+        "value": null,
+        "sample_frames": 25
+      },
+      "max_elbow_angle": {
+        "field": "max_elbow_angle",
+        "unit": "degrees",
+        "status": "unreliable",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 69.44
+        },
+        "value": null,
+        "sample_frames": 25
+      },
+      "elbow_angle_range": {
+        "field": "elbow_angle_range",
+        "unit": "degrees",
+        "status": "unreliable",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 69.44
+        },
+        "value": null,
+        "sample_frames": 25
+      },
+      "elbow_extension_after_release": {
+        "field": "elbow_extension_after_release",
+        "unit": "degrees",
+        "status": "unreliable",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": 69.44
+        },
+        "value": null,
+        "sample_frames": null
+      },
+      "shooting_motion_ms": {
+        "field": "shooting_motion_ms",
+        "unit": "ms",
+        "status": "unreliable",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": null
+        },
+        "value": null,
+        "sample_frames": null
+      },
+      "knee_coverage_pct": {
+        "field": "knee_coverage_pct",
+        "unit": "%",
+        "status": "valid",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": null
+        },
+        "value": 100.0,
+        "sample_frames": null
+      },
+      "elbow_coverage_pct": {
+        "field": "elbow_coverage_pct",
+        "unit": "%",
+        "status": "valid",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": null
+        },
+        "value": 69.44,
+        "sample_frames": null
+      },
+      "tracking_coverage_pct": {
+        "field": "tracking_coverage_pct",
+        "unit": "%",
+        "status": "missing",
+        "reliability": {
+          "pipeline_quality": "review",
+          "event_status": "experimental_review_required",
+          "joint_coverage_pct": null
+        },
+        "value": null,
+        "sample_frames": null
+      }
+    },
+    "limitations": [
+      "Angles are 2D camera estimates. Coverage describes availability, not accuracy.",
+      "Start and release are estimated. Early follow-through can be a provisional window.",
+      "Outcomes and form observations do not establish causes or shooting power."
+    ]
+  },
+  "outcome_source": "outputs\\free_throw_01\\shot_annotations.json",
+  "preflight_frame_refs": [
+    {
+      "id": "frame:free_throw_01_shot_1:knee_dip:38:knee:",
+      "video_id": "free_throw_01",
+      "shot_id": "free_throw_01_shot_1",
+      "frame": 38,
+      "timestamp_s": 1.267,
+      "phase": "knee_dip",
+      "uncertainty": "Deepest measured knee bend",
+      "source": "sample video",
+      "shot_number": 1,
+      "session_id": 1,
+      "playback_end_s": null,
+      "annotation": {
+        "focus": "knee",
+        "side": "right",
+        "angle_deg": 89.9,
+        "angle_source": "saved_landmarks",
+        "marks": [
+          "alignment_lines",
+          "joint_markers",
+          "angle_arc"
+        ]
+      }
+    },
+    {
+      "id": "frame:free_throw_01_shot_1:knee_extension:49:knee:knee_dip",
+      "video_id": "free_throw_01",
+      "shot_id": "free_throw_01_shot_1",
+      "frame": 49,
+      "timestamp_s": 1.633,
+      "phase": "knee_extension",
+      "uncertainty": "Straightest measured knee after loading through release",
+      "source": "sample video",
+      "shot_number": 1,
+      "session_id": 1,
+      "playback_end_s": null,
+      "annotation": {
+        "focus": "knee",
+        "side": "right",
+        "angle_deg": 163.4,
+        "angle_source": "saved_angle",
+        "marks": [
+          "alignment_lines",
+          "joint_markers",
+          "angle_arc",
+          "image_plane_displacement"
+        ],
+        "from_phase": "knee_dip"
+      }
+    }
+  ],
+  "model": "gpt-4.1-mini",
+  "budget_usd": 0.15,
+  "turns": [
+    {
+      "question": "Analyze my shooting form. What should I improve?",
+      "response_text": "Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\n\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\n\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?",
+      "response": {
+        "response_type": "shot",
+        "message": "Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\n\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\n\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [
+          {
+            "id": "frame:free_throw_01_shot_1:knee_dip:38:elbow:",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 38,
+            "timestamp_s": 1.267,
+            "phase": "knee_dip",
+            "uncertainty": "Deepest measured knee bend",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "elbow",
+              "side": "right",
+              "angle_deg": 52.0,
+              "angle_source": "saved_angle",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc"
+              ]
+            },
+            "outcome": "missed",
+            "outcome_source": "manual"
+          },
+          {
+            "id": "frame:free_throw_01_shot_1:knee_extension:49:elbow:",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 49,
+            "timestamp_s": 1.633,
+            "phase": "knee_extension",
+            "uncertainty": "Straightest measured knee after loading through release",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "elbow",
+              "side": "right",
+              "angle_deg": 131.2,
+              "angle_source": "saved_angle",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc"
+              ]
+            },
+            "outcome": "missed",
+            "outcome_source": "manual"
+          },
+          {
+            "id": "frame:free_throw_01_shot_1:release:49:elbow:",
+            "video_id": "free_throw_01",
+            "shot_id": "free_throw_01_shot_1",
+            "frame": 49,
+            "timestamp_s": 1.633,
+            "phase": "release",
+            "uncertainty": "Estimated release",
+            "source": "sample video",
+            "shot_number": 1,
+            "session_id": 1,
+            "playback_end_s": null,
+            "annotation": {
+              "focus": "elbow",
+              "side": "right",
+              "angle_deg": 131.2,
+              "angle_source": "saved_angle",
+              "marks": [
+                "alignment_lines",
+                "joint_markers",
+                "angle_arc"
+              ]
+            },
+            "outcome": "missed",
+            "outcome_source": "manual"
+          }
+        ],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "mechanics",
+            "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+            "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+            "kind": "supporting_source"
+          },
+          {
+            "id": "arm",
+            "source": "Jr. NBA — Form Shooting-2 Hands",
+            "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+            "kind": "supporting_source"
+          },
+          {
+            "id": "finish",
+            "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+            "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+            "kind": "supporting_source"
+          },
+          {
+            "id": "routine",
+            "source": "Jr. NBA — Fundamentals of the Free Throw",
+            "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+            "kind": "supporting_source"
+          }
+        ],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_repaired",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "mechanics",
+          "supporting_evidence_ids": [],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [
+            "narrative_validation_failed"
+          ],
+          "discarded_components": [],
+          "request_usage": {
+            "total_requests": 3,
+            "estimated_cost_usd": 0.0076516,
+            "requests": [
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "planning",
+                "input_tokens": 3702,
+                "cached_input_tokens": 0,
+                "output_tokens": 45,
+                "estimated_cost_usd": 0.0015528,
+                "latency_ms": 2401.137
+              },
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "generation",
+                "input_tokens": 6327,
+                "cached_input_tokens": 0,
+                "output_tokens": 375,
+                "estimated_cost_usd": 0.0031308,
+                "latency_ms": 4490.88
+              },
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "repair",
+                "input_tokens": 6484,
+                "cached_input_tokens": 0,
+                "output_tokens": 234,
+                "estimated_cost_usd": 0.002968,
+                "latency_ms": 3171.41
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {},
+          "citations": [],
+          "numeric_facts": []
+        }
+      },
+      "elapsed_ms": 10713.55,
+      "requests": [
+        {
+          "request": 1,
+          "initial_context": {
+            "question": "Analyze my shooting form. What should I improve?",
+            "conversation": [],
+            "scope": {
+              "selected_shot": "free_throw_01_shot_1",
+              "session_id": null,
+              "comparison": []
+            },
+            "visual_mode": "images_allowed",
+            "player_context": {
+              "goal": "",
+              "experience": "",
+              "preferences": {},
+              "focus": null,
+              "recommendations": [],
+              "reports": []
+            },
+            "practice_constraints": {
+              "equipment": {}
+            },
+            "measurement_guide": {
+              "min_knee_angle": [
+                "Smallest knee angle",
+                "degrees",
+                "start through estimated release"
+              ],
+              "knee_angle_range": [
+                "Knee angle change across the shot",
+                "degrees",
+                "start through estimated release"
+              ],
+              "release_elbow_angle": [
+                "Elbow angle at estimated release",
+                "degrees",
+                "estimated release"
+              ],
+              "max_elbow_angle": [
+                "Largest elbow angle",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_angle_range": [
+                "Elbow angle range",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_extension_after_release": [
+                "Elbow straightening after estimated release",
+                "degrees",
+                "early follow-through"
+              ],
+              "shooting_motion_ms": [
+                "Time from detected start to estimated release",
+                "ms",
+                "start through estimated release"
+              ],
+              "knee_coverage_pct": [
+                "Knee tracking coverage",
+                "%",
+                "start through estimated release"
+              ],
+              "elbow_coverage_pct": [
+                "Elbow tracking coverage",
+                "%",
+                "start through early follow-through"
+              ],
+              "tracking_coverage_pct": [
+                "Ball tracking coverage",
+                "%",
+                "first through last tracked ball frame"
+              ]
+            },
+            "evidence": {
+              "shot:free_throw_01_shot_1": {
+                "shot_id": "free_throw_01_shot_1",
+                "session_id": 1,
+                "shot_number": 1,
+                "outcome": "missed",
+                "outcome_source": "player label",
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "ball_flight": {
+                  "status": "unavailable",
+                  "tracking": {},
+                  "rim_crossing_estimate": null,
+                  "detector_method": null,
+                  "observation": null,
+                  "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+                },
+                "events": {
+                  "start_frame": 20,
+                  "release_frame": 49,
+                  "end_frame": 110,
+                  "segmentation_status": "experimental_review_required"
+                },
+                "measurements": {
+                  "min_knee_angle": {
+                    "status": "valid",
+                    "value": 88.82,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "knee_angle_range": {
+                    "status": "valid",
+                    "value": 74.61,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "release_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "max_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_angle_range": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_extension_after_release": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": null
+                  },
+                  "shooting_motion_ms": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "ms",
+                    "sample_frames": null
+                  },
+                  "knee_coverage_pct": {
+                    "status": "valid",
+                    "value": 100.0,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "elbow_coverage_pct": {
+                    "status": "valid",
+                    "value": 69.44,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "tracking_coverage_pct": {
+                    "status": "missing",
+                    "value": null,
+                    "unit": "%",
+                    "sample_frames": null
+                  }
+                }
+              },
+              "history:outcome_counts": {
+                "made": 0,
+                "missed": 1,
+                "unknown": 0
+              },
+              "profile:current": {
+                "status": "insufficient_data",
+                "counts": {
+                  "total_shots": 1,
+                  "labelled_shots": 1,
+                  "made": 0,
+                  "missed": 1,
+                  "unlabelled_shots": 0
+                },
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "observation_ids": [],
+                "features": {}
+              }
+            },
+            "knowledge": {
+              "mechanics": {
+                "topic": "Shooting mechanics",
+                "principle": "A balanced setup, coordinated lift and comfortable finish give you useful checkpoints for a repeatable shot.",
+                "use_when": "When learning the movement or establishing a baseline.",
+                "avoid_when": "When a comfortable, effective movement already serves the player’s goal.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "arm": {
+                "topic": "Shooting arm",
+                "principle": "The shooting hand and arm guide the ball on delivery.",
+                "use_when": "When exploring shooting-arm delivery.",
+                "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "finish": {
+                "topic": "Follow-through",
+                "principle": "A repeatable finish gives you something easy to check after each shot.",
+                "use_when": "When testing an early finish cue.",
+                "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "individual": {
+                "topic": "Individual technique",
+                "principle": "Different players can make effective shots with different comfortable mechanics.",
+                "use_when": "When appearance is the main concern.",
+                "avoid_when": "When a painful movement needs qualified assessment.",
+                "evidence_basis": "observational_study"
+              },
+              "routine": {
+                "topic": "Shooting consistency",
+                "principle": "One repeatable routine gives you a clear starting point for practice.",
+                "use_when": "For a beginner or a baseline practice set.",
+                "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "recording": {
+                "topic": "Recording quality",
+                "principle": "A steady side view with the whole body visible makes pose review easier.",
+                "use_when": "When clips are hard to interpret or compare.",
+                "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+                "evidence_basis": "measurement_guidance"
+              },
+              "knee_dip_depth": {
+                "topic": "Choosing a comfortable knee dip",
+                "principle": "Treat knee-dip depth as specific to the player and shooting task.",
+                "use_when": "When deciding whether to test a bigger or smaller dip.",
+                "avoid_when": "Depth alone says little about timing, power or whether a change helps.",
+                "evidence_basis": "observational_study",
+                "purpose": "The loading seen in professional long-range attempts can differ from the loading in shorter shots.",
+                "application": "Compare only matched-distance attempts and record both comfort and outcomes."
+              }
+            },
+            "eligible_practice": {
+              "focused_shooting": {
+                "title": "One-focus shooting experiment",
+                "eligible_topics": [
+                  "mechanics",
+                  "arm",
+                  "finish",
+                  "individual",
+                  "routine"
+                ],
+                "required_equipment": [
+                  "ball",
+                  "hoop"
+                ]
+              },
+              "shadow_rehearsal": {
+                "title": "No-release movement rehearsal",
+                "eligible_topics": [
+                  "mechanics",
+                  "arm",
+                  "finish",
+                  "individual",
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "close_delivery": {
+                "title": "Close-range delivery rehearsal",
+                "eligible_topics": [
+                  "arm",
+                  "finish"
+                ],
+                "required_equipment": [
+                  "ball",
+                  "hoop"
+                ]
+              },
+              "steady_setup": {
+                "title": "Comfortable setup rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "recording_check": {
+                "title": "Matched-view recording check",
+                "eligible_topics": [
+                  "recording"
+                ],
+                "required_equipment": [
+                  "camera"
+                ]
+              }
+            }
+          },
+          "image_count": 0,
+          "ceiling_usd": 0.0167444,
+          "estimated_usd": 0.0015528,
+          "usage": {
+            "input_tokens": 3702,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 45,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 3747
+          },
+          "output": [
+            {
+              "id": "fc_0b78d27bfe7d8941016b08e3d79c5087d1891d213003dd458f",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"shot_id\":\"free_throw_01_shot_1\",\"phases\":\"knee_dip,knee_extension,release,follow_through\",\"focus\":\"elbow\"}",
+              "call_id": "call_R9i5PS74ePo5m8KzWUxxkRVf",
+              "name": "retrieve_frames"
+            }
+          ]
+        },
+        {
+          "request": 2,
+          "tool_result": {
+            "id": "tool:1:retrieve_frames",
+            "result": {
+              "frames": [
+                {
+                  "id": "frame:free_throw_01_shot_1:knee_dip:38:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 38,
+                  "timestamp_s": 1.267,
+                  "phase": "knee_dip",
+                  "uncertainty": "Deepest measured knee bend",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 52.0,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                {
+                  "id": "frame:free_throw_01_shot_1:knee_extension:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "knee_extension",
+                  "uncertainty": "Straightest measured knee after loading through release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                {
+                  "id": "frame:free_throw_01_shot_1:release:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "release",
+                  "uncertainty": "Estimated release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                }
+              ]
+            },
+            "context_update": {
+              "evidence": {
+                "frame:free_throw_01_shot_1:knee_dip:38:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:knee_dip:38:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 38,
+                  "timestamp_s": 1.267,
+                  "phase": "knee_dip",
+                  "uncertainty": "Deepest measured knee bend",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 52.0,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                "frame:free_throw_01_shot_1:knee_extension:49:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:knee_extension:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "knee_extension",
+                  "uncertainty": "Straightest measured knee after loading through release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                "frame:free_throw_01_shot_1:release:49:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:release:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "release",
+                  "uncertainty": "Estimated release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                }
+              },
+              "knowledge": {},
+              "eligible_practice": {}
+            }
+          },
+          "image_count": 3,
+          "ceiling_usd": 0.02144,
+          "estimated_usd": 0.0031308,
+          "usage": {
+            "input_tokens": 6327,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 375,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6702
+          },
+          "output": [
+            {
+              "id": "msg_0b78d27bfe7d8941016b08e3d9ed4887d1af3c2a6f563ceb3b",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Looking at your shooting form in these frames, your knee bend at the deepest dip is about 88.8 degrees, which shows a moderate knee bend that can help with power and balance. Your elbow angle at release is about 131 degrees, indicating your arm is fairly extended but not fully straight at release. This is generally good as it suggests you are guiding the ball with your shooting arm rather than locking it out too early.\\n\\nSince this shot was missed, one area to consider improving is the consistency and repeatability of your elbow extension through the release and follow-through phases. Unfortunately, the data on elbow extension after release is unreliable here, so I can't confirm if you fully straighten your arm after release or if there is variability.\\n\\nA useful adjustment to try is focusing on a smooth, controlled follow-through where your shooting arm fully extends and your wrist snaps down naturally. This can help with shot accuracy and consistency. You can check this by recording a few more shots and observing if your elbow angle at follow-through is consistently more extended than at release.\\n\\nAlso, maintaining your knee bend and extension rhythm can support a repeatable shot. Since you have full knee tracking coverage, keep your knee dip comfortable and consistent.\\n\\nIf you want, I can suggest a simple practice drill to rehearse a steady setup and follow-through to build a reliable routine. Would you like that?\",\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:elbow:\",\"frame:free_throw_01_shot_1:knee_extension:49:elbow:\",\"frame:free_throw_01_shot_1:release:49:elbow:\"],\"visual\":\"arm_straightens\",\"knowledge_ids\":[\"mechanics\",\"arm\",\"finish\",\"routine\"]}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        },
+        {
+          "request": 3,
+          "image_count": 3,
+          "ceiling_usd": 0.021074,
+          "estimated_usd": 0.002968,
+          "usage": {
+            "input_tokens": 6484,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 234,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6718
+          },
+          "output": [
+            {
+              "id": "msg_0b78d27bfe7d8941016b08e3de3b2487d1baf2ce0b9f3f83e1",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\\n\\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\\n\\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?\",\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:elbow:\",\"frame:free_throw_01_shot_1:knee_extension:49:elbow:\",\"frame:free_throw_01_shot_1:release:49:elbow:\"],\"knowledge_ids\":[\"mechanics\",\"arm\",\"finish\",\"routine\"]}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Can you visually show me what you mean?",
+      "response_text": "Looking at the images from your shot, at the knee dip phase your elbow is bent, showing you are preparing to push the ball upwards. By the release phase, your elbow is more extended, indicating you are straightening your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\n\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\n\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?",
+      "response": {
+        "response_type": "visual",
+        "message": "Looking at the images from your shot, at the knee dip phase your elbow is bent, showing you are preparing to push the ball upwards. By the release phase, your elbow is more extended, indicating you are straightening your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\n\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\n\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_repaired",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": null,
+          "supporting_evidence_ids": [],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [
+            "narrative_validation_failed"
+          ],
+          "discarded_components": [],
+          "request_usage": {
+            "total_requests": 3,
+            "estimated_cost_usd": 0.0069624,
+            "requests": [
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "planning",
+                "input_tokens": 3483,
+                "cached_input_tokens": 0,
+                "output_tokens": 42,
+                "estimated_cost_usd": 0.0014604,
+                "latency_ms": 1343.828
+              },
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "generation",
+                "input_tokens": 6095,
+                "cached_input_tokens": 0,
+                "output_tokens": 249,
+                "estimated_cost_usd": 0.0028364,
+                "latency_ms": 3404.681
+              },
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "repair",
+                "input_tokens": 6020,
+                "cached_input_tokens": 0,
+                "output_tokens": 161,
+                "estimated_cost_usd": 0.0026656,
+                "latency_ms": 2503.517
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {},
+          "citations": [],
+          "numeric_facts": []
+        }
+      },
+      "elapsed_ms": 8041.52,
+      "requests": [
+        {
+          "request": 4,
+          "initial_context": {
+            "question": "Can you visually show me what you mean?",
+            "conversation": [
+              {
+                "role": "user",
+                "content": "Analyze my shooting form. What should I improve?"
+              },
+              {
+                "role": "assistant",
+                "content": "Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\n\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\n\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?"
+              }
+            ],
+            "scope": {
+              "selected_shot": "free_throw_01_shot_1",
+              "session_id": null,
+              "comparison": []
+            },
+            "visual_mode": "images_allowed",
+            "player_context": {
+              "goal": "",
+              "experience": "",
+              "preferences": {},
+              "focus": null,
+              "recommendations": [],
+              "reports": []
+            },
+            "practice_constraints": {
+              "equipment": {}
+            },
+            "measurement_guide": {
+              "min_knee_angle": [
+                "Smallest knee angle",
+                "degrees",
+                "start through estimated release"
+              ],
+              "knee_angle_range": [
+                "Knee angle change across the shot",
+                "degrees",
+                "start through estimated release"
+              ],
+              "release_elbow_angle": [
+                "Elbow angle at estimated release",
+                "degrees",
+                "estimated release"
+              ],
+              "max_elbow_angle": [
+                "Largest elbow angle",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_angle_range": [
+                "Elbow angle range",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_extension_after_release": [
+                "Elbow straightening after estimated release",
+                "degrees",
+                "early follow-through"
+              ],
+              "shooting_motion_ms": [
+                "Time from detected start to estimated release",
+                "ms",
+                "start through estimated release"
+              ],
+              "knee_coverage_pct": [
+                "Knee tracking coverage",
+                "%",
+                "start through estimated release"
+              ],
+              "elbow_coverage_pct": [
+                "Elbow tracking coverage",
+                "%",
+                "start through early follow-through"
+              ],
+              "tracking_coverage_pct": [
+                "Ball tracking coverage",
+                "%",
+                "first through last tracked ball frame"
+              ]
+            },
+            "evidence": {
+              "shot:free_throw_01_shot_1": {
+                "shot_id": "free_throw_01_shot_1",
+                "session_id": 1,
+                "shot_number": 1,
+                "outcome": "missed",
+                "outcome_source": "player label",
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "ball_flight": {
+                  "status": "unavailable",
+                  "tracking": {},
+                  "rim_crossing_estimate": null,
+                  "detector_method": null,
+                  "observation": null,
+                  "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+                },
+                "events": {
+                  "start_frame": 20,
+                  "release_frame": 49,
+                  "end_frame": 110,
+                  "segmentation_status": "experimental_review_required"
+                },
+                "measurements": {
+                  "min_knee_angle": {
+                    "status": "valid",
+                    "value": 88.82,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "knee_angle_range": {
+                    "status": "valid",
+                    "value": 74.61,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "release_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "max_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_angle_range": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_extension_after_release": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": null
+                  },
+                  "shooting_motion_ms": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "ms",
+                    "sample_frames": null
+                  },
+                  "knee_coverage_pct": {
+                    "status": "valid",
+                    "value": 100.0,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "elbow_coverage_pct": {
+                    "status": "valid",
+                    "value": 69.44,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "tracking_coverage_pct": {
+                    "status": "missing",
+                    "value": null,
+                    "unit": "%",
+                    "sample_frames": null
+                  }
+                }
+              },
+              "history:outcome_counts": {
+                "made": 0,
+                "missed": 1,
+                "unknown": 0
+              },
+              "profile:current": {
+                "status": "insufficient_data",
+                "counts": {
+                  "total_shots": 1,
+                  "labelled_shots": 1,
+                  "made": 0,
+                  "missed": 1,
+                  "unlabelled_shots": 0
+                },
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "observation_ids": [],
+                "features": {}
+              }
+            },
+            "knowledge": {
+              "routine": {
+                "topic": "Shooting consistency",
+                "principle": "One repeatable routine gives you a clear starting point for practice.",
+                "use_when": "For a beginner or a baseline practice set.",
+                "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "recording": {
+                "topic": "Recording quality",
+                "principle": "A steady side view with the whole body visible makes pose review easier.",
+                "use_when": "When clips are hard to interpret or compare.",
+                "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+                "evidence_basis": "measurement_guidance"
+              }
+            },
+            "eligible_practice": {
+              "focused_shooting": {
+                "title": "One-focus shooting experiment",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": [
+                  "ball",
+                  "hoop"
+                ]
+              },
+              "shadow_rehearsal": {
+                "title": "No-release movement rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "steady_setup": {
+                "title": "Comfortable setup rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "recording_check": {
+                "title": "Matched-view recording check",
+                "eligible_topics": [
+                  "recording"
+                ],
+                "required_equipment": [
+                  "camera"
+                ]
+              }
+            }
+          },
+          "image_count": 0,
+          "ceiling_usd": 0.016258,
+          "estimated_usd": 0.0014604,
+          "usage": {
+            "input_tokens": 3483,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 42,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 3525
+          },
+          "output": [
+            {
+              "id": "fc_0448ec2a207cce20016b08e3e14ad087d1b8a9f366c75628a9",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"shot_id\":\"free_throw_01_shot_1\",\"phases\":\"knee_dip,release,follow_through\",\"focus\":\"elbow\"}",
+              "call_id": "call_4x6Q8q4WoGsqaDGTUHJQHHdC",
+              "name": "retrieve_frames"
+            }
+          ]
+        },
+        {
+          "request": 5,
+          "tool_result": {
+            "id": "tool:1:retrieve_frames",
+            "result": {
+              "frames": [
+                {
+                  "id": "frame:free_throw_01_shot_1:knee_dip:38:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 38,
+                  "timestamp_s": 1.267,
+                  "phase": "knee_dip",
+                  "uncertainty": "Deepest measured knee bend",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 52.0,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                {
+                  "id": "frame:free_throw_01_shot_1:release:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "release",
+                  "uncertainty": "Estimated release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                {
+                  "id": "frame:free_throw_01_shot_1:follow_through:110:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 110,
+                  "timestamp_s": 3.667,
+                  "phase": "follow_through",
+                  "uncertainty": "Early post-release frame, not a confirmed shot end",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": null,
+                    "angle_source": null,
+                    "marks": [
+                      "joint_markers"
+                    ]
+                  }
+                }
+              ]
+            },
+            "context_update": {
+              "evidence": {
+                "frame:free_throw_01_shot_1:knee_dip:38:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:knee_dip:38:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 38,
+                  "timestamp_s": 1.267,
+                  "phase": "knee_dip",
+                  "uncertainty": "Deepest measured knee bend",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 52.0,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                "frame:free_throw_01_shot_1:release:49:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:release:49:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 49,
+                  "timestamp_s": 1.633,
+                  "phase": "release",
+                  "uncertainty": "Estimated release",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": 131.2,
+                    "angle_source": "saved_angle",
+                    "marks": [
+                      "alignment_lines",
+                      "joint_markers",
+                      "angle_arc"
+                    ]
+                  }
+                },
+                "frame:free_throw_01_shot_1:follow_through:110:elbow:": {
+                  "id": "frame:free_throw_01_shot_1:follow_through:110:elbow:",
+                  "video_id": "free_throw_01",
+                  "shot_id": "free_throw_01_shot_1",
+                  "frame": 110,
+                  "timestamp_s": 3.667,
+                  "phase": "follow_through",
+                  "uncertainty": "Early post-release frame, not a confirmed shot end",
+                  "source": "sample video",
+                  "shot_number": 1,
+                  "session_id": 1,
+                  "playback_end_s": null,
+                  "annotation": {
+                    "focus": "elbow",
+                    "side": "right",
+                    "angle_deg": null,
+                    "angle_source": null,
+                    "marks": [
+                      "joint_markers"
+                    ]
+                  }
+                }
+              },
+              "knowledge": {},
+              "eligible_practice": {}
+            }
+          },
+          "image_count": 3,
+          "ceiling_usd": 0.0209092,
+          "estimated_usd": 0.0028364,
+          "usage": {
+            "input_tokens": 6095,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 249,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6344
+          },
+          "output": [
+            {
+              "id": "msg_0448ec2a207cce20016b08e3e4094087d1a545d7f6d6609c00",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Looking at the images from your shot, at the knee dip phase your elbow is bent at about 52 degrees, which shows you are preparing to push the ball upwards. By the release phase, your elbow angle opens up to about 131 degrees, indicating you are extending your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\\n\\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\\n\\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?\",\"frame_ids\":[\"frame:free_throw_01_shot_1:knee_dip:38:elbow:\",\"frame:free_throw_01_shot_1:release:49:elbow:\",\"frame:free_throw_01_shot_1:follow_through:110:elbow:\"],\"visual\":\"arm_straightens\"}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        },
+        {
+          "request": 6,
+          "image_count": 3,
+          "ceiling_usd": 0.0201284,
+          "estimated_usd": 0.0026656,
+          "usage": {
+            "input_tokens": 6020,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 161,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 6181
+          },
+          "output": [
+            {
+              "id": "msg_0448ec2a207cce20016b08e3e7062487d19caf647faa1690c4",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Looking at the images from your shot, at the knee dip phase your elbow is bent, showing you are preparing to push the ball upwards. By the release phase, your elbow is more extended, indicating you are straightening your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\\n\\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\\n\\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?\"}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Can you recommend a specific instructional video and explain what I should focus on?",
+      "response_text": "I recommend the Jr. NBA video on shooting consistency titled \"Fundamentals of the Free Throw.\" It focuses on developing one repeatable routine to give you a clear starting point for practice. The key points to focus on are setting your feet, picking a spot on the rim, and using the same comfortable rhythm each time. This helps give each attempt a similar setup, which is crucial for building accuracy and confidence.\n\nSince your current shot shows a typical arm extension but was missed, working on a consistent routine can improve your repeatability and comfort. You can practice by repeating your free-throw routine with attention to a steady setup and smooth follow-through.\n\nWould you like me to suggest a simple drill to practice this routine?\n\nI couldn’t find a verified video for this request in the coaching catalog.\n\nSet your feet the same way each time, pick a target spot on the rim, and shoot with a comfortable rhythm. Focus on repeating the same setup and follow-through for each shot.\n\nCheck if your shots feel more consistent and comfortable, and if your make rate improves over a small set of attempts.\n\nPrescribed practice target: 2 set(s) of 10 repetitions; allow 600 seconds including resets.",
+      "response": {
+        "response_type": "practice",
+        "message": "I recommend the Jr. NBA video on shooting consistency titled \"Fundamentals of the Free Throw.\" It focuses on developing one repeatable routine to give you a clear starting point for practice. The key points to focus on are setting your feet, picking a spot on the rim, and using the same comfortable rhythm each time. This helps give each attempt a similar setup, which is crucial for building accuracy and confidence.\n\nSince your current shot shows a typical arm extension but was missed, working on a consistent routine can improve your repeatability and comfort. You can practice by repeating your free-throw routine with attention to a steady setup and smooth follow-through.\n\nWould you like me to suggest a simple drill to practice this routine?",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting consistency",
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": "general",
+        "guidance_note": "I couldn’t find a verified video for this request in the coaching catalog.",
+        "practice": {
+          "title": "One-focus shooting experiment",
+          "instructions": "Set your feet the same way each time, pick a target spot on the rim, and shoot with a comfortable rhythm. Focus on repeating the same setup and follow-through for each shot.",
+          "evaluation": "Check if your shots feel more consistent and comfortable, and if your make rate improves over a small set of attempts.",
+          "drill_id": "focused_shooting",
+          "dose": {
+            "sets": 2,
+            "repetitions": 10,
+            "duration_seconds": 600
+          },
+          "reason": null,
+          "setup": null,
+          "focus": null,
+          "success_criteria": null,
+          "easier_variation": null,
+          "progression": null,
+          "reconsider": null,
+          "assumptions": [
+            "Requires access to a ball.",
+            "Requires access to a hoop."
+          ],
+          "source_info": {
+            "author": "ShotCoach",
+            "status": "app_authored_adaptation",
+            "professionally_validated": false
+          }
+        },
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "routine",
+            "source": "Jr. NBA — Fundamentals of the Free Throw",
+            "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+            "kind": "supporting_source"
+          }
+        ],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_authored",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "routine",
+          "supporting_evidence_ids": [],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [],
+          "discarded_components": [
+            {
+              "field": "instructional_resource_id",
+              "reason": "Resource was not offered by the reviewed catalog"
+            },
+            {
+              "field": "adaptation",
+              "reason": "There is no previous active objective"
+            }
+          ],
+          "request_usage": {
+            "total_requests": 2,
+            "estimated_cost_usd": 0.0025724,
+            "requests": [
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "planning",
+                "input_tokens": 3678,
+                "cached_input_tokens": 0,
+                "output_tokens": 23,
+                "estimated_cost_usd": 0.001508,
+                "latency_ms": 1427.536
+              },
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "generation",
+                "input_tokens": 4189,
+                "cached_input_tokens": 3584,
+                "output_tokens": 290,
+                "estimated_cost_usd": 0.0010644,
+                "latency_ms": 3087.424
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {},
+          "citations": [],
+          "numeric_facts": []
+        }
+      },
+      "elapsed_ms": 4760.45,
+      "requests": [
+        {
+          "request": 7,
+          "initial_context": {
+            "question": "Can you recommend a specific instructional video and explain what I should focus on?",
+            "conversation": [
+              {
+                "role": "user",
+                "content": "Analyze my shooting form. What should I improve?"
+              },
+              {
+                "role": "assistant",
+                "content": "Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\n\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\n\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?"
+              },
+              {
+                "role": "user",
+                "content": "Can you visually show me what you mean?"
+              },
+              {
+                "role": "assistant",
+                "content": "Looking at the images from your shot, at the knee dip phase your elbow is bent, showing you are preparing to push the ball upwards. By the release phase, your elbow is more extended, indicating you are straightening your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\n\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\n\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?"
+              }
+            ],
+            "scope": {
+              "selected_shot": "free_throw_01_shot_1",
+              "session_id": null,
+              "comparison": []
+            },
+            "visual_mode": "images_allowed",
+            "player_context": {
+              "goal": "",
+              "experience": "",
+              "preferences": {},
+              "focus": null,
+              "recommendations": [],
+              "reports": []
+            },
+            "practice_constraints": {
+              "equipment": {}
+            },
+            "measurement_guide": {
+              "min_knee_angle": [
+                "Smallest knee angle",
+                "degrees",
+                "start through estimated release"
+              ],
+              "knee_angle_range": [
+                "Knee angle change across the shot",
+                "degrees",
+                "start through estimated release"
+              ],
+              "release_elbow_angle": [
+                "Elbow angle at estimated release",
+                "degrees",
+                "estimated release"
+              ],
+              "max_elbow_angle": [
+                "Largest elbow angle",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_angle_range": [
+                "Elbow angle range",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_extension_after_release": [
+                "Elbow straightening after estimated release",
+                "degrees",
+                "early follow-through"
+              ],
+              "shooting_motion_ms": [
+                "Time from detected start to estimated release",
+                "ms",
+                "start through estimated release"
+              ],
+              "knee_coverage_pct": [
+                "Knee tracking coverage",
+                "%",
+                "start through estimated release"
+              ],
+              "elbow_coverage_pct": [
+                "Elbow tracking coverage",
+                "%",
+                "start through early follow-through"
+              ],
+              "tracking_coverage_pct": [
+                "Ball tracking coverage",
+                "%",
+                "first through last tracked ball frame"
+              ]
+            },
+            "evidence": {
+              "shot:free_throw_01_shot_1": {
+                "shot_id": "free_throw_01_shot_1",
+                "session_id": 1,
+                "shot_number": 1,
+                "outcome": "missed",
+                "outcome_source": "player label",
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "ball_flight": {
+                  "status": "unavailable",
+                  "tracking": {},
+                  "rim_crossing_estimate": null,
+                  "detector_method": null,
+                  "observation": null,
+                  "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+                },
+                "events": {
+                  "start_frame": 20,
+                  "release_frame": 49,
+                  "end_frame": 110,
+                  "segmentation_status": "experimental_review_required"
+                },
+                "measurements": {
+                  "min_knee_angle": {
+                    "status": "valid",
+                    "value": 88.82,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "knee_angle_range": {
+                    "status": "valid",
+                    "value": 74.61,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "release_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "max_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_angle_range": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_extension_after_release": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": null
+                  },
+                  "shooting_motion_ms": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "ms",
+                    "sample_frames": null
+                  },
+                  "knee_coverage_pct": {
+                    "status": "valid",
+                    "value": 100.0,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "elbow_coverage_pct": {
+                    "status": "valid",
+                    "value": 69.44,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "tracking_coverage_pct": {
+                    "status": "missing",
+                    "value": null,
+                    "unit": "%",
+                    "sample_frames": null
+                  }
+                }
+              },
+              "history:outcome_counts": {
+                "made": 0,
+                "missed": 1,
+                "unknown": 0
+              },
+              "profile:current": {
+                "status": "insufficient_data",
+                "counts": {
+                  "total_shots": 1,
+                  "labelled_shots": 1,
+                  "made": 0,
+                  "missed": 1,
+                  "unlabelled_shots": 0
+                },
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "observation_ids": [],
+                "features": {}
+              }
+            },
+            "knowledge": {
+              "recording": {
+                "topic": "Recording quality",
+                "principle": "A steady side view with the whole body visible makes pose review easier.",
+                "use_when": "When clips are hard to interpret or compare.",
+                "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+                "evidence_basis": "measurement_guidance"
+              },
+              "routine": {
+                "topic": "Shooting consistency",
+                "principle": "One repeatable routine gives you a clear starting point for practice.",
+                "use_when": "For a beginner or a baseline practice set.",
+                "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+                "evidence_basis": "coaching_guidance"
+              }
+            },
+            "eligible_practice": {
+              "recording_check": {
+                "title": "Matched-view recording check",
+                "eligible_topics": [
+                  "recording"
+                ],
+                "required_equipment": [
+                  "camera"
+                ]
+              },
+              "focused_shooting": {
+                "title": "One-focus shooting experiment",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": [
+                  "ball",
+                  "hoop"
+                ]
+              },
+              "shadow_rehearsal": {
+                "title": "No-release movement rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "steady_setup": {
+                "title": "Comfortable setup rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              }
+            },
+            "instructional_resources": [],
+            "requested_resource_kind": "video"
+          },
+          "image_count": 0,
+          "ceiling_usd": 0.0166672,
+          "estimated_usd": 0.001508,
+          "usage": {
+            "input_tokens": 3678,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 23,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 3701
+          },
+          "output": [
+            {
+              "id": "fc_08da580d597bc9e6016b08e3e9d23887d1875c3921c5c277d5",
+              "type": "function_call",
+              "status": "completed",
+              "arguments": "{\"topic\":\"shooting routine\",\"resource_kind\":\"video\"}",
+              "call_id": "call_oFmed1WQFkJnRtCAVCjY7CVs",
+              "name": "retrieve_knowledge"
+            }
+          ]
+        },
+        {
+          "request": 8,
+          "tool_result": {
+            "id": "tool:1:retrieve_knowledge",
+            "result": {
+              "status": "available",
+              "principles": {
+                "routine": {
+                  "topic": "Shooting consistency",
+                  "principle": "One repeatable routine gives you a clear starting point for practice.",
+                  "cue": "Set your feet, pick a spot on the rim, then use the same comfortable rhythm each time.",
+                  "purpose": "Give each attempt a similar setup.",
+                  "use_when": "For a beginner or a baseline practice set.",
+                  "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+                  "exercise": "Repeat your free-throw routine",
+                  "source": "Jr. NBA — Fundamentals of the Free Throw",
+                  "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+                  "metric": "shooting_motion_ms",
+                  "evidence_basis": "coaching_guidance"
+                },
+                "arm": {
+                  "topic": "Shooting arm",
+                  "principle": "The shooting hand and arm guide the ball on delivery.",
+                  "cue": "Lift the ball with your shooting hand underneath and let the arm extend toward the basket.",
+                  "purpose": "Give the ball a repeatable lift.",
+                  "use_when": "When exploring shooting-arm delivery.",
+                  "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+                  "exercise": "Close one-hand form shots",
+                  "source": "Jr. NBA — Form Shooting-2 Hands",
+                  "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+                  "metric": "release_elbow_angle",
+                  "evidence_basis": "coaching_guidance"
+                }
+              },
+              "resources": [],
+              "resource_status": "no_match"
+            },
+            "context_update": {
+              "evidence": {},
+              "knowledge": {
+                "arm": {
+                  "topic": "Shooting arm",
+                  "principle": "The shooting hand and arm guide the ball on delivery.",
+                  "use_when": "When exploring shooting-arm delivery.",
+                  "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+                  "evidence_basis": "coaching_guidance"
+                }
+              },
+              "eligible_practice": {
+                "focused_shooting": {
+                  "title": "One-focus shooting experiment",
+                  "eligible_topics": [
+                    "routine",
+                    "arm"
+                  ],
+                  "required_equipment": [
+                    "ball",
+                    "hoop"
+                  ]
+                },
+                "shadow_rehearsal": {
+                  "title": "No-release movement rehearsal",
+                  "eligible_topics": [
+                    "routine",
+                    "arm"
+                  ],
+                  "required_equipment": []
+                },
+                "close_delivery": {
+                  "title": "Close-range delivery rehearsal",
+                  "eligible_topics": [
+                    "arm"
+                  ],
+                  "required_equipment": [
+                    "ball",
+                    "hoop"
+                  ]
+                }
+              },
+              "instructional_resources": [],
+              "requested_resource_kind": "video"
+            }
+          },
+          "image_count": 0,
+          "ceiling_usd": 0.017756,
+          "estimated_usd": 0.0010644,
+          "usage": {
+            "input_tokens": 4189,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 3584
+            },
+            "output_tokens": 290,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4479
+          },
+          "output": [
+            {
+              "id": "msg_08da580d597bc9e6016b08e3eaa17c87d180ed515459d44b3e",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"I recommend the Jr. NBA video on shooting consistency titled \\\"Fundamentals of the Free Throw.\\\" It focuses on developing one repeatable routine to give you a clear starting point for practice. The key points to focus on are setting your feet, picking a spot on the rim, and using the same comfortable rhythm each time. This helps give each attempt a similar setup, which is crucial for building accuracy and confidence.\\n\\nSince your current shot shows a typical arm extension but was missed, working on a consistent routine can improve your repeatability and comfort. You can practice by repeating your free-throw routine with attention to a steady setup and smooth follow-through.\\n\\nWould you like me to suggest a simple drill to practice this routine?\",\"knowledge_ids\":[\"routine\"],\"instructional_resource_id\":\"https://jr.nba.com/video/fundamentals-of-the-free-throw/\",\"practice\":{\"drill_id\":\"focused_shooting\",\"topic\":\"routine\",\"instructions\":\"Set your feet the same way each time, pick a target spot on the rim, and shoot with a comfortable rhythm. Focus on repeating the same setup and follow-through for each shot.\",\"evaluation\":\"Check if your shots feel more consistent and comfortable, and if your make rate improves over a small set of attempts.\",\"dose\":{\"sets\":2,\"repetitions\":10,\"duration_seconds\":600}},\"adaptation\":\"continue\"}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Is there anything about my current technique that I should keep rather than change?",
+      "response_text": "Your current shooting technique shows a typical arm extension pattern through the shot, which is a good habit to keep as it helps guide the ball. The knee bend at the dip phase also indicates a solid loading movement. These elements provide a foundation for a consistent shot.\n\nSince your shot was missed, the main area to focus on is building a repeatable and comfortable shooting routine rather than changing your arm or knee mechanics. Keeping your arm extension and knee bend as they are, try to develop a steady setup and smooth follow-through that you can repeat every time. This consistency often leads to better accuracy.\n\nWould you like me to suggest a simple drill to practice this consistent routine?",
+      "response": {
+        "response_type": "general",
+        "message": "Your current shooting technique shows a typical arm extension pattern through the shot, which is a good habit to keep as it helps guide the ball. The knee bend at the dip phase also indicates a solid loading movement. These elements provide a foundation for a consistent shot.\n\nSince your shot was missed, the main area to focus on is building a repeatable and comfortable shooting routine rather than changing your arm or knee mechanics. Keeping your arm extension and knee bend as they are, try to develop a steady setup and smooth follow-through that you can repeat every time. This consistency often leads to better accuracy.\n\nWould you like me to suggest a simple drill to practice this consistent routine?",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": null,
+        "cue": null,
+        "explanation": null,
+        "guidance_basis": null,
+        "guidance_note": null,
+        "practice": null,
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "routine",
+            "source": "Jr. NBA — Fundamentals of the Free Throw",
+            "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+            "kind": "supporting_source"
+          }
+        ],
+        "instructional_resource": null,
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null,
+        "provenance": {
+          "source": "openai_authored",
+          "wording": "model_authored",
+          "provider": "openai",
+          "selected_topic": "routine",
+          "supporting_evidence_ids": [],
+          "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+          "reason": null,
+          "validation_failures": [],
+          "discarded_components": [
+            {
+              "field": "practice",
+              "reason": "practice.instructions: this drill is a no-release rehearsal."
+            },
+            {
+              "field": "adaptation",
+              "reason": "There is no previous active objective"
+            }
+          ],
+          "request_usage": {
+            "total_requests": 1,
+            "estimated_cost_usd": 0.0019684,
+            "requests": [
+              {
+                "model": "gpt-4.1-mini-2025-04-14",
+                "purpose": "generation",
+                "input_tokens": 3953,
+                "cached_input_tokens": 0,
+                "output_tokens": 242,
+                "estimated_cost_usd": 0.0019684,
+                "latency_ms": 3015.348
+              }
+            ]
+          }
+        },
+        "next_step": null,
+        "authored_evidence": {
+          "observations": {},
+          "citations": [],
+          "numeric_facts": []
+        }
+      },
+      "elapsed_ms": 3060.65,
+      "requests": [
+        {
+          "request": 9,
+          "initial_context": {
+            "question": "Is there anything about my current technique that I should keep rather than change?",
+            "conversation": [
+              {
+                "role": "user",
+                "content": "Analyze my shooting form. What should I improve?"
+              },
+              {
+                "role": "assistant",
+                "content": "Reviewing your shooting form from the available frames, your knee bend at the deepest dip shows a clear loading phase, and your elbow is bent at release, indicating you are guiding the ball with your shooting arm. However, the exact elbow angles and extension after release are not reliably measured here, so I cannot confirm the degree of arm extension or changes through follow-through.\n\nSince this shot was missed, focusing on a consistent and comfortable shooting routine could help. You might try rehearsing a steady setup and a smooth follow-through to build repeatability. This approach aligns with general shooting mechanics principles emphasizing balance, coordinated lift, and a comfortable finish.\n\nIf you'd like, I can suggest a simple practice drill to work on these aspects. Would you be interested?"
+              },
+              {
+                "role": "user",
+                "content": "Can you visually show me what you mean?"
+              },
+              {
+                "role": "assistant",
+                "content": "Looking at the images from your shot, at the knee dip phase your elbow is bent, showing you are preparing to push the ball upwards. By the release phase, your elbow is more extended, indicating you are straightening your arm to release the ball. The follow-through frame shows your arm is extended forward, but the exact elbow angle there is not measured.\n\nThis sequence shows a typical arm extension through the shot, which is good for guiding the ball. Since this shot was missed, one thing to check is the consistency of your elbow extension and follow-through across multiple shots. A smooth, repeatable extension and a comfortable follow-through often help improve accuracy.\n\nWould you like to compare this with a made shot or try a drill to build a consistent shooting routine?"
+              },
+              {
+                "role": "user",
+                "content": "Can you recommend a specific instructional video and explain what I should focus on?"
+              },
+              {
+                "role": "assistant",
+                "content": "I recommend the Jr. NBA video on shooting consistency titled \"Fundamentals of the Free Throw.\" It focuses on developing one repeatable routine to give you a clear starting point for practice. The key points to focus on are setting your feet, picking a spot on the rim, and using the same comfortable rhythm each time. This helps give each attempt a similar setup, which is crucial for building accuracy and confidence.\n\nSince your current shot shows a typical arm extension but was missed, working on a consistent routine can improve your repeatability and comfort. You can practice by repeating your free-throw routine with attention to a steady setup and smooth follow-through.\n\nWould you like me to suggest a simple drill to practice this routine?\n\nI couldn’t find a verified video for this request in the coaching catalog.\n\nSet your feet the same way each time, pick a target spot on the rim, and shoot with a comfortable rhythm. Focus on repeating the same setup and follow-through for each shot.\n\nCheck if your shots feel more consistent and comfortable, and if your make rate improves over a small set of attempts.\n\nPrescribed practice target: 2 set(s) of 10 repetitions; allow 600 seconds including resets."
+              }
+            ],
+            "scope": {
+              "selected_shot": "free_throw_01_shot_1",
+              "session_id": null,
+              "comparison": []
+            },
+            "visual_mode": "images_allowed",
+            "player_context": {
+              "goal": "",
+              "experience": "",
+              "preferences": {},
+              "focus": null,
+              "recommendations": [],
+              "reports": []
+            },
+            "practice_constraints": {
+              "equipment": {}
+            },
+            "measurement_guide": {
+              "min_knee_angle": [
+                "Smallest knee angle",
+                "degrees",
+                "start through estimated release"
+              ],
+              "knee_angle_range": [
+                "Knee angle change across the shot",
+                "degrees",
+                "start through estimated release"
+              ],
+              "release_elbow_angle": [
+                "Elbow angle at estimated release",
+                "degrees",
+                "estimated release"
+              ],
+              "max_elbow_angle": [
+                "Largest elbow angle",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_angle_range": [
+                "Elbow angle range",
+                "degrees",
+                "start through early follow-through"
+              ],
+              "elbow_extension_after_release": [
+                "Elbow straightening after estimated release",
+                "degrees",
+                "early follow-through"
+              ],
+              "shooting_motion_ms": [
+                "Time from detected start to estimated release",
+                "ms",
+                "start through estimated release"
+              ],
+              "knee_coverage_pct": [
+                "Knee tracking coverage",
+                "%",
+                "start through estimated release"
+              ],
+              "elbow_coverage_pct": [
+                "Elbow tracking coverage",
+                "%",
+                "start through early follow-through"
+              ],
+              "tracking_coverage_pct": [
+                "Ball tracking coverage",
+                "%",
+                "first through last tracked ball frame"
+              ]
+            },
+            "evidence": {
+              "shot:free_throw_01_shot_1": {
+                "shot_id": "free_throw_01_shot_1",
+                "session_id": 1,
+                "shot_number": 1,
+                "outcome": "missed",
+                "outcome_source": "player label",
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "provenance": "SQLite shot analysis snapshot and current outcome label",
+                "ball_flight": {
+                  "status": "unavailable",
+                  "tracking": {},
+                  "rim_crossing_estimate": null,
+                  "detector_method": null,
+                  "observation": null,
+                  "limitations": "Image-plane tracking cannot establish ball depth, launch angle, release speed or force."
+                },
+                "events": {
+                  "start_frame": 20,
+                  "release_frame": 49,
+                  "end_frame": 110,
+                  "segmentation_status": "experimental_review_required"
+                },
+                "measurements": {
+                  "min_knee_angle": {
+                    "status": "valid",
+                    "value": 88.82,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "knee_angle_range": {
+                    "status": "valid",
+                    "value": 74.61,
+                    "unit": "degrees",
+                    "sample_frames": 30
+                  },
+                  "release_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "max_elbow_angle": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_angle_range": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": 25
+                  },
+                  "elbow_extension_after_release": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "degrees",
+                    "sample_frames": null
+                  },
+                  "shooting_motion_ms": {
+                    "status": "unreliable",
+                    "value": null,
+                    "unit": "ms",
+                    "sample_frames": null
+                  },
+                  "knee_coverage_pct": {
+                    "status": "valid",
+                    "value": 100.0,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "elbow_coverage_pct": {
+                    "status": "valid",
+                    "value": 69.44,
+                    "unit": "%",
+                    "sample_frames": null
+                  },
+                  "tracking_coverage_pct": {
+                    "status": "missing",
+                    "value": null,
+                    "unit": "%",
+                    "sample_frames": null
+                  }
+                }
+              },
+              "history:outcome_counts": {
+                "made": 0,
+                "missed": 1,
+                "unknown": 0
+              },
+              "profile:current": {
+                "status": "insufficient_data",
+                "counts": {
+                  "total_shots": 1,
+                  "labelled_shots": 1,
+                  "made": 0,
+                  "missed": 1,
+                  "unlabelled_shots": 0
+                },
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "observation_ids": [],
+                "features": {}
+              }
+            },
+            "knowledge": {
+              "routine": {
+                "topic": "Shooting consistency",
+                "principle": "One repeatable routine gives you a clear starting point for practice.",
+                "use_when": "For a beginner or a baseline practice set.",
+                "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+                "evidence_basis": "coaching_guidance"
+              },
+              "recording": {
+                "topic": "Recording quality",
+                "principle": "A steady side view with the whole body visible makes pose review easier.",
+                "use_when": "When clips are hard to interpret or compare.",
+                "avoid_when": "When treating camera visibility as proof that a measurement is correct.",
+                "evidence_basis": "measurement_guidance"
+              }
+            },
+            "eligible_practice": {
+              "focused_shooting": {
+                "title": "One-focus shooting experiment",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": [
+                  "ball",
+                  "hoop"
+                ]
+              },
+              "shadow_rehearsal": {
+                "title": "No-release movement rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "steady_setup": {
+                "title": "Comfortable setup rehearsal",
+                "eligible_topics": [
+                  "routine"
+                ],
+                "required_equipment": []
+              },
+              "recording_check": {
+                "title": "Matched-view recording check",
+                "eligible_topics": [
+                  "recording"
+                ],
+                "required_equipment": [
+                  "camera"
+                ]
+              }
+            }
+          },
+          "image_count": 0,
+          "ceiling_usd": 0.0172044,
+          "estimated_usd": 0.0019684,
+          "usage": {
+            "input_tokens": 3953,
+            "input_tokens_details": {
+              "cache_write_tokens": 0,
+              "cache_write_tokens_details": {
+                "ttl_12h_tokens": 0,
+                "ttl_30m_tokens": 0
+              },
+              "cached_tokens": 0
+            },
+            "output_tokens": 242,
+            "output_tokens_details": {
+              "reasoning_tokens": 0
+            },
+            "total_tokens": 4195
+          },
+          "output": [
+            {
+              "id": "msg_04c2247d4e2809c5016b08e3ee3e6c87d1933b281e0294bcf6",
+              "type": "message",
+              "status": "completed",
+              "content": [
+                {
+                  "type": "output_text",
+                  "annotations": [],
+                  "logprobs": [],
+                  "text": "{\"message\":\"Your current shooting technique shows a typical arm extension pattern through the shot, which is a good habit to keep as it helps guide the ball. The knee bend at the dip phase also indicates a solid loading movement. These elements provide a foundation for a consistent shot.\\n\\nSince your shot was missed, the main area to focus on is building a repeatable and comfortable shooting routine rather than changing your arm or knee mechanics. Keeping your arm extension and knee bend as they are, try to develop a steady setup and smooth follow-through that you can repeat every time. This consistency often leads to better accuracy.\\n\\nWould you like me to suggest a simple drill to practice this consistent routine?\",\"knowledge_ids\":[\"routine\"],\"practice\":{\"drill_id\":\"steady_setup\",\"topic\":\"routine\",\"instructions\":\"Practice your comfortable shooting setup by rehearsing your stance, knee bend, and arm position without shooting the ball. Focus on feeling balanced and ready to shoot with a smooth arm extension. Repeat this setup 10 times per set, for 2 sets.\",\"dose\":{\"sets\":2,\"repetitions\":10,\"duration_seconds\":300}},\"adaptation\":\"continue\"}"
+                }
+              ],
+              "role": "assistant"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "deferred": [
+    "multi-shot comparisons",
+    "multi-session progress evaluation"
+  ],
+  "attempted_calls": 9,
+  "accounted_usd": 0.0191548,
+  "provider_failed": false,
+  "budget_guard_stopped": false,
+  "frame_files": {
+    "turn 1: frame:free_throw_01_shot_1:knee_dip:38:elbow:": "live-openai-single-shot-frames/turn-1-knee_dip-38.jpg",
+    "turn 1: frame:free_throw_01_shot_1:knee_extension:49:elbow:": "live-openai-single-shot-frames/turn-1-knee_extension-49.jpg",
+    "turn 1: frame:free_throw_01_shot_1:release:49:elbow:": "live-openai-single-shot-frames/turn-1-release-49.jpg",
+    "turn 2: frame:free_throw_01_shot_1:knee_dip:38:elbow:": "live-openai-single-shot-frames/turn-2-knee_dip-38.jpg",
+    "turn 2: frame:free_throw_01_shot_1:release:49:elbow:": "live-openai-single-shot-frames/turn-2-release-49.jpg",
+    "turn 2: frame:free_throw_01_shot_1:follow_through:110:elbow:": "live-openai-single-shot-frames/turn-2-follow_through-110.jpg"
+  },
+  "offline_rendering": [
+    {
+      "turn": 1,
+      "image_count": 3,
+      "captions": [
+        "Attempt 1 · missed (player label) · Deepest knee bend · 1.267 s",
+        "Right elbow · 52° (2D, saved angle)",
+        "Attempt 1 · missed (player label) · Knee extension after loading · 1.633 s",
+        "Right elbow · 131.2° (2D, saved angle)",
+        "Attempt 1 · missed (player label) · Estimated release · 1.633 s",
+        "Right elbow · 131.2° (2D, saved angle)"
+      ],
+      "video_links_count": 3
+    },
+    {
+      "turn": 2,
+      "image_count": 0,
+      "captions": [],
+      "video_links_count": 0
+    },
+    {
+      "turn": 3,
+      "image_count": 0,
+      "captions": [
+        "I couldn’t find a verified video for this request in the coaching catalog.",
+        "Prescribed practice target: 2 set(s) of 10 repetitions; allow 600 seconds including resets.",
+        "Requires access to a ball.",
+        "Requires access to a hoop.",
+        "ShotCoach practice adaptation; the exercise prescription is not professionally validated."
+      ],
+      "video_links_count": 0
+    },
+    {
+      "turn": 4,
+      "image_count": 0,
+      "captions": [],
+      "video_links_count": 0
+    }
+  ]
+}

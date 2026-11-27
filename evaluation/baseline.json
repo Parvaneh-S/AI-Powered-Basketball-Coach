@@ -1,0 +1,229 @@
+{
+  "revision": "62d095ff4ca3726882f9cf5c0bb1aa45a9075722",
+  "player": "TestPlayer",
+  "selected_video_id": "free_throw_03",
+  "model": "gemini-3.8-flash",
+  "sdk": "3.6.1",
+  "temperature": 0.2,
+  "automatic_function_call_limit": 6,
+  "live_requests": 0,
+  "status": "blocked: GEMINI_API_KEY unavailable",
+  "tool_snapshots": {
+    "shot_analysis": {
+      "video_id": "free_throw_03",
+      "shot_id": "free_throw_03_shot_1",
+      "shot_type": "free_throw",
+      "shot_events": {
+        "start_frame": 28,
+        "release_frame": 76,
+        "end_frame": 82,
+        "end_frame_source": "provisional_follow_through_window",
+        "segmentation_method": "pose_angle_heuristic_v1",
+        "segmentation_status": "experimental_review_required"
+      },
+      "biomechanics": {
+        "shooting_arm": "right",
+        "shooting_motion_ms": 1600,
+        "min_knee_angle": 168.24,
+        "max_elbow_angle": 175.59,
+        "release_elbow_angle": 129.01,
+        "knee_angle_range": 6.63,
+        "elbow_angle_range": 97.75,
+        "elbow_extension_after_release": 46.58,
+        "knee_coverage_pct": 100.0,
+        "elbow_coverage_pct": 100.0,
+        "measurement_quality": "pass"
+      },
+      "ball_tracking": {
+        "tracked_frames": 113,
+        "first_tracked_frame": 0,
+        "last_tracked_frame": 191,
+        "tracking_coverage_pct": 58.85
+      },
+      "hoop_detection": {
+        "rim_center": [
+          202.0,
+          144.5
+        ],
+        "rim_bbox": [
+          177.0,
+          118.0,
+          227.0,
+          171.0
+        ],
+        "confidence": 0.8124
+      },
+      "shot_outcome": {
+        "prediction": "made",
+        "observation": "made_bridged_gap",
+        "method": "2d_trajectory_rim_crossing_v2",
+        "final_outcome": "made",
+        "outcome_source": "auto"
+      },
+      "analysis_status": "experimental"
+    },
+    "player_history": {
+      "player": "TestPlayer",
+      "total_shots": 4,
+      "shots": [
+        {
+          "session_id": 1,
+          "session_date": "2026-11-22",
+          "shot_id": "free_throw_03_shot_1",
+          "video_id": "free_throw_03",
+          "outcome": "made",
+          "outcome_source": "auto",
+          "release_elbow_angle": 129.01,
+          "min_knee_angle": 168.24,
+          "knee_angle_range": 6.63,
+          "elbow_extension_after_release": 46.58,
+          "measurement_quality": "pass"
+        },
+        {
+          "session_id": 2,
+          "session_date": "2026-11-22",
+          "shot_id": "free_throw_02_shot_1",
+          "video_id": "free_throw_02",
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "release_elbow_angle": 126.27,
+          "min_knee_angle": 67.99,
+          "knee_angle_range": 98.72,
+          "elbow_extension_after_release": 50.56,
+          "measurement_quality": "review"
+        },
+        {
+          "session_id": 3,
+          "session_date": "2026-11-22",
+          "shot_id": "shot_b8a4046d9f91_shot_1",
+          "video_id": "shot_b8a4046d9f91",
+          "outcome": "made",
+          "outcome_source": "auto",
+          "release_elbow_angle": 80.22,
+          "min_knee_angle": 168.21,
+          "knee_angle_range": 3.56,
+          "elbow_extension_after_release": 0.95,
+          "measurement_quality": "pass"
+        },
+        {
+          "session_id": 4,
+          "session_date": "2026-11-22",
+          "shot_id": "shot_55ce5ca18a50_shot_1",
+          "video_id": "shot_55ce5ca18a50",
+          "outcome": "made",
+          "outcome_source": "auto",
+          "release_elbow_angle": 133.69,
+          "min_knee_angle": 161.29,
+          "knee_angle_range": 11.93,
+          "elbow_extension_after_release": 46.13,
+          "measurement_quality": "review"
+        }
+      ]
+    },
+    "comparison": {
+      "status": "success",
+      "comparison": {
+        "player": "TestPlayer",
+        "previous_shot": "shot_b8a4046d9f91_shot_1",
+        "latest_shot": "shot_55ce5ca18a50_shot_1",
+        "previous_outcome": "made",
+        "previous_outcome_source": "auto",
+        "latest_outcome": "made",
+        "latest_outcome_source": "auto",
+        "differences": {
+          "release_elbow_angle": {
+            "previous": 80.22,
+            "latest": 133.69,
+            "change": 53.47
+          },
+          "min_knee_angle": {
+            "previous": 168.21,
+            "latest": 161.29,
+            "change": -6.92
+          },
+          "max_elbow_angle": {
+            "previous": 82.58,
+            "latest": 179.82,
+            "change": 97.24
+          },
+          "knee_angle_range": {
+            "previous": 3.56,
+            "latest": 11.93,
+            "change": 8.37
+          },
+          "elbow_angle_range": {
+            "previous": 3.25,
+            "latest": 129.19,
+            "change": 125.94
+          },
+          "elbow_extension_after_release": {
+            "previous": 0.95,
+            "latest": 46.13,
+            "change": 45.18
+          },
+          "shooting_motion_ms": {
+            "previous": 1600,
+            "latest": 467,
+            "change": -1133
+          }
+        }
+      },
+      "warning": "Differences do not necessarily indicate improvement. Review measurement quality and experimental segmentation results."
+    },
+    "knowledge": {
+      "status": "not invoked because no model call was made"
+    }
+  },
+  "cases": [
+    {
+      "question": "How can I improve my shot?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "What am I doing wrong?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "Why did I miss?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "Did I use too much power?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "Is my shooting form good?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "Can you show me what I should change?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "What should I practice today?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "Am I improving?",
+      "prior_case": 6,
+      "response": null
+    },
+    {
+      "question": "My shoulder hurts when I shoot. What should I change?",
+      "prior_case": null,
+      "response": null
+    },
+    {
+      "question": "I tried your previous advice, but it did not help.",
+      "prior_case": 6,
+      "response": null
+    }
+  ]
+}

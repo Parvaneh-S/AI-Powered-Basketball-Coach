@@ -1,0 +1,769 @@
+{
+  "model": "gpt-6.1-terra",
+  "player": "TestPlayer",
+  "shot_id": "free_throw_02_shot_1",
+  "budget_usd": 0.15,
+  "estimated_cost_usd": 0.071529,
+  "turns": [
+    {
+      "question": "Why did I miss this shot?",
+      "seconds": 23.35,
+      "player_text": "The ball appears to have arrived **short**, rather than necessarily missing left or right. The tracking places it at rim height on your side of the rim; the side-on view makes a short arrival plausible, though the estimate can\u2019t confirm rim contact or depth. The miss label itself is detector-estimated.\n\nIn the frames, you bend your knees and then straighten them as you rise. The analysis also measured substantial knee movement, so this isn\u2019t clear evidence that you forgot to use your legs. Your shooting arm looks straighter in the early follow-through, but the elbow measurements and release timing are unreliable.\n\n**Possible explanations, not diagnoses:** Your usual distance may have been challenging for that delivery, or the lift rhythm or ball path may have varied. The clip can\u2019t distinguish those possibilities or establish a lack of power.\n\n**Try this test:** Shoot a few from closer in, then from your usual spot, keeping the same comfortable rhythm. Compare where the ball arrives. A difference would be useful information about distance, though it wouldn\u2019t by itself identify what caused this miss.",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:knee_dip:13:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 13,
+          "timestamp_s": 0.433,
+          "phase": "knee_dip",
+          "uncertainty": "Deepest measured knee bend",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 72.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-1-frame_free_throw_02_shot_1_knee_dip_13_knee_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "knee_extension",
+          "uncertainty": "Straightest measured knee after loading through release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 165.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc",
+              "image_plane_displacement"
+            ],
+            "from_phase": "knee_dip"
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-1-frame_free_throw_02_shot_1_knee_extension_25_knee_knee_dip.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:release:25:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "release",
+          "uncertainty": "Estimated release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 124.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-1-frame_free_throw_02_shot_1_release_25_elbow_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:follow_through:31:elbow:release",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 31,
+          "timestamp_s": 1.033,
+          "phase": "follow_through",
+          "uncertainty": "Early post-release frame, not a confirmed shot end",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 179.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-1-frame_free_throw_02_shot_1_follow_through_31_elbow_release.jpg"
+        }
+      ],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "short_miss",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1",
+          "shot:free_throw_02_shot_1:knee_angle_range"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 3.88,
+          "input_tokens": 3954,
+          "cached_tokens": 3951,
+          "output_tokens": 193,
+          "reasoning_tokens": 21,
+          "cost_usd": 0.001166,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"knee_dip,knee_extension\", \"focus\": \"knee\", \"from_phase\": \"knee_dip\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"focus\": \"elbow\", \"from_phase\": \"release\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_make_miss",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"short miss\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.18,
+          "input_tokens": 10513,
+          "cached_tokens": 3951,
+          "output_tokens": 30,
+          "reasoning_tokens": 8,
+          "cost_usd": 0.00855,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\":\"short miss\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 9.86,
+          "input_tokens": 10756,
+          "cached_tokens": 10510,
+          "output_tokens": 594,
+          "reasoning_tokens": 196,
+          "cost_usd": 0.003803,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"The ball appears to have arrived **short**, rather than necessarily missing left or right. The tracking places it at rim height on your side of the rim; the side-on view makes a short arrival plausible, though the estimate can\u2019t confirm rim contact or depth. The miss label itself is detector-estimated.\\n\\nIn the frames, you bend your knees and then straighten them as you rise. The analysis also measured substantial knee movement, so this isn\u2019t clear evidence that you forgot to use your legs. Your shooting arm looks straighter in the early follow-through, but the elbow measurements and release timing are unreliable.\\n\\nA plausible explanation is that your delivery didn\u2019t carry the ball far enough from that distance; a change in lift rhythm or ball path could also contribute. This clip can\u2019t tell us which, or establish a lack of power.\\n\\n**Try this test:** Shoot a few from closer in, then from your usual spot, keeping the same comfortable rhythm. Watch whether the ball reaches the rim more consistently from closer range. That can help separate a distance-related issue from a delivery issue, without assuming either is the cause yet.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\",\"shot:free_throw_02_shot_1:knee_angle_range\"],\"facts\":[],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":\"knee_straightens\",\"knowledge_ids\":[\"short_miss\"],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.01,
+          "input_tokens": 11004,
+          "cached_tokens": 1628,
+          "output_tokens": 430,
+          "reasoning_tokens": 41,
+          "cost_usd": 0.013951,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"The ball appears to have arrived **short**, rather than necessarily missing left or right. The tracking places it at rim height on your side of the rim; the side-on view makes a short arrival plausible, though the estimate can\u2019t confirm rim contact or depth. The miss label itself is detector-estimated.\\n\\nIn the frames, you bend your knees and then straighten them as you rise. The analysis also measured substantial knee movement, so this isn\u2019t clear evidence that you forgot to use your legs. Your shooting arm looks straighter in the early follow-through, but the elbow measurements and release timing are unreliable.\\n\\n**Possible explanations, not diagnoses:** Your usual distance may have been challenging for that delivery, or the lift rhythm or ball path may have varied. The clip can\u2019t distinguish those possibilities or establish a lack of power.\\n\\n**Try this test:** Shoot a few from closer in, then from your usual spot, keeping the same comfortable rhythm. Compare where the ball arrives. A difference would be useful information about distance, though it wouldn\u2019t by itself identify what caused this miss.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\",\"shot:free_throw_02_shot_1:knee_angle_range\"],\"facts\":[],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":\"knee_straightens\",\"knowledge_ids\":[\"short_miss\"],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Can you visually show me what I should improve?",
+      "seconds": 12.8,
+      "player_text": "**Look at the knee frames first:** You\u2019re bent in the dip, then much straighter as you rise. The arrow shows movement in the image plane. The analysis also measured substantial knee movement, so I wouldn\u2019t tell you to bend more based on this shot.\n\n**Now look at the release and follow-through:** Your shooting arm appears straighter in the early follow-through. The elbow measurements and release timing are unreliable, though, so these images don\u2019t establish an elbow fault.\n\n**What to work on:** Test your comfortable shooting range rather than forcing a form change. The tracked ball appears to arrive short, although rim contact and depth aren\u2019t confirmed. Distance or a variation in lift rhythm or ball path could be involved; the clip can\u2019t tell us which.\n\nAs a test, shoot a few from closer in, then from your usual spot, keeping your rhythm comfortable. Compare where the ball arrives. General shooting guidance supports moving closer to find a controlled range; a difference in arrivals would be useful, but wouldn\u2019t prove the cause.",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:knee_dip:13:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 13,
+          "timestamp_s": 0.433,
+          "phase": "knee_dip",
+          "uncertainty": "Deepest measured knee bend",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 72.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-2-frame_free_throw_02_shot_1_knee_dip_13_knee_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "knee_extension",
+          "uncertainty": "Straightest measured knee after loading through release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 165.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc",
+              "image_plane_displacement"
+            ],
+            "from_phase": "knee_dip"
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-2-frame_free_throw_02_shot_1_knee_extension_25_knee_knee_dip.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:release:25:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "release",
+          "uncertainty": "Estimated release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 124.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-2-frame_free_throw_02_shot_1_release_25_elbow_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:follow_through:31:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 31,
+          "timestamp_s": 1.033,
+          "phase": "follow_through",
+          "uncertainty": "Early post-release frame, not a confirmed shot end",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 179.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-2-frame_free_throw_02_shot_1_follow_through_31_elbow_.jpg"
+        }
+      ],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "distance",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1",
+          "shot:free_throw_02_shot_1:knee_angle_range"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 4.06,
+          "input_tokens": 3690,
+          "cached_tokens": 2091,
+          "output_tokens": 168,
+          "reasoning_tokens": 19,
+          "cost_usd": 0.002943,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"knee_dip,knee_extension\", \"focus\": \"knee\", \"from_phase\": \"knee_dip\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"focus\": \"elbow\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_make_miss",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"short shot shooting legs lift rhythm distance\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 7.37,
+          "input_tokens": 9886,
+          "cached_tokens": 3687,
+          "output_tokens": 499,
+          "reasoning_tokens": 82,
+          "cost_usd": 0.010428,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\n  \"message\": \"**Look at the knee frames first:** You\u2019re bent in the dip, then much straighter as you rise. The arrow shows movement in the image plane. The analysis also measured substantial knee movement, so I wouldn\u2019t tell you to bend more based on this shot.\\n\\n**Now look at the release and follow-through:** Your shooting arm appears straighter in the early follow-through. The elbow measurements and release timing are unreliable, though, so these images don\u2019t establish an elbow fault.\\n\\n**What to work on:** Test your comfortable shooting range rather than forcing a form change. The tracked ball appears to arrive short, although rim contact and depth aren\u2019t confirmed. Distance or a variation in lift rhythm or ball path could be involved; the clip can\u2019t tell us which.\\n\\nAs a test, shoot a few from closer in, then from your usual spot, keeping your rhythm comfortable. Compare where the ball arrives. General shooting guidance supports moving closer to find a controlled range; a difference in arrivals would be useful, but wouldn\u2019t prove the cause.\",\n  \"evidence_ids\": [\n    \"shot:free_throw_02_shot_1\",\n    \"shot:free_throw_02_shot_1:knee_angle_range\"\n  ],\n  \"facts\": [],\n  \"frame_ids\": [\n    \"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\n    \"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\n    \"frame:free_throw_02_shot_1:release:25:elbow:\",\n    \"frame:free_throw_02_shot_1:follow_through:31:elbow:\"\n  ],\n  \"visual\": \"knee_straightens\",\n  \"knowledge_ids\": [\n    \"distance\"\n  ],\n  \"instructional_resource_id\": null,\n  \"practice\": null,\n  \"adaptation\": null\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I practice, and can you recommend an instructional video?",
+      "seconds": 9.2,
+      "player_text": "**Practice a comfortable-range experiment.** The tracked ball appeared to arrive short in your selected shot, although the view can\u2019t confirm rim contact or depth. That makes distance worth testing\u2014not proof that you need more leg drive or a different elbow position.\n\nShoot one set from a comfortable spot closer to the basket, then one set from the free-throw line. Keep your usual rhythm and notice where the ball arrives and how comfortable the shot feels. If the closer shots reach the rim more comfortably, use that range for practice before gradually moving back. The comparison won\u2019t establish what caused the original miss.\n\n**For the video:** Watch the balance checkpoint before the lift. Treat it as a general reference, not a correction you must copy; your clip doesn\u2019t establish a balance fault.\n\nBEEF - Acronym for Shooting Form \u00b7 USA Basketball\nhttps://www.usab.com/videos/2021/04/beef-acronym-for-shooting-form\n\nShoot one set from a comfortable closer spot and one set from the free-throw line, keeping your usual comfortable rhythm.\n\nCompare ball arrival and comfort at each distance; don't treat a difference as proof of the cause of the original miss.\n\nPrescribed practice target: 2 set(s) of 5 repetitions; allow 150 seconds including resets.\n\nPick one checkpoint to watch, such as balance before the lift or the finish after the ball leaves.\n\nUse this as a general reference for shooting mechanics.",
+      "frames": [],
+      "resource": {
+        "id": "usab_beef",
+        "kind": "video",
+        "title": "BEEF - Acronym for Shooting Form",
+        "organization": "USA Basketball",
+        "creator": "Tara VanDerveer",
+        "url": "https://www.usab.com/videos/2021/04/beef-acronym-for-shooting-form",
+        "section": null,
+        "verified_on": "2026-11-26",
+        "watch_for": "Pick one checkpoint to watch, such as balance before the lift or the finish after the ball leaves.",
+        "relevance": "Use this as a general reference for shooting mechanics.",
+        "exercise": null,
+        "skill_levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ]
+      },
+      "practice": {
+        "title": "One-focus shooting experiment",
+        "instructions": "Shoot one set from a comfortable closer spot and one set from the free-throw line, keeping your usual comfortable rhythm.",
+        "evaluation": "Compare ball arrival and comfort at each distance; don't treat a difference as proof of the cause of the original miss.",
+        "drill_id": "focused_shooting",
+        "dose": {
+          "sets": 2,
+          "repetitions": 5,
+          "duration_seconds": 150
+        },
+        "reason": null,
+        "setup": null,
+        "focus": null,
+        "success_criteria": null,
+        "easier_variation": null,
+        "progression": null,
+        "reconsider": null,
+        "assumptions": [
+          "Requires access to a ball.",
+          "Requires access to a hoop."
+        ],
+        "source_info": {
+          "author": "ShotCoach",
+          "status": "app_authored_adaptation",
+          "professionally_validated": false
+        }
+      },
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "distance",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.55,
+          "input_tokens": 4393,
+          "cached_tokens": 2091,
+          "output_tokens": 124,
+          "reasoning_tokens": 15,
+          "cost_usd": 0.003602,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"comfortable shooting range form shooting closer move back\", \"resource_kind\": \"video\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"04a99858e75a4912854f285d8c238320\", \"topic\": \"shooting consistency\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.6,
+          "input_tokens": 6509,
+          "cached_tokens": 4390,
+          "output_tokens": 405,
+          "reasoning_tokens": 96,
+          "cost_usd": 0.004893,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"**Practice a comfortable-range experiment.** The tracked ball appeared to arrive short in your selected shot, although the view can\u2019t confirm rim contact or depth. That makes distance worth testing\u2014not proof that you need more leg drive or a different elbow position.\\n\\nShoot one set from a comfortable spot closer to the basket, then one set from the free-throw line. Keep your usual rhythm and notice where the ball arrives and how comfortable the shot feels. If the closer shots reach the rim more comfortably, use that range for practice before gradually moving back. The comparison won\u2019t establish what caused the original miss.\\n\\n**For the video:** Watch the balance checkpoint before the lift. Treat it as a general reference, not a correction you must copy; your clip doesn\u2019t establish a balance fault.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"distance\",\"mechanics\"],\"instructional_resource_id\":\"usab_beef\",\"practice\":{\"drill_id\":\"focused_shooting\",\"topic\":\"distance\",\"instructions\":\"Shoot one set from a comfortable closer spot and one set from the free-throw line, keeping your usual comfortable rhythm.\",\"evaluation\":\"Compare ball arrival and comfort at each distance; don't treat a difference as proof of the cause of the original miss.\",\"dose\":{\"sets\":2,\"repetitions\":5,\"duration_seconds\":150}},\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I keep about my current technique?",
+      "seconds": 16.64,
+      "player_text": "**Keep the knee bend and rise you used on this shot.** In the frames, you load with bent knees and straighten them as you rise. The knee analysis also measured substantial movement, so there\u2019s no reason from this clip to force a deeper bend.\n\n**Keep letting your shooting arm extend into the finish.** It looks straighter in the early follow-through than at the estimated release. The elbow measurements are unreliable, though, so I wouldn\u2019t try to copy an exact angle or make an elbow correction from this clip.\n\nThese are useful things to preserve, not proof of a repeatable habit from this clip. For the range experiment we discussed, keep your natural rhythm rather than rebuilding your form around this estimated miss.",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:knee_dip:13:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 13,
+          "timestamp_s": 0.433,
+          "phase": "knee_dip",
+          "uncertainty": "Deepest measured knee bend",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 72.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-4-frame_free_throw_02_shot_1_knee_dip_13_knee_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "knee_extension",
+          "uncertainty": "Straightest measured knee after loading through release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 165.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc",
+              "image_plane_displacement"
+            ],
+            "from_phase": "knee_dip"
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-4-frame_free_throw_02_shot_1_knee_extension_25_knee_knee_dip.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:release:25:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "release",
+          "uncertainty": "Estimated release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 124.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-4-frame_free_throw_02_shot_1_release_25_elbow_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:follow_through:31:elbow:release",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 31,
+          "timestamp_s": 1.033,
+          "phase": "follow_through",
+          "uncertainty": "Early post-release frame, not a confirmed shot end",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 179.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-final-frames\\turn-4-frame_free_throw_02_shot_1_follow_through_31_elbow_release.jpg"
+        }
+      ],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "knees",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1:knee_angle_range",
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 3.79,
+          "input_tokens": 4294,
+          "cached_tokens": 2091,
+          "output_tokens": 161,
+          "reasoning_tokens": 18,
+          "cost_usd": 0.003663,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"knee_dip,knee_extension\", \"focus\": \"knee\", \"from_phase\": \"knee_dip\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"focus\": \"elbow\", \"from_phase\": \"release\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.64,
+          "input_tokens": 8870,
+          "cached_tokens": 4291,
+          "output_tokens": 349,
+          "reasoning_tokens": 41,
+          "cost_usd": 0.007683,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"**Keep the knee bend and rise you used on this shot.** In the frames, you load with bent knees and straighten them as you rise. The knee analysis also measured substantial movement, so there\u2019s no reason from this clip to force a deeper bend.\\n\\n**Keep letting your shooting arm extend into the finish.** It looks straighter in the early follow-through than at the estimated release. The elbow measurements are unreliable, though, so I wouldn\u2019t try to copy an exact angle or make an elbow correction from this clip.\\n\\nThese are useful things to preserve, not proof of a repeatable habit from one attempt. For the range experiment we discussed, keep your natural rhythm rather than rebuilding your form around this estimated miss.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1:knee_angle_range\",\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.88,
+          "input_tokens": 8875,
+          "cached_tokens": 1628,
+          "output_tokens": 341,
+          "reasoning_tokens": 33,
+          "cost_usd": 0.010845,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"**Keep the knee bend and rise you used on this shot.** In the frames, you load with bent knees and straighten them as you rise. The knee analysis also measured substantial movement, so there\u2019s no reason from this clip to force a deeper bend.\\n\\n**Keep letting your shooting arm extend into the finish.** It looks straighter in the early follow-through than at the estimated release. The elbow measurements are unreliable, though, so I wouldn\u2019t try to copy an exact angle or make an elbow correction from this clip.\\n\\nThese are useful things to preserve, not proof of a repeatable habit from this clip. For the range experiment we discussed, keep your natural rhythm rather than rebuilding your form around this estimated miss.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1:knee_angle_range\",\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,492 @@
+{
+  "model": "gpt-6.1-terra",
+  "player": "TestPlayer",
+  "shot_id": "free_throw_02_shot_1",
+  "budget_usd": 0.15,
+  "estimated_cost_usd": 0.042114,
+  "turns": [
+    {
+      "question": "Why did I miss this shot?",
+      "seconds": 16.32,
+      "player_text": "It looks like the ball came down short of the basket. The view doesn\u2019t confirm whether it touched the rim, though.\n\nYou did get a good bend and rise through your legs, so I wouldn\u2019t change your knee bend based on this shot. The clip doesn\u2019t tell us what caused the short arrival. Did it feel short as it left your hand?",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:knee_dip:13:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 13,
+          "timestamp_s": 0.433,
+          "phase": "knee_dip",
+          "uncertainty": "Deepest measured knee bend",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 72.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-communication-frames\\turn-1-frame_free_throw_02_shot_1_knee_dip_13_knee_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:knee_extension:25:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "knee_extension",
+          "uncertainty": "Straightest measured knee after loading through release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 165.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-communication-frames\\turn-1-frame_free_throw_02_shot_1_knee_extension_25_knee_.jpg"
+        }
+      ],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 4.33,
+          "input_tokens": 4070,
+          "cached_tokens": 0,
+          "output_tokens": 173,
+          "reasoning_tokens": 14,
+          "cost_usd": 0.005953,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"knee_dip,knee_extension\", \"focus\": \"knee\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"focus\": \"elbow\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_make_miss",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"short miss\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.49,
+          "input_tokens": 10567,
+          "cached_tokens": 4067,
+          "output_tokens": 30,
+          "reasoning_tokens": 8,
+          "cost_usd": 0.008478,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\":\"short miss\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 8.02,
+          "input_tokens": 10810,
+          "cached_tokens": 10564,
+          "output_tokens": 304,
+          "reasoning_tokens": 148,
+          "cost_usd": 0.002356,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"It looks like the ball came down short of the basket. The view doesn\u2019t confirm whether it touched the rim, though.\\n\\nYou did get a good bend and rise through your legs, so I wouldn\u2019t change your knee bend based on this shot. The clip doesn\u2019t tell us what caused the short arrival. Did it feel short as it left your hand?\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:\"],\"visual\":\"knee_straightens\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "Can you visually show me what I should improve?",
+      "seconds": 11.16,
+      "player_text": "Look at your shooting arm in these frames. Near release, your elbow is still bent; in the early follow-through, your arm has straightened toward the basket. That extension is worth keeping.\n\nFor now, use that finish as a checkpoint: let your arm extend comfortably toward the hoop rather than forcing more knee bend. I can\u2019t point to a specific change that would have fixed this miss from these frames alone.",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:release:25:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "release",
+          "uncertainty": "Estimated release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 124.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-communication-frames\\turn-2-frame_free_throw_02_shot_1_release_25_elbow_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:follow_through:31:elbow:release",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 31,
+          "timestamp_s": 1.033,
+          "phase": "follow_through",
+          "uncertainty": "Early post-release frame, not a confirmed shot end",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 179.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-communication-frames\\turn-2-frame_free_throw_02_shot_1_follow_through_31_elbow_release.jpg"
+        }
+      ],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "arm",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": [
+          {
+            "field": "visual",
+            "reason": "Movement tag lacks verified same-shot phase images"
+          }
+        ]
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.97,
+          "input_tokens": 3656,
+          "cached_tokens": 2207,
+          "output_tokens": 154,
+          "reasoning_tokens": 13,
+          "cost_usd": 0.002692,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"focus\": \"elbow\", \"from_phase\": \"release\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"preparation,release\", \"focus\": \"alignment\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_make_miss",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"shooting follow through short shot\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 7.37,
+          "input_tokens": 9711,
+          "cached_tokens": 3653,
+          "output_tokens": 339,
+          "reasoning_tokens": 165,
+          "cost_usd": 0.00945,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Look at your shooting arm in these frames. Near release, your elbow is still bent; in the early follow-through, your arm has straightened toward the basket. That extension is worth keeping.\\n\\nFor now, use that finish as a checkpoint: let your arm extend comfortably toward the hoop rather than forcing more knee bend. I can\u2019t point to a specific change that would have fixed this miss from these frames alone.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"frame_ids\":[\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":\"arm_straightens\",\"knowledge_ids\":[\"arm\"]}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I practice, and can you recommend an instructional video?",
+      "seconds": 8.96,
+      "player_text": "Practice a comfortable free-throw routine rather than changing your mechanics: use your usual setup, pick a spot on the rim, and shoot with a comfortable rhythm. Keep the relaxed arm extension we saw.\n\nTry one set of five free throws. Notice where each ball lands and whether the routine felt comfortable; use that as a baseline, not a test you have to pass.\n\nFundamentals of the Free Throw \u00b7 Jr. NBA\nhttps://jr.nba.com/video/fundamentals-of-the-free-throw/\n\nShoot free throws using your usual comfortable setup, a chosen spot on the rim, and the same relaxed rhythm each time.\n\nNotice where each ball lands and whether your routine feels comfortable; use the set as a baseline.\n\nPrescribed practice target: 1 set(s) of 5 repetitions; allow 75 seconds including resets.\n\nWatch the sequence before the shot and how a repeatable routine sets up its rhythm.\n\nWatch the sequence before each free throw and how it sets up the shot. Use it to check your own comfortable routine in your next practice, without feeling you need to copy every detail.",
+      "frames": [],
+      "resource": {
+        "id": "jrnba_free_throw",
+        "kind": "video",
+        "title": "Fundamentals of the Free Throw",
+        "organization": "Jr. NBA",
+        "creator": "Megan Griffith",
+        "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+        "section": null,
+        "verified_on": "2026-11-26",
+        "watch_for": "Watch the sequence before the shot and how a repeatable routine sets up its rhythm.",
+        "relevance": "Watch the sequence before each free throw and how it sets up the shot. Use it to check your own comfortable routine in your next practice, without feeling you need to copy every detail.",
+        "exercise": null,
+        "skill_levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ]
+      },
+      "practice": {
+        "title": "One-focus shooting experiment",
+        "instructions": "Shoot free throws using your usual comfortable setup, a chosen spot on the rim, and the same relaxed rhythm each time.",
+        "evaluation": "Notice where each ball lands and whether your routine feels comfortable; use the set as a baseline.",
+        "drill_id": "focused_shooting",
+        "dose": {
+          "sets": 1,
+          "repetitions": 5,
+          "duration_seconds": 75
+        },
+        "reason": null,
+        "setup": null,
+        "focus": null,
+        "success_criteria": null,
+        "easier_variation": null,
+        "progression": null,
+        "reconsider": null,
+        "assumptions": [
+          "Requires access to a ball.",
+          "Requires access to a hoop."
+        ],
+        "source_info": {
+          "author": "ShotCoach",
+          "status": "app_authored_adaptation",
+          "professionally_validated": false
+        }
+      },
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "routine",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.59,
+          "input_tokens": 4214,
+          "cached_tokens": 2207,
+          "output_tokens": 114,
+          "reasoning_tokens": 18,
+          "cost_usd": 0.003189,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"routine\", \"resource_kind\": \"video\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"focus_id\": \"04a99858e75a4912854f285d8c238320\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.34,
+          "input_tokens": 6126,
+          "cached_tokens": 4211,
+          "output_tokens": 336,
+          "reasoning_tokens": 77,
+          "cost_usd": 0.004284,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Practice a comfortable free-throw routine rather than changing your mechanics: use your usual setup, pick a spot on the rim, and shoot with a comfortable rhythm. Keep the relaxed arm extension we saw.\\n\\nTry one set of five free throws. Notice where each ball lands and whether the routine felt comfortable; use that as a baseline, not a test you have to pass.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"routine\"],\"instructional_resource_id\":\"jrnba_free_throw\",\"resource_note\":\"Watch the sequence before each free throw and how it sets up the shot. Use it to check your own comfortable routine in your next practice, without feeling you need to copy every detail.\",\"practice\":{\"drill_id\":\"focused_shooting\",\"topic\":\"routine\",\"instructions\":\"Shoot free throws using your usual comfortable setup, a chosen spot on the rim, and the same relaxed rhythm each time.\",\"evaluation\":\"Notice where each ball lands and whether your routine feels comfortable; use the set as a baseline.\",\"dose\":{\"sets\":1,\"repetitions\":5,\"duration_seconds\":75}},\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I keep about my current technique?",
+      "seconds": 5.71,
+      "player_text": "Keep the bend and rise you had through your legs, and the way your shooting arm extended toward the basket in your follow-through. Both are worth preserving rather than forcing a new motion.\n\nThis shot doesn\u2019t give me a reason to rebuild your technique. Keep your usual setup too, if it feels comfortable, and let the finish happen naturally.",
+      "frames": [],
+      "resource": null,
+      "practice": null,
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.83,
+          "input_tokens": 4034,
+          "cached_tokens": 2207,
+          "output_tokens": 125,
+          "reasoning_tokens": 68,
+          "cost_usd": 0.003019,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_shot",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_profile",
+              "arguments": "{}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.86,
+          "input_tokens": 5692,
+          "cached_tokens": 4031,
+          "output_tokens": 83,
+          "reasoning_tokens": 0,
+          "cost_usd": 0.002693,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Keep the bend and rise you had through your legs, and the way your shooting arm extended toward the basket in your follow-through. Both are worth preserving rather than forcing a new motion.\\n\\nThis shot doesn\u2019t give me a reason to rebuild your technique. Keep your usual setup too, if it feels comfortable, and let the finish happen naturally.\"}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

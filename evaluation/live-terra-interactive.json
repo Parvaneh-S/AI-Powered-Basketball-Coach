@@ -1,0 +1,353 @@
+{
+  "model": "gpt-6.1-terra",
+  "turns": [
+    {
+      "question": "Why did I miss this shot?",
+      "player_text": "This shot appears to have come up **short**: the ball dropped to rim height on your side of the basket. The view doesn\u2019t confirm rim contact, though.\n\nYou had a clear knee bend and rise, and your shooting arm extended into the follow-through. Those are worth keeping. The clip doesn\u2019t tell us exactly why the ball came up short, so I wouldn\u2019t rebuild your shot or tell you to bend more based on this attempt.\n\nFor your next few free throws, keep your normal motion and watch whether the ball reaches the rim comfortably. If they keep coming up short, try a few from closer in with the same motion, then return to the line and compare the feel and arrival.\n\nDid this one feel short as soon as it left your hand?",
+      "source": "openai_authored",
+      "note": "console capture"
+    },
+    {
+      "question": "Yes, it felt a little flat and short coming off my hand, like I rushed the release.",
+      "player_text": "That makes a rushed delivery worth testing, rather than adding more knee bend.\n\nOn your next few free throws, keep your normal bend and let the ball rise with you. Think **\u201crise, then finish\u201d** instead of trying to get it off quickly. Check whether the release feels less rushed and the ball reaches the rim comfortably\u2014without forcing the motion.",
+      "source": "openai_authored",
+      "note": "console capture"
+    },
+    {
+      "question": "Can you visually show me what I should improve?",
+      "player_text": "The thing to work on is **connecting your rise to your finish**, rather than adding more knee bend.\n\n- **Knee dip \u2192 rise:** In the first two images, notice your knees move from bent to nearly straight as the ball comes up. That rise is worth keeping.\n- **Release \u2192 follow-through:** In the next two, your shooting arm continues extending after the ball leaves. Keep that finish, too.\n\nThe pictures don\u2019t establish that you rushed, but your description makes the connection between those movements worth testing. On your next shot, let the ball travel upward *with* your rise, then finish toward the basket\u2014without pausing or forcing it. Check whether it feels less hurried and reaches the rim more comfortably.",
+      "frames": [
+        {
+          "id": "frame:free_throw_02_shot_1:knee_dip:13:knee:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 13,
+          "timestamp_s": 0.433,
+          "phase": "knee_dip",
+          "uncertainty": "Deepest measured knee bend",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 72.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-interactive-frames\\turn-3-frame_free_throw_02_shot_1_knee_dip_13_knee_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "knee_extension",
+          "uncertainty": "Straightest measured knee after loading through release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "knee",
+            "side": "right",
+            "angle_deg": 165.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc",
+              "image_plane_displacement"
+            ],
+            "from_phase": "knee_dip"
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-interactive-frames\\turn-3-frame_free_throw_02_shot_1_knee_extension_25_knee_knee_dip.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:release:25:elbow:",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 25,
+          "timestamp_s": 0.833,
+          "phase": "release",
+          "uncertainty": "Estimated release",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 124.6,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-interactive-frames\\turn-3-frame_free_throw_02_shot_1_release_25_elbow_.jpg"
+        },
+        {
+          "id": "frame:free_throw_02_shot_1:follow_through:31:elbow:release",
+          "video_id": "free_throw_02",
+          "shot_id": "free_throw_02_shot_1",
+          "frame": 31,
+          "timestamp_s": 1.033,
+          "phase": "follow_through",
+          "uncertainty": "Early post-release frame, not a confirmed shot end",
+          "source": "sample video",
+          "shot_number": 1,
+          "session_id": 2,
+          "playback_end_s": null,
+          "annotation": {
+            "focus": "elbow",
+            "side": "right",
+            "angle_deg": 179.7,
+            "angle_source": "saved_landmarks",
+            "marks": [
+              "alignment_lines",
+              "joint_markers",
+              "angle_arc"
+            ]
+          },
+          "outcome": "missed",
+          "outcome_source": "auto",
+          "file": "evaluation\\live-terra-interactive-frames\\turn-3-frame_free_throw_02_shot_1_follow_through_31_elbow_release.jpg"
+        }
+      ],
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "arm",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "resource": null,
+      "practice": null,
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 3.21,
+          "input_tokens": 3991,
+          "cached_tokens": 3988,
+          "output_tokens": 160,
+          "reasoning_tokens": 26,
+          "cost_usd": 0.001003,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"knee_dip,knee_extension\", \"from_phase\": \"knee_dip\", \"focus\": \"knee\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_frames",
+              "arguments": "{\"shot_id\": \"free_throw_02_shot_1\", \"phases\": \"release,follow_through\", \"from_phase\": \"release\", \"focus\": \"elbow\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"shooting timing legs rise release\", \"resource_kind\": \"any\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.89,
+          "input_tokens": 7956,
+          "cached_tokens": 3988,
+          "output_tokens": 426,
+          "reasoning_tokens": 118,
+          "cost_usd": 0.007289,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 4,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"The thing to work on is **connecting your rise to your finish**, rather than adding more knee bend.\\n\\n- **Knee dip \u2192 rise:** In the first two images, notice your knees move from bent to nearly straight as the ball comes up. That rise is worth keeping.\\n- **Release \u2192 follow-through:** In the next two, your shooting arm continues extending after the ball leaves. Keep that finish, too.\\n\\nThe pictures don\u2019t establish that you rushed, but your description makes the connection between those movements worth testing. On your next shot, let the ball travel upward *with* your rise, then finish toward the basket\u2014without pausing or forcing it. Check whether it feels less hurried and reaches the rim more comfortably.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[\"frame:free_throw_02_shot_1:knee_dip:13:knee:\",\"frame:free_throw_02_shot_1:knee_extension:25:knee:knee_dip\",\"frame:free_throw_02_shot_1:release:25:elbow:\",\"frame:free_throw_02_shot_1:follow_through:31:elbow:release\"],\"visual\":\"knee_straightens\",\"knowledge_ids\":[\"arm\"],\"instructional_resource_id\":null,\"resource_note\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I practice, and can you recommend an instructional video?",
+      "player_text": "Practice a **relaxed rise into your finish**. Since that free throw felt rushed and short, test the rhythm without changing your knee bend.\n\nShoot a small set from closer to the basket, letting the ball rise with you before you finish. Then shoot another set from the free-throw line with the same cue: **\u201crise, then finish.\u201d** Don\u2019t add a pause or force the motion.\n\nCompare how rushed each set feels and whether the ball reaches the rim comfortably. If the closer shots feel smoother but the free throws still feel hurried, stay with the closer distance a little longer before moving back.\n\nForm Shooting-2 Hands \u00b7 Jr. NBA\nhttps://jr.nba.com/video/form-shooting-2-hands/\n\nWatch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.\n\nWatch how the legs and shooting arm extend through the finish. Use that as a rhythm reference for your next close-range set, rather than trying to copy an exact position.\n\nTake a short set close to the rim, then add your guide hand. Compare the shooting arm at similar points in each clip.",
+      "frames": [],
+      "provenance": {
+        "source": "openai_repaired",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": "arm",
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [
+          "narrative_validation_failed"
+        ],
+        "discarded_components": []
+      },
+      "resource": {
+        "id": "jrnba_two_hand_form",
+        "kind": "video",
+        "title": "Form Shooting-2 Hands",
+        "organization": "Jr. NBA",
+        "creator": "Dale Ellis",
+        "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+        "section": null,
+        "verified_on": "2026-11-26",
+        "watch_for": "Watch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.",
+        "relevance": "Watch how the legs and shooting arm extend through the finish. Use that as a rhythm reference for your next close-range set, rather than trying to copy an exact position.",
+        "exercise": "Take a short set close to the rim, then add your guide hand. Compare the shooting arm at similar points in each clip.",
+        "skill_levels": [
+          "beginner",
+          "intermediate",
+          "advanced"
+        ]
+      },
+      "practice": null,
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 2.19,
+          "input_tokens": 4646,
+          "cached_tokens": 2341,
+          "output_tokens": 87,
+          "reasoning_tokens": 17,
+          "cost_usd": 0.003433,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "function_call",
+              "name": "retrieve_knowledge",
+              "arguments": "{\"topic\": \"coordinating leg rise and shooting arm release free throw\", \"resource_kind\": \"video\"}"
+            },
+            {
+              "type": "function_call",
+              "name": "retrieve_memory",
+              "arguments": "{\"topic\": \"release rhythm and practice preferences\"}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 6.42,
+          "input_tokens": 5493,
+          "cached_tokens": 4643,
+          "output_tokens": 419,
+          "reasoning_tokens": 104,
+          "cost_usd": 0.00339,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Practice a **relaxed rise into your finish**. Since that free throw felt rushed and short, test the rhythm without changing your knee bend.\\n\\nShoot 5 comfortable shots from closer to the basket, letting the ball rise with you before you finish. Then shoot 5 from the free-throw line with the same cue: **\u201crise, then finish.\u201d** Don\u2019t add a pause or force the motion.\\n\\nCompare how rushed each set feels and whether the ball reaches the rim comfortably. If the closer shots feel smoother but the free throws still feel hurried, stay with the closer distance a little longer before moving back.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"arm\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"resource_note\":\"Watch how the legs and shooting arm extend through the finish. Use that as a rhythm reference for your next close-range set, rather than trying to copy an exact position.\",\"practice\":{\"drill_id\":\"focused_shooting\",\"topic\":\"release\",\"instructions\":\"Shoot 5 comfortable close-range shots, then 5 free throws. Let the ball rise with your body and finish toward the basket without pausing or forcing the motion.\",\"evaluation\":\"Compare how rushed each set feels and whether the ball reaches the rim comfortably.\",\"dose\":{\"sets\":2,\"repetitions\":5,\"duration_seconds\":300}},\"adaptation\":null}"
+            }
+          ]
+        },
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 5.03,
+          "input_tokens": 5570,
+          "cached_tokens": 0,
+          "output_tokens": 325,
+          "reasoning_tokens": 93,
+          "cost_usd": 0.008587,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 0,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Practice a **relaxed rise into your finish**. Since that free throw felt rushed and short, test the rhythm without changing your knee bend.\\n\\nShoot a small set from closer to the basket, letting the ball rise with you before you finish. Then shoot another set from the free-throw line with the same cue: **\u201crise, then finish.\u201d** Don\u2019t add a pause or force the motion.\\n\\nCompare how rushed each set feels and whether the ball reaches the rim comfortably. If the closer shots feel smoother but the free throws still feel hurried, stay with the closer distance a little longer before moving back.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"arm\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"resource_note\":\"Watch how the legs and shooting arm extend through the finish. Use that as a rhythm reference for your next close-range set, rather than trying to copy an exact position.\",\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "question": "What should I keep about my current technique?",
+      "player_text": "Keep two things from that shot:\n\n- **Your natural knee bend and rise.** You already got down and rose through the shot; you don\u2019t need to bend more.\n- **Your shooting-arm finish.** Your arm continued extending after release, so keep finishing toward the basket.\n\nThere\u2019s no reason to rebuild those movements from one short shot. On your next free throw, keep them comfortable and let the ball rise with you. Check whether the release feels less rushed and the ball reaches the rim comfortably.",
+      "frames": [],
+      "provenance": {
+        "source": "openai_authored",
+        "wording": "model_authored",
+        "provider": "openai",
+        "selected_topic": null,
+        "supporting_evidence_ids": [
+          "shot:free_throw_02_shot_1"
+        ],
+        "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+        "reason": null,
+        "validation_failures": [],
+        "discarded_components": []
+      },
+      "resource": null,
+      "practice": null,
+      "requests": [
+        {
+          "model": "gpt-6.1-terra",
+          "seconds": 4.36,
+          "input_tokens": 4458,
+          "cached_tokens": 2341,
+          "output_tokens": 266,
+          "reasoning_tokens": 93,
+          "cost_usd": 0.004093,
+          "reasoning": {
+            "effort": "medium"
+          },
+          "images_sent": 0,
+          "tools_offered": 10,
+          "output": [
+            {
+              "type": "message",
+              "text": "{\"message\":\"Keep two things from that shot:\\n\\n- **Your natural knee bend and rise.** You already got down and rose through the shot; you don\u2019t need to bend more.\\n- **Your shooting-arm finish.** Your arm continued extending after release, so keep finishing toward the basket.\\n\\nThere\u2019s no reason to rebuild those movements from one short shot. On your next free throw, keep them comfortable and let the ball rise with you. Check whether the release feels less rushed and the ball reaches the rim comfortably.\",\"evidence_ids\":[\"shot:free_throw_02_shot_1\"],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[],\"instructional_resource_id\":null,\"resource_note\":null,\"practice\":null,\"adaptation\":null}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "turns_1_2_cost_usd": 0.0221,
+  "turn_3_first_attempt_cost_estimate_usd": 0.02,
+  "continuation_cost_usd": 0.027796
+}

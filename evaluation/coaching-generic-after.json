@@ -1,0 +1,1373 @@
+{
+  "question": "What should I practice for my shooting arm?",
+  "data": "synthetic fixtures only",
+  "runs": [
+    {
+      "path": "fallback, same fixture as before",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nGeneral practice option. The available evidence is too limited to identify a personal adjustment.\n\nGive the ball a repeatable lift.\n\nLift the ball with your shooting hand underneath and let the arm extend toward the basket.\n\nTake a short set close to the rim, then add your guide hand.\n\nRecord another set from the same spot and angle. I’ll review the movement across attempts and track makes separately when outcomes are available.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Lift the ball with your shooting hand underneath and let the arm extend toward the basket.",
+        "explanation": "Give the ball a repeatable lift.",
+        "guidance_basis": "general",
+        "guidance_note": "General practice option. The available evidence is too limited to identify a personal adjustment.",
+        "practice": {
+          "title": "Close one-hand form shots",
+          "instructions": "Take a short set close to the rim, then add your guide hand.",
+          "evaluation": "Record another set from the same spot and angle. I’ll review the movement across attempts and track makes separately when outcomes are available."
+        },
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "kind": "supporting_source"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    },
+    {
+      "path": "fallback, straighter elbow on makes",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nOn your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).\n\nI couldn’t verify matching frames for this pattern.\n\nThe difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.\n\nTry a slightly straighter shooting arm as the ball leaves your hand.\n\nTake a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.\n\nFilm the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately.\n\nThis is an association in your recorded shots. Try any adjustment as an experiment.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [
+          {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "evidence_ids": [
+              "pattern:release_elbow_angle:90066f2cba86204c"
+            ],
+            "video_reference_ids": [],
+            "technical": {
+              "n_made": 6,
+              "n_missed": 6,
+              "mean_made": 146.0,
+              "mean_missed": 106.0,
+              "difference_made_minus_missed": 40.0,
+              "ci": [
+                38.83,
+                41.17
+              ],
+              "effect_size": 44.72,
+              "result": "likely_pattern",
+              "direction": "higher_on_makes",
+              "made_shot_ids": [
+                "fixture_shot_1",
+                "fixture_shot_2",
+                "fixture_shot_3",
+                "fixture_shot_4",
+                "fixture_shot_5",
+                "fixture_shot_6"
+              ],
+              "missed_shot_ids": [
+                "fixture_shot_7",
+                "fixture_shot_8",
+                "fixture_shot_9",
+                "fixture_shot_10",
+                "fixture_shot_11",
+                "fixture_shot_12"
+              ],
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+              "auto_label_count": 0
+            },
+            "visual_focus": null
+          }
+        ],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Try a slightly straighter shooting arm as the ball leaves your hand.",
+        "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+        "guidance_basis": "personal_pattern",
+        "guidance_note": "I couldn’t verify matching frames for this pattern.",
+        "practice": {
+          "title": "Shooting arm practice set",
+          "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+          "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+        },
+        "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "kind": "supporting_source"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    },
+    {
+      "path": "fallback, more bent elbow on makes",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nOn your recorded makes, your shooting elbow at estimated release looked more bent than on your misses (6 makes and 6 misses with usable measurements).\n\nI couldn’t verify matching frames for this pattern.\n\nThe difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.\n\nTry a slightly softer bend in your shooting arm as the ball leaves your hand.\n\nTake a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.\n\nFilm the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately.\n\nThis is an association in your recorded shots. Try any adjustment as an experiment.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [
+          {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked more bent than on your misses (6 makes and 6 misses with usable measurements).",
+            "evidence_ids": [
+              "pattern:release_elbow_angle:c995b0f1f622aa6d"
+            ],
+            "video_reference_ids": [],
+            "technical": {
+              "n_made": 6,
+              "n_missed": 6,
+              "mean_made": 106.0,
+              "mean_missed": 146.0,
+              "difference_made_minus_missed": -40.0,
+              "ci": [
+                -41.17,
+                -38.83
+              ],
+              "effect_size": -44.72,
+              "result": "likely_pattern",
+              "direction": "lower_on_makes",
+              "made_shot_ids": [
+                "fixture_shot_1",
+                "fixture_shot_2",
+                "fixture_shot_3",
+                "fixture_shot_4",
+                "fixture_shot_5",
+                "fixture_shot_6"
+              ],
+              "missed_shot_ids": [
+                "fixture_shot_7",
+                "fixture_shot_8",
+                "fixture_shot_9",
+                "fixture_shot_10",
+                "fixture_shot_11",
+                "fixture_shot_12"
+              ],
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+              "auto_label_count": 0
+            },
+            "visual_focus": null
+          }
+        ],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Try a slightly softer bend in your shooting arm as the ball leaves your hand.",
+        "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+        "guidance_basis": "personal_pattern",
+        "guidance_note": "I couldn’t verify matching frames for this pattern.",
+        "practice": {
+          "title": "Shooting arm practice set",
+          "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+          "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+        },
+        "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "kind": "supporting_source"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    },
+    {
+      "path": "mocked Gemini draft and approval",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nOn your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).\n\nI couldn’t verify matching frames for this pattern.\n\nA slightly straighter release gives us one arm position to test while keeping the rest of your shot familiar.\n\nAs the ball leaves your fingers, let your elbow unfold a little farther while staying relaxed.\n\nStart close to the rim. Rehearse the smooth reach with an empty hand, then try it through a short set from the same spot.\n\nFilm from the same side. I’ll line up the release frames and check whether your elbow position repeats, then report makes separately.\n\nThis is an association in your recorded shots. Try any adjustment as an experiment.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [
+          {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "evidence_ids": [
+              "pattern:release_elbow_angle:90066f2cba86204c"
+            ],
+            "video_reference_ids": [],
+            "technical": {
+              "n_made": 6,
+              "n_missed": 6,
+              "mean_made": 146.0,
+              "mean_missed": 106.0,
+              "difference_made_minus_missed": 40.0,
+              "ci": [
+                38.83,
+                41.17
+              ],
+              "effect_size": 44.72,
+              "result": "likely_pattern",
+              "direction": "higher_on_makes",
+              "made_shot_ids": [
+                "fixture_shot_1",
+                "fixture_shot_2",
+                "fixture_shot_3",
+                "fixture_shot_4",
+                "fixture_shot_5",
+                "fixture_shot_6"
+              ],
+              "missed_shot_ids": [
+                "fixture_shot_7",
+                "fixture_shot_8",
+                "fixture_shot_9",
+                "fixture_shot_10",
+                "fixture_shot_11",
+                "fixture_shot_12"
+              ],
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+              "auto_label_count": 0
+            },
+            "visual_focus": null
+          }
+        ],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "As the ball leaves your fingers, let your elbow unfold a little farther while staying relaxed.",
+        "explanation": "A slightly straighter release gives us one arm position to test while keeping the rest of your shot familiar.",
+        "guidance_basis": "personal_pattern",
+        "guidance_note": "I couldn’t verify matching frames for this pattern.",
+        "practice": {
+          "title": "Shooting arm practice set",
+          "instructions": "Start close to the rim. Rehearse the smooth reach with an empty hand, then try it through a short set from the same spot.",
+          "evaluation": "Film from the same side. I’ll line up the release frames and check whether your elbow position repeats, then report makes separately."
+        },
+        "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "kind": "supporting_source"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    },
+    {
+      "path": "live Gemini attempt on synthetic evidence",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nOn your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).\n\nI couldn’t verify matching frames for this pattern.\n\nThe difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.\n\nTry a slightly straighter shooting arm as the ball leaves your hand.\n\nTake a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.\n\nFilm the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately.\n\nThis is an association in your recorded shots. Try any adjustment as an experiment.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [
+          {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "evidence_ids": [
+              "pattern:release_elbow_angle:90066f2cba86204c"
+            ],
+            "video_reference_ids": [],
+            "technical": {
+              "n_made": 6,
+              "n_missed": 6,
+              "mean_made": 146.0,
+              "mean_missed": 106.0,
+              "difference_made_minus_missed": 40.0,
+              "ci": [
+                38.83,
+                41.17
+              ],
+              "effect_size": 44.72,
+              "result": "likely_pattern",
+              "direction": "higher_on_makes",
+              "made_shot_ids": [
+                "fixture_shot_1",
+                "fixture_shot_2",
+                "fixture_shot_3",
+                "fixture_shot_4",
+                "fixture_shot_5",
+                "fixture_shot_6"
+              ],
+              "missed_shot_ids": [
+                "fixture_shot_7",
+                "fixture_shot_8",
+                "fixture_shot_9",
+                "fixture_shot_10",
+                "fixture_shot_11",
+                "fixture_shot_12"
+              ],
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+              "auto_label_count": 0
+            },
+            "visual_focus": null
+          }
+        ],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Try a slightly straighter shooting arm as the ball leaves your hand.",
+        "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+        "guidance_basis": "personal_pattern",
+        "guidance_note": "I couldn’t verify matching frames for this pattern.",
+        "practice": {
+          "title": "Shooting arm practice set",
+          "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+          "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+        },
+        "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "kind": "supporting_source"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    }
+  ],
+  "live_trace": {
+    "source": "fallback",
+    "events": [
+      {
+        "stage": "retrieved",
+        "observations": {
+          "shot:fixture_shot_1:outcome": {
+            "text": "You recorded this shot as made.",
+            "topic": "individual",
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:min_knee_angle": {
+            "text": "Smallest knee angle was 110 degrees in this shot.",
+            "topic": "knees",
+            "field": "min_knee_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:knee_angle_range": {
+            "text": "Your knee angle changes between the start of the shot and estimated release.",
+            "topic": "knees",
+            "field": "knee_angle_range",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:release_elbow_angle": {
+            "text": "Elbow angle at estimated release was 146 degrees in this shot.",
+            "topic": "arm",
+            "field": "release_elbow_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:max_elbow_angle": {
+            "text": "Largest elbow angle was 165 degrees in this shot.",
+            "topic": "arm",
+            "field": "max_elbow_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_angle_range": {
+            "text": "Elbow angle range was 66 degrees in this shot.",
+            "topic": "arm",
+            "field": "elbow_angle_range",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_extension_after_release": {
+            "text": "Your shooting arm straightens farther in the short window after estimated release.",
+            "topic": "finish",
+            "field": "elbow_extension_after_release",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:shooting_motion_ms": {
+            "text": "Time from detected start to estimated release was 1000 ms in this shot.",
+            "topic": "timing",
+            "field": "shooting_motion_ms",
+            "unit": "ms",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:knee_coverage_pct": {
+            "text": "Knee tracking coverage was 100 % in this shot.",
+            "topic": "recording",
+            "field": "knee_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_coverage_pct": {
+            "text": "Elbow tracking coverage was 100 % in this shot.",
+            "topic": "recording",
+            "field": "elbow_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:tracking_coverage_pct": {
+            "text": "Ball tracking coverage was 75 % in this shot.",
+            "topic": "recording",
+            "field": "tracking_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "pattern:release_elbow_angle:90066f2cba86204c": {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "topic": "arm",
+            "n_made": 6,
+            "n_missed": 6,
+            "direction": "higher_on_makes",
+            "field": "release_elbow_angle",
+            "unit": "degrees"
+          }
+        },
+        "frames": [],
+        "session_summary": null,
+        "knowledge": {
+          "arm": {
+            "topic": "Shooting arm",
+            "principle": "The shooting hand and arm guide the ball on delivery.",
+            "purpose": "Give the ball a repeatable lift.",
+            "use_when": "When exploring shooting-arm delivery.",
+            "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+            "exercise": "Close one-hand form shots",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "metric": "release_elbow_angle"
+          },
+          "finish": {
+            "topic": "Follow-through",
+            "principle": "A repeatable finish gives you something easy to check after each shot.",
+            "purpose": "Make the end of the shooting motion easy to repeat.",
+            "use_when": "When testing an early finish cue.",
+            "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+            "exercise": "Same-spot finish set",
+            "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+            "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+            "metric": "elbow_extension_after_release"
+          },
+          "routine": {
+            "topic": "Shooting consistency",
+            "principle": "One repeatable routine gives you a clear starting point for practice.",
+            "purpose": "Give each attempt a similar setup.",
+            "use_when": "For a beginner or a baseline practice set.",
+            "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+            "exercise": "Repeat your free-throw routine",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "metric": "shooting_motion_ms"
+          }
+        }
+      },
+      {
+        "stage": "prepared_fallback",
+        "focus": "arm",
+        "evidence_ids": [
+          "pattern:release_elbow_angle:90066f2cba86204c"
+        ]
+      },
+      {
+        "stage": "generation_evidence",
+        "observations": {
+          "shot:fixture_shot_1:outcome": {
+            "text": "You recorded this shot as made.",
+            "topic": "individual",
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:min_knee_angle": {
+            "text": "Smallest knee angle was 110 degrees in this shot.",
+            "topic": "knees",
+            "field": "min_knee_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:knee_angle_range": {
+            "text": "Your knee angle changes between the start of the shot and estimated release.",
+            "topic": "knees",
+            "field": "knee_angle_range",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:release_elbow_angle": {
+            "text": "Elbow angle at estimated release was 146 degrees in this shot.",
+            "topic": "arm",
+            "field": "release_elbow_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:max_elbow_angle": {
+            "text": "Largest elbow angle was 165 degrees in this shot.",
+            "topic": "arm",
+            "field": "max_elbow_angle",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_angle_range": {
+            "text": "Elbow angle range was 66 degrees in this shot.",
+            "topic": "arm",
+            "field": "elbow_angle_range",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_extension_after_release": {
+            "text": "Your shooting arm straightens farther in the short window after estimated release.",
+            "topic": "finish",
+            "field": "elbow_extension_after_release",
+            "unit": "degrees",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": 100
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:shooting_motion_ms": {
+            "text": "Time from detected start to estimated release was 1000 ms in this shot.",
+            "topic": "timing",
+            "field": "shooting_motion_ms",
+            "unit": "ms",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:knee_coverage_pct": {
+            "text": "Knee tracking coverage was 100 % in this shot.",
+            "topic": "recording",
+            "field": "knee_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:elbow_coverage_pct": {
+            "text": "Elbow tracking coverage was 100 % in this shot.",
+            "topic": "recording",
+            "field": "elbow_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "shot:fixture_shot_1:tracking_coverage_pct": {
+            "text": "Ball tracking coverage was 75 % in this shot.",
+            "topic": "recording",
+            "field": "tracking_coverage_pct",
+            "unit": "%",
+            "reliability": {
+              "pipeline_quality": "pass",
+              "event_status": "experimental_review_required",
+              "joint_coverage_pct": null
+            },
+            "shot_id": "fixture_shot_1"
+          },
+          "pattern:release_elbow_angle:90066f2cba86204c": {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "topic": "arm",
+            "n_made": 6,
+            "n_missed": 6,
+            "direction": "higher_on_makes",
+            "field": "release_elbow_angle",
+            "unit": "degrees"
+          }
+        },
+        "frames": [],
+        "session_summary": null,
+        "knowledge": {
+          "arm": {
+            "topic": "Shooting arm",
+            "principle": "The shooting hand and arm guide the ball on delivery.",
+            "purpose": "Give the ball a repeatable lift.",
+            "use_when": "When exploring shooting-arm delivery.",
+            "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+            "exercise": "Close one-hand form shots",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "metric": "release_elbow_angle"
+          },
+          "finish": {
+            "topic": "Follow-through",
+            "principle": "A repeatable finish gives you something easy to check after each shot.",
+            "purpose": "Make the end of the shooting motion easy to repeat.",
+            "use_when": "When testing an early finish cue.",
+            "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+            "exercise": "Same-spot finish set",
+            "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+            "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+            "metric": "elbow_extension_after_release"
+          },
+          "routine": {
+            "topic": "Shooting consistency",
+            "principle": "One repeatable routine gives you a clear starting point for practice.",
+            "purpose": "Give each attempt a similar setup.",
+            "use_when": "For a beginner or a baseline practice set.",
+            "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+            "exercise": "Repeat your free-throw routine",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/",
+            "metric": "shooting_motion_ms"
+          }
+        }
+      },
+      {
+        "stage": "fallback",
+        "reason": "ServerError",
+        "status": 503
+      },
+      {
+        "stage": "selected_focus",
+        "focus": "arm",
+        "evidence_ids": [
+          "pattern:release_elbow_angle:90066f2cba86204c"
+        ]
+      },
+      {
+        "stage": "rendered",
+        "response": {
+          "response_type": "practice",
+          "message": "Use one focus for this practice set so you can tell what feels different.",
+          "show_details": false,
+          "observations": [
+            {
+              "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+              "evidence_ids": [
+                "pattern:release_elbow_angle:90066f2cba86204c"
+              ],
+              "video_reference_ids": [],
+              "technical": {
+                "n_made": 6,
+                "n_missed": 6,
+                "mean_made": 146.0,
+                "mean_missed": 106.0,
+                "difference_made_minus_missed": 40.0,
+                "ci": [
+                  38.83,
+                  41.17
+                ],
+                "effect_size": 44.72,
+                "result": "likely_pattern",
+                "direction": "higher_on_makes",
+                "made_shot_ids": [
+                  "fixture_shot_1",
+                  "fixture_shot_2",
+                  "fixture_shot_3",
+                  "fixture_shot_4",
+                  "fixture_shot_5",
+                  "fixture_shot_6"
+                ],
+                "missed_shot_ids": [
+                  "fixture_shot_7",
+                  "fixture_shot_8",
+                  "fixture_shot_9",
+                  "fixture_shot_10",
+                  "fixture_shot_11",
+                  "fixture_shot_12"
+                ],
+                "field": "release_elbow_angle",
+                "unit": "degrees",
+                "conditions": {
+                  "shot_type": "free_throw",
+                  "shooting_arm": "right"
+                },
+                "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+                "auto_label_count": 0
+              },
+              "visual_focus": null
+            }
+          ],
+          "strengths": [],
+          "video_references": [],
+          "focus": "Shooting arm",
+          "cue": "Try a slightly straighter shooting arm as the ball leaves your hand.",
+          "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+          "guidance_basis": "personal_pattern",
+          "guidance_note": "I couldn’t verify matching frames for this pattern.",
+          "practice": {
+            "title": "Shooting arm practice set",
+            "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+            "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+          },
+          "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+          "knowledge_references": [
+            {
+              "id": "arm",
+              "source": "Jr. NBA — At Home shooting drills",
+              "url": "https://jr.nba.com/jrnbaathome/",
+              "kind": "supporting_source"
+            }
+          ],
+          "clarification": null,
+          "previous_focus": null,
+          "progress": null,
+          "session_summary": null,
+          "memory_update": null
+        }
+      }
+    ]
+  },
+  "first_live_attempt": {
+    "trace": {
+      "source": "fallback",
+      "events": [
+        {
+          "stage": "retrieved",
+          "observations": {
+            "shot:fixture_shot_1:outcome": {
+              "text": "You recorded this shot as made.",
+              "topic": "individual",
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:min_knee_angle": {
+              "text": "Smallest knee angle was 110 degrees in this shot.",
+              "topic": "knees",
+              "field": "min_knee_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:knee_angle_range": {
+              "text": "Your knee angle changes between the start of the shot and estimated release.",
+              "topic": "knees",
+              "field": "knee_angle_range",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:release_elbow_angle": {
+              "text": "Elbow angle at estimated release was 146 degrees in this shot.",
+              "topic": "arm",
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:max_elbow_angle": {
+              "text": "Largest elbow angle was 165 degrees in this shot.",
+              "topic": "arm",
+              "field": "max_elbow_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_angle_range": {
+              "text": "Elbow angle range was 66 degrees in this shot.",
+              "topic": "arm",
+              "field": "elbow_angle_range",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_extension_after_release": {
+              "text": "Your shooting arm straightens farther in the short window after estimated release.",
+              "topic": "finish",
+              "field": "elbow_extension_after_release",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:shooting_motion_ms": {
+              "text": "Time from detected start to estimated release was 1000 ms in this shot.",
+              "topic": "timing",
+              "field": "shooting_motion_ms",
+              "unit": "ms",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:knee_coverage_pct": {
+              "text": "Knee tracking coverage was 100 % in this shot.",
+              "topic": "recording",
+              "field": "knee_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_coverage_pct": {
+              "text": "Elbow tracking coverage was 100 % in this shot.",
+              "topic": "recording",
+              "field": "elbow_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:tracking_coverage_pct": {
+              "text": "Ball tracking coverage was 75 % in this shot.",
+              "topic": "recording",
+              "field": "tracking_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "pattern:release_elbow_angle:90066f2cba86204c": {
+              "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+              "topic": "arm",
+              "n_made": 6,
+              "n_missed": 6,
+              "direction": "higher_on_makes",
+              "field": "release_elbow_angle",
+              "unit": "degrees"
+            }
+          },
+          "frames": [],
+          "session_summary": null,
+          "knowledge": {
+            "arm": {
+              "topic": "Shooting arm",
+              "principle": "The shooting hand and arm guide the ball on delivery.",
+              "purpose": "Give the ball a repeatable lift.",
+              "use_when": "When exploring shooting-arm delivery.",
+              "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+              "exercise": "Close one-hand form shots",
+              "source": "Jr. NBA — At Home shooting drills",
+              "url": "https://jr.nba.com/jrnbaathome/",
+              "metric": "release_elbow_angle"
+            },
+            "finish": {
+              "topic": "Follow-through",
+              "principle": "A repeatable finish gives you something easy to check after each shot.",
+              "purpose": "Make the end of the shooting motion easy to repeat.",
+              "use_when": "When testing an early finish cue.",
+              "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+              "exercise": "Same-spot finish set",
+              "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+              "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+              "metric": "elbow_extension_after_release"
+            },
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "purpose": "Give each attempt a similar setup.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "exercise": "Repeat your free-throw routine",
+              "source": "Jr. NBA — At Home shooting drills",
+              "url": "https://jr.nba.com/jrnbaathome/",
+              "metric": "shooting_motion_ms"
+            }
+          }
+        },
+        {
+          "stage": "prepared_fallback",
+          "focus": "arm",
+          "evidence_ids": [
+            "pattern:release_elbow_angle:90066f2cba86204c"
+          ]
+        },
+        {
+          "stage": "generation_evidence",
+          "observations": {
+            "shot:fixture_shot_1:outcome": {
+              "text": "You recorded this shot as made.",
+              "topic": "individual",
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:min_knee_angle": {
+              "text": "Smallest knee angle was 110 degrees in this shot.",
+              "topic": "knees",
+              "field": "min_knee_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:knee_angle_range": {
+              "text": "Your knee angle changes between the start of the shot and estimated release.",
+              "topic": "knees",
+              "field": "knee_angle_range",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:release_elbow_angle": {
+              "text": "Elbow angle at estimated release was 146 degrees in this shot.",
+              "topic": "arm",
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:max_elbow_angle": {
+              "text": "Largest elbow angle was 165 degrees in this shot.",
+              "topic": "arm",
+              "field": "max_elbow_angle",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_angle_range": {
+              "text": "Elbow angle range was 66 degrees in this shot.",
+              "topic": "arm",
+              "field": "elbow_angle_range",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_extension_after_release": {
+              "text": "Your shooting arm straightens farther in the short window after estimated release.",
+              "topic": "finish",
+              "field": "elbow_extension_after_release",
+              "unit": "degrees",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": 100
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:shooting_motion_ms": {
+              "text": "Time from detected start to estimated release was 1000 ms in this shot.",
+              "topic": "timing",
+              "field": "shooting_motion_ms",
+              "unit": "ms",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:knee_coverage_pct": {
+              "text": "Knee tracking coverage was 100 % in this shot.",
+              "topic": "recording",
+              "field": "knee_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:elbow_coverage_pct": {
+              "text": "Elbow tracking coverage was 100 % in this shot.",
+              "topic": "recording",
+              "field": "elbow_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "shot:fixture_shot_1:tracking_coverage_pct": {
+              "text": "Ball tracking coverage was 75 % in this shot.",
+              "topic": "recording",
+              "field": "tracking_coverage_pct",
+              "unit": "%",
+              "reliability": {
+                "pipeline_quality": "pass",
+                "event_status": "experimental_review_required",
+                "joint_coverage_pct": null
+              },
+              "shot_id": "fixture_shot_1"
+            },
+            "pattern:release_elbow_angle:90066f2cba86204c": {
+              "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+              "topic": "arm",
+              "n_made": 6,
+              "n_missed": 6,
+              "direction": "higher_on_makes",
+              "field": "release_elbow_angle",
+              "unit": "degrees"
+            }
+          },
+          "frames": [],
+          "session_summary": null,
+          "knowledge": {
+            "arm": {
+              "topic": "Shooting arm",
+              "principle": "The shooting hand and arm guide the ball on delivery.",
+              "purpose": "Give the ball a repeatable lift.",
+              "use_when": "When exploring shooting-arm delivery.",
+              "avoid_when": "When chasing a specific joint angle or changing an effective shot for appearance.",
+              "exercise": "Close one-hand form shots",
+              "source": "Jr. NBA — At Home shooting drills",
+              "url": "https://jr.nba.com/jrnbaathome/",
+              "metric": "release_elbow_angle"
+            },
+            "finish": {
+              "topic": "Follow-through",
+              "principle": "A repeatable finish gives you something easy to check after each shot.",
+              "purpose": "Make the end of the shooting motion easy to repeat.",
+              "use_when": "When testing an early finish cue.",
+              "avoid_when": "When the video ends at release or when interpreting early extension as hold duration.",
+              "exercise": "Same-spot finish set",
+              "source": "USA Basketball — 7 Tips To Improve Your Shooting Mechanics",
+              "url": "https://www.usab.com/news/2014/01/7-tips-to-improve-your-shooting-mechanics",
+              "metric": "elbow_extension_after_release"
+            },
+            "routine": {
+              "topic": "Shooting consistency",
+              "principle": "One repeatable routine gives you a clear starting point for practice.",
+              "purpose": "Give each attempt a similar setup.",
+              "use_when": "For a beginner or a baseline practice set.",
+              "avoid_when": "When adding a new sequence would conflict with a reliable existing routine.",
+              "exercise": "Repeat your free-throw routine",
+              "source": "Jr. NBA — At Home shooting drills",
+              "url": "https://jr.nba.com/jrnbaathome/",
+              "metric": "shooting_motion_ms"
+            }
+          }
+        },
+        {
+          "stage": "fallback",
+          "reason": "ServerError",
+          "status": 504
+        },
+        {
+          "stage": "selected_focus",
+          "focus": "arm",
+          "evidence_ids": [
+            "pattern:release_elbow_angle:90066f2cba86204c"
+          ]
+        },
+        {
+          "stage": "rendered",
+          "response": {
+            "response_type": "practice",
+            "message": "Use one focus for this practice set so you can tell what feels different.",
+            "show_details": false,
+            "observations": [
+              {
+                "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+                "evidence_ids": [
+                  "pattern:release_elbow_angle:90066f2cba86204c"
+                ],
+                "video_reference_ids": [],
+                "technical": {
+                  "n_made": 6,
+                  "n_missed": 6,
+                  "mean_made": 146.0,
+                  "mean_missed": 106.0,
+                  "difference_made_minus_missed": 40.0,
+                  "ci": [
+                    38.83,
+                    41.17
+                  ],
+                  "effect_size": 44.72,
+                  "result": "likely_pattern",
+                  "direction": "higher_on_makes",
+                  "made_shot_ids": [
+                    "fixture_shot_1",
+                    "fixture_shot_2",
+                    "fixture_shot_3",
+                    "fixture_shot_4",
+                    "fixture_shot_5",
+                    "fixture_shot_6"
+                  ],
+                  "missed_shot_ids": [
+                    "fixture_shot_7",
+                    "fixture_shot_8",
+                    "fixture_shot_9",
+                    "fixture_shot_10",
+                    "fixture_shot_11",
+                    "fixture_shot_12"
+                  ],
+                  "field": "release_elbow_angle",
+                  "unit": "degrees",
+                  "conditions": {
+                    "shot_type": "free_throw",
+                    "shooting_arm": "right"
+                  },
+                  "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+                  "auto_label_count": 0
+                },
+                "visual_focus": null
+              }
+            ],
+            "strengths": [],
+            "video_references": [],
+            "focus": "Shooting arm",
+            "cue": "Try a slightly straighter shooting arm as the ball leaves your hand.",
+            "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+            "guidance_basis": "personal_pattern",
+            "guidance_note": "I couldn’t verify matching frames for this pattern.",
+            "practice": {
+              "title": "Close one-hand form shots",
+              "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+              "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+            },
+            "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+            "knowledge_references": [
+              {
+                "id": "arm",
+                "source": "Jr. NBA — At Home shooting drills",
+                "url": "https://jr.nba.com/jrnbaathome/"
+              }
+            ],
+            "clarification": null,
+            "previous_focus": null,
+            "progress": null,
+            "session_summary": null,
+            "memory_update": null
+          }
+        }
+      ]
+    },
+    "run": {
+      "path": "live Gemini attempt on synthetic evidence",
+      "text": "Use one focus for this practice set so you can tell what feels different.\n\nOn your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).\n\nI couldn’t verify matching frames for this pattern.\n\nThe difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.\n\nTry a slightly straighter shooting arm as the ball leaves your hand.\n\nTake a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.\n\nFilm the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately.\n\nThis is an association in your recorded shots. Try any adjustment as an experiment.",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [
+          {
+            "text": "On your recorded makes, your shooting elbow at estimated release looked straighter than on your misses (6 makes and 6 misses with usable measurements).",
+            "evidence_ids": [
+              "pattern:release_elbow_angle:90066f2cba86204c"
+            ],
+            "video_reference_ids": [],
+            "technical": {
+              "n_made": 6,
+              "n_missed": 6,
+              "mean_made": 146.0,
+              "mean_missed": 106.0,
+              "difference_made_minus_missed": 40.0,
+              "ci": [
+                38.83,
+                41.17
+              ],
+              "effect_size": 44.72,
+              "result": "likely_pattern",
+              "direction": "higher_on_makes",
+              "made_shot_ids": [
+                "fixture_shot_1",
+                "fixture_shot_2",
+                "fixture_shot_3",
+                "fixture_shot_4",
+                "fixture_shot_5",
+                "fixture_shot_6"
+              ],
+              "missed_shot_ids": [
+                "fixture_shot_7",
+                "fixture_shot_8",
+                "fixture_shot_9",
+                "fixture_shot_10",
+                "fixture_shot_11",
+                "fixture_shot_12"
+              ],
+              "field": "release_elbow_angle",
+              "unit": "degrees",
+              "conditions": {
+                "shot_type": "free_throw",
+                "shooting_arm": "right"
+              },
+              "provenance": "Existing form_profile.make_vs_miss_bootstrap_bonferroni_v1",
+              "auto_label_count": 0
+            },
+            "visual_focus": null
+          }
+        ],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Try a slightly straighter shooting arm as the ball leaves your hand.",
+        "explanation": "The difference was in your elbow angle at estimated release. Trying the version that showed up on your makes gives us one movement to test while keeping the rest of your shot familiar.",
+        "guidance_basis": "personal_pattern",
+        "guidance_note": "I couldn’t verify matching frames for this pattern.",
+        "practice": {
+          "title": "Close one-hand form shots",
+          "instructions": "Take a short set from one spot. Rehearse the cue once before each shot, then shoot at your usual pace.",
+          "evaluation": "Film the next set from the same angle. I’ll compare your elbow angle at estimated release across attempts and report makes and misses separately."
+        },
+        "uncertainty": "This is an association in your recorded shots. Try any adjustment as an experiment.",
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA — At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    }
+  }
+}

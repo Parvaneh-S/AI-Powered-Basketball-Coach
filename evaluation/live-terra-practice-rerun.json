@@ -1,0 +1,106 @@
+{
+  "model": "gpt-6.1-terra",
+  "question": "What should I practice, and can you recommend an instructional video?",
+  "player_text": "Practice a same-spot free-throw set, using your comfortable arm extension as a checkpoint\u2014not something to force. Keep the rest of your shot as usual.\n\nAfter each shot, notice your finish and whether the ball reaches the basket. You\u2019re looking for a comfortable finish and a clearer picture of your distance, not trying to fix your knee bend.\n\nForm Shooting-2 Hands \u00b7 Jr. NBA\nhttps://jr.nba.com/video/form-shooting-2-hands/\n\nWatch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.\n\nWatch how the shooting arm extends through the finish. Use it as a visual reference for your next set, without forcing your arm into a position.\n\nTake a short set from one spot and think only about the finish. Review early follow-through across the next clips and log makes separately.",
+  "provenance": {
+    "source": "openai_repaired",
+    "wording": "model_authored",
+    "provider": "openai",
+    "selected_topic": "finish",
+    "supporting_evidence_ids": [],
+    "decision_rationale": "The model selected the coaching focus from player-scoped evidence.",
+    "reason": null,
+    "validation_failures": [
+      "narrative_validation_failed"
+    ],
+    "discarded_components": []
+  },
+  "resource": {
+    "id": "jrnba_two_hand_form",
+    "kind": "video",
+    "title": "Form Shooting-2 Hands",
+    "organization": "Jr. NBA",
+    "creator": "Dale Ellis",
+    "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+    "section": null,
+    "verified_on": "2026-11-26",
+    "watch_for": "Watch how the guide hand supports the ball and how the legs and shooting arm extend through the finish.",
+    "relevance": "Watch how the shooting arm extends through the finish. Use it as a visual reference for your next set, without forcing your arm into a position.",
+    "exercise": "Take a short set from one spot and think only about the finish. Review early follow-through across the next clips and log makes separately.",
+    "skill_levels": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ]
+  },
+  "practice": null,
+  "requests": [
+    {
+      "model": "gpt-6.1-terra",
+      "seconds": 2.41,
+      "input_tokens": 4222,
+      "cached_tokens": 2207,
+      "output_tokens": 88,
+      "reasoning_tokens": 22,
+      "cost_usd": 0.003069,
+      "reasoning": {
+        "effort": "medium"
+      },
+      "images_sent": 0,
+      "tools_offered": 10,
+      "output": [
+        {
+          "type": "function_call",
+          "name": "retrieve_knowledge",
+          "arguments": "{\"topic\": \"comfortable follow-through form shooting free throw\", \"resource_kind\": \"video\"}"
+        },
+        {
+          "type": "function_call",
+          "name": "retrieve_memory",
+          "arguments": "{\"topic\": \"shooting practice follow through\"}"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "seconds": 5.01,
+      "input_tokens": 5173,
+      "cached_tokens": 4219,
+      "output_tokens": 281,
+      "reasoning_tokens": 61,
+      "cost_usd": 0.002808,
+      "reasoning": {
+        "effort": "medium"
+      },
+      "images_sent": 0,
+      "tools_offered": 10,
+      "output": [
+        {
+          "type": "message",
+          "text": "{\"message\":\"Practice a same-spot free-throw set, using your comfortable arm extension as a checkpoint\u2014not something to force. Keep the rest of your shot as usual.\\n\\nShoot 2 sets of 10. After each shot, notice your finish and whether the ball reaches the basket. You\u2019re looking for a comfortable finish and a clearer picture of your distance, not trying to fix your knee bend.\",\"knowledge_ids\":[\"finish\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"resource_note\":\"Watch how the shooting arm extends through the finish. Use it as a visual reference for your next set, without forcing your arm into a position.\",\"practice\":{\"drill_id\":\"focused_shooting\",\"topic\":\"finish\",\"instructions\":\"Shoot free throws from the same spot, keeping your usual shot and letting your shooting arm extend comfortably through the finish.\",\"evaluation\":\"Notice whether the finish feels comfortable and track how often the ball reaches the basket.\",\"dose\":{\"sets\":2,\"repetitions\":10,\"duration_seconds\":0}}}"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6.1-terra",
+      "seconds": 4.47,
+      "input_tokens": 5112,
+      "cached_tokens": 0,
+      "output_tokens": 252,
+      "reasoning_tokens": 91,
+      "cost_usd": 0.00765,
+      "reasoning": {
+        "effort": "medium"
+      },
+      "images_sent": 0,
+      "tools_offered": 0,
+      "output": [
+        {
+          "type": "message",
+          "text": "{\"message\":\"Practice a same-spot free-throw set, using your comfortable arm extension as a checkpoint\u2014not something to force. Keep the rest of your shot as usual.\\n\\nAfter each shot, notice your finish and whether the ball reaches the basket. You\u2019re looking for a comfortable finish and a clearer picture of your distance, not trying to fix your knee bend.\",\"evidence_ids\":[],\"facts\":[],\"frame_ids\":[],\"visual\":null,\"knowledge_ids\":[\"finish\"],\"instructional_resource_id\":\"jrnba_two_hand_form\",\"resource_note\":\"Watch how the shooting arm extends through the finish. Use it as a visual reference for your next set, without forcing your arm into a position.\",\"practice\":null,\"adaptation\":null}"
+        }
+      ]
+    }
+  ],
+  "estimated_cost_usd": 0.013528
+}

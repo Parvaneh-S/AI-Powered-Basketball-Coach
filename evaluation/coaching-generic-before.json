@@ -1,0 +1,71 @@
+{
+  "question": "What should I practice for my shooting arm?",
+  "fixture": "one synthetic shot, no supported personal association, no video",
+  "original player's question and request logs": "unavailable",
+  "runs": [
+    {
+      "path": "deterministic fallback",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Lift the ball with your shooting hand underneath and let the arm extend toward the basket.",
+        "explanation": "Give the ball a repeatable lift.",
+        "practice": {
+          "title": "Close one-hand form shots",
+          "instructions": "Take a short set close to the rim, then add your guide hand.",
+          "evaluation": "Compare the shooting arm at similar points in each clip."
+        },
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA \u2014 At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    },
+    {
+      "path": "mocked Gemini decision",
+      "response": {
+        "response_type": "practice",
+        "message": "Use one focus for this practice set so you can tell what feels different.",
+        "show_details": false,
+        "observations": [],
+        "strengths": [],
+        "video_references": [],
+        "focus": "Shooting arm",
+        "cue": "Lift the ball with your shooting hand underneath and let the arm extend toward the basket.",
+        "explanation": "Give the ball a repeatable lift.",
+        "practice": {
+          "title": "Close one-hand form shots",
+          "instructions": "Take a short set close to the rim, then add your guide hand.",
+          "evaluation": "Compare the shooting arm at similar points in each clip."
+        },
+        "uncertainty": null,
+        "knowledge_references": [
+          {
+            "id": "arm",
+            "source": "Jr. NBA \u2014 At Home shooting drills",
+            "url": "https://jr.nba.com/jrnbaathome/"
+          }
+        ],
+        "clarification": null,
+        "previous_focus": null,
+        "progress": null,
+        "session_summary": null,
+        "memory_update": null
+      }
+    }
+  ]
+}

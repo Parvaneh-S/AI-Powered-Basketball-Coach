@@ -1,0 +1,193 @@
+{
+  "footage": "3 stitched copies of real demo footage",
+  "ball_detection": "saved detections from the real demo",
+  "pose_tracking": "fresh MediaPipe inference",
+  "hoop_detection": "disabled for this local check",
+  "detected_attempts": 3,
+  "review_candidate_count": 0,
+  "attempts": [
+    {
+      "number": 1,
+      "events": {
+        "start_frame": 47,
+        "start_time_ms": 1567,
+        "release_time_ms": 2600,
+        "end_time_ms": 2800,
+        "flight_end_frame": 159,
+        "flight_end_time_ms": 5300,
+        "release_method": "ball_leaves_hands",
+        "measurement_frames": {
+          "knee_dip": 65,
+          "knee_max": 78,
+          "elbow_min": 60,
+          "elbow_max": 81,
+          "post_release_extension": 81
+        },
+        "release_frame": 78,
+        "end_frame": 84,
+        "end_frame_source": "provisional_follow_through_window",
+        "segmentation_method": "pose_and_ball_departure_v1",
+        "segmentation_status": "experimental_review_required"
+      },
+      "outcome": "unknown",
+      "decoded_release": [
+        2.6
+      ]
+    },
+    {
+      "number": 2,
+      "events": {
+        "start_frame": 240,
+        "start_time_ms": 8000,
+        "release_time_ms": 9033,
+        "end_time_ms": 9233,
+        "flight_end_frame": 352,
+        "flight_end_time_ms": 11733,
+        "release_method": "ball_leaves_hands",
+        "measurement_frames": {
+          "knee_dip": 258,
+          "knee_max": 271,
+          "elbow_min": 253,
+          "elbow_max": 274,
+          "post_release_extension": 274
+        },
+        "release_frame": 271,
+        "end_frame": 277,
+        "end_frame_source": "provisional_follow_through_window",
+        "segmentation_method": "pose_and_ball_departure_v1",
+        "segmentation_status": "experimental_review_required"
+      },
+      "outcome": "unknown",
+      "decoded_release": [
+        9.033
+      ]
+    },
+    {
+      "number": 3,
+      "events": {
+        "start_frame": 433,
+        "start_time_ms": 14433,
+        "release_time_ms": 15467,
+        "end_time_ms": 15667,
+        "flight_end_frame": 545,
+        "flight_end_time_ms": 18167,
+        "release_method": "ball_leaves_hands",
+        "measurement_frames": {
+          "knee_dip": 451,
+          "knee_max": 464,
+          "elbow_min": 446,
+          "elbow_max": 467,
+          "post_release_extension": 467
+        },
+        "release_frame": 464,
+        "end_frame": 470,
+        "end_frame_source": "provisional_follow_through_window",
+        "segmentation_method": "pose_and_ball_departure_v1",
+        "segmentation_status": "experimental_review_required"
+      },
+      "outcome": "unknown",
+      "decoded_release": [
+        15.467
+      ]
+    }
+  ],
+  "coaching_message": "I detected 3 attempts. The outcomes are unknown. The usable form data does not point to a clear change.",
+  "session_summary": {
+    "status": "available",
+    "session_id": 5,
+    "attempts": 3,
+    "made": 0,
+    "missed": 0,
+    "unknown": 3,
+    "accuracy_pct": null,
+    "outcome_coverage_pct": 0.0,
+    "manual_labels": 0,
+    "reliable_form_attempts": 3,
+    "measurements": {
+      "min_knee_angle": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 168.45,
+        "median": 168.45,
+        "min": 168.45,
+        "max": 168.45,
+        "spread": 0.0,
+        "earlier_mean": 168.45,
+        "later_mean": 168.45
+      },
+      "knee_angle_range": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 7.14,
+        "median": 7.14,
+        "min": 7.14,
+        "max": 7.14,
+        "spread": 0.0,
+        "earlier_mean": 7.14,
+        "later_mean": 7.14
+      },
+      "release_elbow_angle": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 156.47,
+        "median": 156.45,
+        "min": 156.45,
+        "max": 156.52,
+        "spread": 0.03,
+        "earlier_mean": 156.45,
+        "later_mean": 156.49
+      },
+      "max_elbow_angle": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 174.04,
+        "median": 174.06,
+        "min": 173.98,
+        "max": 174.07,
+        "spread": 0.04,
+        "earlier_mean": 174.06,
+        "later_mean": 174.02
+      },
+      "elbow_angle_range": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 99.83,
+        "median": 99.84,
+        "min": 99.78,
+        "max": 99.86,
+        "spread": 0.03,
+        "earlier_mean": 99.86,
+        "later_mean": 99.81
+      },
+      "elbow_extension_after_release": {
+        "unit": "degrees",
+        "sample": 3,
+        "mean": 17.56,
+        "median": 17.61,
+        "min": 17.46,
+        "max": 17.61,
+        "spread": 0.07,
+        "earlier_mean": 17.61,
+        "later_mean": 17.54
+      },
+      "shooting_motion_ms": {
+        "unit": "ms",
+        "sample": 3,
+        "mean": 1033.33,
+        "median": 1033,
+        "min": 1033,
+        "max": 1034,
+        "spread": 0.47,
+        "earlier_mean": 1033.0,
+        "later_mean": 1033.5
+      }
+    },
+    "limitations": [
+      "Accuracy uses attempts with a known outcome. Automatic labels are experimental.",
+      "Form summaries use available reliable samples; earlier and later values describe recording order only.",
+      "Shot type and arm are the recorded conditions. Differences are descriptive."
+    ],
+    "profile_status": "insufficient_data",
+    "likely_patterns": []
+  }
+}

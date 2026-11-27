@@ -1,0 +1,18 @@
+{
+  "input": "Three concatenated copies of sample_videos/free_throw_03.mp4",
+  "input_frames": 579,
+  "pose_tracking": "fresh MediaPipe inference",
+  "frames_with_pose": 576,
+  "ball_detection": "fresh YOLO inference",
+  "frames_with_ball_candidates": 567,
+  "ball_detections": 1167,
+  "hoop_detection": "disabled for the local run",
+  "detected_attempts_saved_to_sqlite": 3,
+  "tracked_ball_positions": 336,
+  "browser_previews_generated": ["annotated pose", "tracked ball"],
+  "attempts": [
+    {"number": 1, "start_frame": 47, "start_time_ms": 1567, "release_frame": 78, "release_time_ms": 2600, "end_frame": 84, "end_time_ms": 2800, "flight_end_frame": 159, "form_quality": "pass", "outcome": "unknown"},
+    {"number": 2, "start_frame": 240, "start_time_ms": 8000, "release_frame": 271, "release_time_ms": 9033, "end_frame": 277, "end_time_ms": 9233, "flight_end_frame": 352, "form_quality": "pass", "outcome": "unknown"},
+    {"number": 3, "start_frame": 433, "start_time_ms": 14433, "release_frame": 464, "release_time_ms": 15467, "end_frame": 470, "end_time_ms": 15667, "flight_end_frame": 545, "form_quality": "pass", "outcome": "unknown"}
+  ]
+}
