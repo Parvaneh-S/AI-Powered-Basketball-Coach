@@ -70,6 +70,14 @@ def test_knee_bend_without_raised_hands_is_not_a_shot(tmp_path):
     assert len(find_shots(csv, FPS)) == 1
 
 
+def fake_shots(count):
+    return [
+        {"shot": n, "first_frame": 100 * n, "last_frame": 100 * n + 90,
+         "time_s": round(100 * n / FPS, 2)}
+        for n in range(1, count + 1)
+    ]
+
+
 @pytest.fixture
 def fake_steps(monkeypatch, tmp_path):
     """
@@ -79,21 +87,18 @@ def fake_steps(monkeypatch, tmp_path):
 
     calls = []
 
-    def fake_find(video, work_dir, count=3):
-        return work_dir / "video.mp4", FPS, [
-            {"shot": n, "dip_frame": 100 * n,
-             "hands_up_frame": 100 * n + 10,
-             "hands_down_frame": 100 * n + 25}
-            for n in range(1, count + 1)
-        ]
-
-    monkeypatch.setattr(pipeline, "find_shots_in_video", fake_find)
-    monkeypatch.setattr(pipeline, "count_frames", lambda video: 1000)
+    monkeypatch.setattr(pipeline, "convert_for_analysis",
+                        lambda source, destination: None)
+    monkeypatch.setattr(
+        pipeline, "find_all_shots",
+        lambda video, work_dir: (FPS, fake_shots(3), "test"),
+    )
     monkeypatch.setattr(pipeline, "cut_clip",
                         lambda video, destination, first, last: None)
 
     def fake_analysis(video_path, player_name, shooting_arm,
-                      original_filename, session_id, source_sha256):
+                      original_filename, session_id, source_sha256,
+                      ball_arrival_frame=None):
         calls.append(session_id)
 
         if "shot 2," in original_filename:
@@ -138,8 +143,8 @@ def test_a_failed_shot_does_not_stop_the_others(fake_steps):
 
 def test_no_shots_found_is_reported(fake_steps, monkeypatch):
     video, _ = fake_steps
-    monkeypatch.setattr(pipeline, "find_shots_in_video",
-                        lambda video, work_dir: (None, FPS, []))
+    monkeypatch.setattr(pipeline, "find_all_shots",
+                        lambda video, work_dir: (FPS, [], "test"))
 
     with pytest.raises(pipeline.NoShotsFoundError):
         pipeline.process_multi_shot_video(video, "MultiShotTester")
@@ -150,11 +155,8 @@ def test_single_shot_video_is_refused_as_several_shots(
 ):
     video, calls = fake_steps
     monkeypatch.setattr(
-        pipeline, "find_shots_in_video",
-        lambda video, work_dir: (None, FPS, [
-            {"shot": 1, "dip_frame": 50, "hands_up_frame": 60,
-             "hands_down_frame": 75},
-        ]),
+        pipeline, "find_all_shots",
+        lambda video, work_dir: (FPS, fake_shots(1), "test"),
     )
 
     with pytest.raises(WrongUploadModeError, match="One shot"):

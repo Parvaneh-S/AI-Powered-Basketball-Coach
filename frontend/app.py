@@ -501,6 +501,8 @@ with upload_tab:
     )
 
     if running_job:
+        finished_ok = False
+
         try:
             job = wait_for_job(running_job)
 
@@ -539,6 +541,8 @@ with upload_tab:
                     first_id = analysed[0]["video_id"]
                     set_current_shot(first_id, fetch_analysis(first_id))
 
+                finished_ok = True
+
         except requests.exceptions.HTTPError as error:
             if error.response is not None and error.response.status_code == 404:
                 st.warning(
@@ -556,6 +560,13 @@ with upload_tab:
         # The job is finished (or lost): stop following it.
         st.session_state.job_id = None
         st.query_params.pop("job", None)
+
+        # The page was loaded before the video's session (and
+        # shots) existed. Reload it once so every list and label
+        # uses the fresh data; the results table is kept in
+        # st.session_state. Errors stay on screen (no reload).
+        if finished_ok:
+            st.rerun()
 
     # ---------------------------------------------------
     # Result of the last multi-shot video
@@ -741,24 +752,35 @@ with upload_tab:
             f"Video ID: {st.session_state.video_id}"
         )
 
+        if biomechanics.get("measurement_note"):
+            st.warning(
+                "The form of this shot could not be measured. "
+                f"{biomechanics['measurement_note']} "
+                "The made/missed result is still valid."
+            )
+
+        def measured(key, unit):
+            value = biomechanics.get(key)
+            return "Not measured" if value is None else f"{value}{unit}"
+
         col1, col2, col3 = st.columns(3)
 
         with col1:
             st.metric(
                 "Minimum knee angle",
-                f"{biomechanics.get('min_knee_angle', 'N/A')}°",
+                measured("min_knee_angle", "°"),
             )
 
         with col2:
             st.metric(
                 "Release elbow angle",
-                f"{biomechanics.get('release_elbow_angle', 'N/A')}°",
+                measured("release_elbow_angle", "°"),
             )
 
         with col3:
             st.metric(
                 "Start-to-release duration",
-                f"{biomechanics.get('shooting_motion_ms', 'N/A')} ms",
+                measured("shooting_motion_ms", " ms"),
             )
 
         col4, col5, col6 = st.columns(3)
@@ -766,19 +788,19 @@ with upload_tab:
         with col4:
             st.metric(
                 "Knee angle range",
-                f"{biomechanics.get('knee_angle_range', 'N/A')}°",
+                measured("knee_angle_range", "°"),
             )
 
         with col5:
             st.metric(
                 "Elbow angle range",
-                f"{biomechanics.get('elbow_angle_range', 'N/A')}°",
+                measured("elbow_angle_range", "°"),
             )
 
         with col6:
             st.metric(
                 "Elbow extension after release",
-                f"{biomechanics.get('elbow_extension_after_release', 'N/A')}°",
+                measured("elbow_extension_after_release", "°"),
             )
 
         st.subheader("Outcome and quality")
@@ -812,7 +834,7 @@ with upload_tab:
                 "Measurement quality",
                 str(
                     biomechanics.get("measurement_quality", "unknown")
-                ).title(),
+                ).replace("_", " ").title(),
             )
 
         with col9:

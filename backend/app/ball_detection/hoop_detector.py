@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import time
 from pathlib import Path
 
 import cv2
@@ -12,6 +13,9 @@ from inference_sdk import (
 
 
 MODEL_ID = "basketball-hoop-images/2"
+
+# Waits before retrying a failed Roboflow request (3 tries).
+RETRY_WAIT_SECONDS = (2, 5)
 
 
 def detect_hoop(video_path, output_dir, frame_number=40):
@@ -51,11 +55,25 @@ def detect_hoop(video_path, output_dir, frame_number=40):
         )
     )
 
-    # Send one frame to the hosted model.
-    result = client.infer(
-        frame,
-        model_id=MODEL_ID,
-    )
+    # Send one frame to the hosted model. A short internet
+    # problem should not lose the shot, so retry a few times.
+    for attempt, wait_seconds in enumerate(RETRY_WAIT_SECONDS + (None,)):
+        try:
+            result = client.infer(
+                frame,
+                model_id=MODEL_ID,
+            )
+            break
+
+        except Exception as error:
+            if wait_seconds is None:
+                raise
+
+            print(
+                f"Roboflow request failed ({error}); "
+                f"retrying in {wait_seconds} s"
+            )
+            time.sleep(wait_seconds)
 
     # Ignore predictions belonging to other classes.
     rim_predictions = [

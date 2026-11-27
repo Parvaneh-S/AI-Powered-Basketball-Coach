@@ -3,7 +3,9 @@ Analyse a video that contains several free throws.
 
 Steps:
     1. Convert the video to 30 fps, at most 1920 px, normal colours.
-    2. Find every shot with MediaPipe Pose (hands above the head).
+    2. Find every shot: each time the ball arrives at the hoop
+       (ball_shot_finder). Falls back to MediaPipe Pose (hands
+       above the head) if the ball or hoop cannot be used.
     3. Cut one short clip per shot.
     4. Run the single-shot pipeline on each clip. All shots are
        saved in one practice session.
@@ -31,15 +33,20 @@ from backend.app.pipeline.video_input import (
     SUPPORTED_EXTENSIONS,
     UnsupportedVideoError,
     WrongUploadModeError,
+    convert_for_analysis,
 )
 from backend.app.pipeline.video_pipeline import (
     ROOT,
     process_uploaded_video,
 )
+from backend.app.shot_detection.ball_shot_finder import (
+    find_ball_shots,
+)
 from backend.app.shot_detection.multi_shot import (
     clip_window,
     cut_clip,
-    find_shots_in_video,
+    extract_pose_signals,
+    find_shots,
     format_time,
 )
 
@@ -57,6 +64,47 @@ def count_frames(video_path):
     total = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
     capture.release()
     return total
+
+
+def find_all_shots(analysis_video, work_dir):
+    """
+    Find the shots and the clip to cut for each.
+
+    Main method: the ball arriving at the hoop (ball_shot_finder).
+    If it cannot be used (e.g. no hoop found) or finds nothing,
+    the pose method (hands above the head) is used instead.
+
+    Returns (fps, shots, method name). Each shot has "shot",
+    "first_frame", "last_frame" and "time_s".
+    """
+
+    try:
+        fps, shots = find_ball_shots(analysis_video, work_dir / "ball")
+
+        if shots:
+            return fps, shots, "ball_arrives_at_hoop"
+
+    except Exception:
+        logging.exception(
+            "Ball-based shot finding failed; using the pose method"
+        )
+
+    signals_csv = work_dir / "pose_signals.csv"
+    fps = extract_pose_signals(analysis_video, signals_csv)
+    total_frames = count_frames(analysis_video)
+
+    shots = []
+
+    for shot in find_shots(signals_csv, fps):
+        first, last = clip_window(shot, total_frames, fps)
+        shots.append({
+            "shot": shot["shot"],
+            "first_frame": first,
+            "last_frame": last,
+            "time_s": shot["hands_up_time_s"],
+        })
+
+    return fps, shots, "hands_above_head"
 
 
 def process_multi_shot_video(
@@ -112,10 +160,15 @@ def process_multi_shot_video(
     started = time.perf_counter()
 
     try:
-        # 1 + 2. Convert and find the shots.
-        progress("Converting the video and finding the shots")
-        analysis_video, fps, shots = find_shots_in_video(
-            source, work_dir
+        # 1. Convert.
+        progress("Converting the video")
+        analysis_video = work_dir / "video.mp4"
+        convert_for_analysis(source, analysis_video)
+
+        # 2. Find the shots.
+        progress("Finding the shots (ball and hoop)")
+        fps, shots, shot_finder = find_all_shots(
+            analysis_video, work_dir
         )
 
         if not shots:
@@ -130,14 +183,12 @@ def process_multi_shot_video(
                 "Please upload it as 'One shot'."
             )
 
-        total_frames = count_frames(analysis_video)
-
         # 3 + 4. Cut and analyse each shot.
         results = []
 
         for shot in shots:
             number = shot["shot"]
-            time_in_video = format_time(shot["hands_up_frame"] / fps)
+            time_in_video = format_time(shot["time_s"])
 
             progress(
                 f"Analysing shot {number} of {len(shots)}",
@@ -151,9 +202,11 @@ def process_multi_shot_video(
             }
 
             try:
-                first, last = clip_window(shot, total_frames, fps)
                 clip = work_dir / f"shot_{number:02d}.mp4"
-                cut_clip(analysis_video, clip, first, last)
+                cut_clip(
+                    analysis_video, clip,
+                    shot["first_frame"], shot["last_frame"],
+                )
 
                 result = process_uploaded_video(
                     video_path=str(clip),
@@ -165,6 +218,11 @@ def process_multi_shot_video(
                     ),
                     session_id=session_id,
                     source_sha256=source_sha256,
+                    ball_arrival_frame=(
+                        shot["arrival_frame"] - shot["first_frame"]
+                        if "arrival_frame" in shot
+                        else None
+                    ),
                 )
 
                 # The first shot creates the session if needed;
@@ -197,6 +255,7 @@ def process_multi_shot_video(
             "player_name": player_name,
             "session_id": session_id,
             "shots_found": len(shots),
+            "shot_finder": shot_finder,
             "shots_analysed": sum(
                 1 for r in results if r["status"] == "success"
             ),

@@ -127,6 +127,10 @@ def build_shot_analysis(video_id):
             "measurement_quality": features[
                 "measurement_quality"
             ],
+            # Why the form could not be measured, if so.
+            "measurement_note": features.get(
+                "measurement_note"
+            ),
         },
 
         "ball_tracking": trajectory,

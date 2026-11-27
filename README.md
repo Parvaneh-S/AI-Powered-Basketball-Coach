@@ -25,7 +25,7 @@ FastAPI backend (backend/app/api/main.py)
    │
    ├─ Upload a practice video with several shots
    │     ─► background job (backend/app/pipeline/multi_shot_pipeline.py)
-   │        convert to 30 fps / 1080p ─► find every shot (MediaPipe)
+   │        convert to 30 fps / 1080p ─► find every shot (ball reaching the hoop)
    │        ─► cut one clip per shot ─► steps 0–9 for each clip,
    │           all shots saved in one practice session
    │
@@ -88,11 +88,12 @@ Then open http://localhost:8501. To check the backend on its own, open http://12
 
 ## Recording tips
 
-- Upload **one free throw**, or a **practice video with several free throws** (choose "Several shots" in the app). In a practice video every shot is found automatically (the moment the hands go above the head), cut into its own clip and analysed. This takes several minutes for a long video.
+- Upload **one free throw**, or a **practice video with several free throws** (choose "Several shots" in the app). In a practice video every shot is found automatically (each time the ball reaches the hoop, including shots taken straight after each other), cut into its own clip and analysed. This takes several minutes for a long video.
 - Choose the matching option: a video with several shots uploaded as "One shot", or a video with one shot uploaded as "Several shots", is refused with a message.
 - Only one video is analysed at a time; uploads are refused until the current analysis has finished.
 - Film from the **side**, with the player's **whole body and the hoop** in the picture for the whole shot.
 - A **steady camera** (tripod or a fixed stand) gives the most reliable results. A handheld camera is supported, but sudden zooms can make the made/missed result `unknown`.
+- **Record continuously: do not pause the recording between shots, and do not zoom.** The app cuts out each shot itself, so waiting time costs nothing. If the video jumps during a shot (recording paused and resumed, cut, or zoomed), the release is often missing: the shot is still saved with its made/missed result, but its angles are shown as **Not measured** instead of wrong values.
 - MP4 and MOV (including iPhone HEVC) are accepted, up to 1 GB. MOV and unreadable MP4 videos are converted to H.264 MP4 automatically.
 - Select the **shooting arm** before analysing.
 
@@ -148,16 +149,18 @@ To share real recorded data with the team, use a private shared folder for the v
 
 ## Privacy
 
-- **Roboflow:** for each analysed shot, **one frame** is sent to Roboflow's hosted model to find the hoop (a practice video with 20 shots sends 20 frames). Everything else (pose, ball, hoop tracking) runs on your computer.
+- **Roboflow:** for each analysed shot, **one frame** is sent to Roboflow's hosted model to find the hoop (a practice video sends one more frame to find its shots, so a video with 20 shots sends 21 frames). Everything else (pose, ball, hoop tracking) runs on your computer.
 - **Gemini:** when you ask the coach a question, the question and the player's measurements, history and form profile are sent to Google's Gemini API.
 - **Uploaded videos** are stored on your computer in `data/uploads/` and are not deleted automatically. They are never committed to git.
 - Only record and upload other people with their **consent**, and upload each player under their own name.
 
 ## Current limitations
 
-- Practice videos: one player at a time in the picture. A shot is only found if the hands go above the head. This works when the player is large in the picture (22 of 22 shots in one test video), but misses shots when the player is small or releases at head height, and can count catching the ball overhead as a shot (about 9 of 21 real shots found in another test video). A shot finder based on the ball's flight is being tested. The progress of a running practice video is lost if the backend restarts.
+- Practice videos: one player and one ball at a time, with the hoop in the picture. Shots are found from the ball reaching the hoop; this found every shot in two test videos (22 of 22 and 21 of 21), but has only been tested on these two. A shot that never comes near the rim (an airball) is not found. If no hoop is found, the app falls back to finding shots by the hands going above the head, which can miss shots when the player is small in the picture. The progress of a running practice video is lost if the backend restarts.
 - Shot outcome is a 2D heuristic: balls falling just in front of or behind the rim are reported as `unknown`. The made rule was checked on 27 real shots (no wrong results, 11 `unknown`); more varied recordings are needed to confirm it.
 - The release frame comes from the ball leaving the hands and is accurate to about one frame (33 ms at 30 fps); without a visible ball the pose-only estimate is used.
+- The elbow angle at release is only accurate to about ±25°: the elbow straightens by about 30° per frame at release, so one frame earlier or later changes it a lot. The knee angle is much more stable. All angles are 2D estimates from the side view and have not been compared with a reference measurement.
+- Shots where the video jumps during the shot are marked Not measured; shots analysed before this check keep their stored values unless they are corrected or analysed again.
 - Shots analysed before an analysis improvement keep their stored results until they are analysed again.
 - The personalised form-to-outcome model is at stage 1 (comparing makes and misses per feature); it needs at least 10 labelled shots, with at least 3 made and 3 missed.
 - The coaching knowledge base has only 4 entries.

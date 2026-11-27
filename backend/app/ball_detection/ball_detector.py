@@ -6,7 +6,12 @@ import cv2
 from ultralytics import YOLO
 
 
-def detect_basketball(video_path, output_dir):
+def detect_basketball(video_path, output_dir, write_video=True):
+    """
+    Detect ball candidates in every frame and save them to
+    ball_detections.csv. With write_video=False no annotated
+    video is written (faster, for whole practice videos).
+    """
     video_path = Path(video_path)
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -45,16 +50,19 @@ def detect_basketball(video_path, output_dir):
     output_video = output_dir / "ball_detection.mp4"
     output_csv = output_dir / "ball_detections.csv"
 
-    writer = cv2.VideoWriter(
-        str(output_video),
-        cv2.VideoWriter_fourcc(*"mp4v"),
-        fps,
-        (width, height),
-    )
+    writer = None
 
-    if not writer.isOpened():
-        cap.release()
-        raise RuntimeError("Cannot create output video")
+    if write_video:
+        writer = cv2.VideoWriter(
+            str(output_video),
+            cv2.VideoWriter_fourcc(*"mp4v"),
+            fps,
+            (width, height),
+        )
+
+        if not writer.isOpened():
+            cap.release()
+            raise RuntimeError("Cannot create output video")
 
     records = []
     frame_index = 0
@@ -145,12 +153,16 @@ def detect_basketball(video_path, output_dir):
                     2,
                 )
 
-            writer.write(frame)
+            if writer is not None:
+                writer.write(frame)
+
             frame_index += 1
 
     finally:
         cap.release()
-        writer.release()
+
+        if writer is not None:
+            writer.release()
 
     # Export detection results to CSV.
     columns = [
@@ -186,7 +198,9 @@ def detect_basketball(video_path, output_dir):
         coverage = 100 * detected_frames / frame_index
         print(f"Detection coverage: {coverage:.2f}%")
 
-    print(f"Annotated video: {output_video}")
+    if write_video:
+        print(f"Annotated video: {output_video}")
+
     print(f"Detections CSV: {output_csv}")
 
 

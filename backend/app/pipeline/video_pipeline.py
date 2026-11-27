@@ -36,6 +36,10 @@ from backend.app.ball_detection.shot_outcome import (
 )
 from backend.app.measurements.shot_features import (
     extract_shot_features,
+    mark_not_measurable,
+)
+from backend.app.shot_detection.recording_jumps import (
+    jump_during_shot,
 )
 from backend.app.analysis.shot_analysis import (
     build_shot_analysis,
@@ -148,6 +152,7 @@ def process_uploaded_video(
     original_filename: str | None = None,
     session_id: int | None = None,
     source_sha256: str | None = None,
+    ball_arrival_frame: int | None = None,
 ) -> dict:
     """
     Run the complete basketball video-analysis pipeline
@@ -160,6 +165,10 @@ def process_uploaded_video(
     the fingerprint of the uploaded video. It is stored with
     the shot instead of the clip's own fingerprint, and the
     duplicate check is skipped (the caller already did it).
+
+    ball_arrival_frame: for such a clip, the frame where the
+    ball reaches the hoop. Used to check that the recording
+    was not paused or cut during the shot.
     """
 
     source_video = Path(video_path).resolve()
@@ -356,6 +365,26 @@ def process_uploaded_video(
     require_file(
         output_dir / "shot_features.json"
     )
+
+    # If the video jumps during the shot (recording paused and
+    # resumed, a cut, a sudden zoom), part of the shot is missing
+    # and its form values would be wrong: keep the shot, but
+    # mark its form as not measurable.
+    jump = jump_during_shot(
+        stored_video,
+        json.loads(events_path.read_text(encoding="utf-8")),
+        ball_arrival_frame=ball_arrival_frame,
+    )
+
+    if jump is not None:
+        mark_not_measurable(
+            output_dir / "shot_features.csv",
+            reason=(
+                f"The video jumps at frame {jump}, during the shot "
+                "(recording paused, cut or zoomed), so part of the "
+                "shot is missing."
+            ),
+        )
 
     # --------------------------------------------------
     # 7. Shot outcome

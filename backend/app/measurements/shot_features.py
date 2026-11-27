@@ -231,6 +231,49 @@ def extract_shot_features(
     return features
 
 
+# Measured form values; emptied when the shot cannot be measured.
+ANGLE_FIELDS = (
+    "shooting_motion_ms",
+    "min_knee_angle",
+    "max_elbow_angle",
+    "release_elbow_angle",
+    "knee_angle_range",
+    "elbow_angle_range",
+    "elbow_extension_after_release",
+)
+
+
+def mark_not_measurable(output_path, reason):
+    """
+    Empty the form values of an already extracted shot (CSV and
+    JSON) and record why. The personal form profile and the coach
+    skip empty values, so no wrong numbers are used.
+    """
+
+    output_path = Path(output_path)
+    json_path = output_path.with_suffix(".json")
+
+    features = json.loads(json_path.read_text(encoding="utf-8"))
+
+    for field in ANGLE_FIELDS:
+        features[field] = None
+
+    features["release_angle_valid"] = False
+    features["measurement_quality"] = "not_measurable"
+    features["measurement_note"] = reason
+
+    with output_path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=list(features.keys()))
+        writer.writeheader()
+        writer.writerow(features)
+
+    json_path.write_text(json.dumps(features, indent=2), encoding="utf-8")
+
+    print(f"Form not measurable: {reason}")
+
+    return features
+
+
 if __name__ == "__main__":
     root = Path(__file__).resolve().parents[3]
 
