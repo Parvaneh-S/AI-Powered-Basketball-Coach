@@ -1,6 +1,6 @@
 # AI Basketball ShotCoach
 
-An agentic AI basketball coach that analyses free-throw videos. Computer vision measures the player's shooting form and the ball's flight, the results are stored per player, and a Gemini-based agent answers coaching questions using those measurements, the player's history and retrieved coaching knowledge.
+An AI basketball coach that analyses free-throw videos. Computer vision measures the player's shooting form and the ball's flight. ShotCoach stores the results per player and uses the configured coaching provider to answer questions with those measurements, the player's history and curated coaching knowledge. OpenAI is the default.
 
 ## How it works
 
@@ -23,15 +23,20 @@ FastAPI backend (backend/app/api/main.py)
    │     8. Combined analysis                  ─► outputs/<video_id>/shot_analysis.json
    │     9. Save to SQLite                     ─► data/shotcoach.db
    │
+   ├─ Several shots (separate clips) ─► background job with progress
+   │     Find shots with MediaPipe, cut clips and run the one-shot pipeline on each.
    ├─ Upload a practice video with several shots
    │     ─► background job (backend/app/pipeline/multi_shot_pipeline.py)
    │        convert to 30 fps / 1080p ─► find every shot (ball reaching the hoop)
    │        ─► cut one clip per shot ─► steps 0–9 for each clip,
    │           all shots saved in one practice session
    │
-   └─ Ask the coach ─► Gemini agent (backend/app/agent/coaching_agent.py)
+   ├─ Full recording with session coaching ─► scan the continuous recording
+   │     Combine pose and ball motion to measure attempts at their original timestamps.
+   │
+   └─ Ask the coach ─► Coaching engine (backend/app/agent/coaching_agent.py)
          tools: shot analysis, player history, shot comparison,
-                coaching knowledge (RAG, backend/app/rag/knowledge_retriever.py),
+                curated coaching knowledge and drills (backend/app/agent/knowledge.py),
                 personal form profile (backend/app/ml/form_profile.py)
 ```
 
@@ -67,8 +72,10 @@ Requires Python 3.13. Run all commands from the project root.
 
    | Key | Used for | Where to get it |
    |---|---|---|
-   | `GEMINI_API_KEY` | The coaching agent | [Google AI Studio](https://aistudio.google.com) |
+   | `OPENAI_API_KEY` | The coaching agent | [OpenAI API keys](https://platform.openai.com/api-keys) |
    | `ROBOFLOW_API_KEY` | Hoop detection when uploading a video | [Roboflow](https://roboflow.com) workspace settings |
+
+   The coach defaults to OpenAI with `gpt-4.1-mini`. Set `SHOTCOACH_PROVIDER=gemini` and `GEMINI_API_KEY` to use Gemini. Set `SHOTCOACH_MODEL` to select the model for the active provider. The provider-specific `OPENAI_MODEL` and `GEMINI_MODEL` also work when `SHOTCOACH_MODEL` is unset. The local fallback is available when the selected provider has no key.
 
    Never commit `.env`; it is listed in `.gitignore`.
 
@@ -125,8 +132,7 @@ python -m pytest
 | `backend/app/ball_detection/` | Ball detection and tracking, hoop detection and tracking, shot outcome |
 | `backend/app/analysis/` | Combined shot analysis and shot comparison |
 | `backend/app/database/` | SQLite models, saving shots, player history |
-| `backend/app/agent/` | Gemini coaching agent and its tools |
-| `backend/app/rag/` | Coaching knowledge base and semantic search |
+| `backend/app/agent/` | Shared coaching engine, provider adapters and evidence tools |
 | `backend/app/ml/` | Personal form profile (form-to-outcome model, stage 1) |
 | `tests/` | Automated tests |
 | `frontend/` | Streamlit user interface |
@@ -163,5 +169,5 @@ To share real recorded data with the team, use a private shared folder for the v
 - Shots where the video jumps during the shot are marked Not measured; shots analysed before this check keep their stored values unless they are corrected or analysed again.
 - Shots analysed before an analysis improvement keep their stored results until they are analysed again.
 - The personalised form-to-outcome model is at stage 1 (comparing makes and misses per feature); it needs at least 10 labelled shots, with at least 3 made and 3 missed.
-- The coaching knowledge base has only 4 entries.
+- The curated coaching knowledge focuses on shooting technique and practice.
 - Joint angles are 2D and depend on camera position; a side view works best.
