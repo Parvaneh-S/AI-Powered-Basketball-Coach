@@ -228,53 +228,30 @@
     font-weight: 650;
 }
 
-/* ---------- AI Coach: heading and Coach / Practice / Progress tabs ---------- */
+/* ---------- AI Coach ---------- */
 .st-key-coach_heading {
-    gap: 0.35rem;
-    border-bottom: 1px solid var(--sc-line);
-    margin-bottom: 0.4rem;
-}
-
-.st-key-coach_heading h1 {
-    font-size: clamp(1.45rem, 1.3rem + 0.6vw, 1.8rem);
-    letter-spacing: -0.025em;
-    padding-block: 0 0.3rem;
-}
-
-.st-key-coach_heading [data-testid="stButtonGroup"] > div {
-    gap: 1.25rem;
+    gap: 0.6rem;
     flex-wrap: nowrap;
 }
 
-.st-key-coach_heading [data-testid="stButtonGroup"] button {
-    background: transparent;
-    border: 0;
-    border-radius: 0;
-    border-bottom: 2px solid transparent;
-    padding: 0.35rem 0.1rem 0.55rem;
-    min-height: 0;
+.st-key-coach_heading h1 {
+    font-size: clamp(1.55rem, 1.32rem + 0.9vw, 2.1rem);
+    padding: 0;
+}
+
+.st-key-coach_heading [data-testid="stPopover"] button {
     color: var(--sc-muted);
-    font-weight: 600;
-}
-
-.st-key-coach_heading [data-testid="stButtonGroup"] button:hover {
-    color: var(--sc-text);
-}
-
-.st-key-coach_heading [data-testid="stButtonGroup"] button[kind$="Active"] {
-    color: var(--sc-accent);
-    border-bottom-color: var(--sc-accent);
-    background: transparent;
+    min-height: 2.65rem;
 }
 
 /* Compact recording + attempt selector. */
 .st-key-coach_context [data-testid="stPopover"] button {
     justify-content: flex-start;
     text-align: start;
-    background: var(--sc-card);
-    border: 1px solid var(--sc-line);
-    border-radius: 0.75rem;
-    padding: 0.55rem 0.85rem;
+    background: transparent;
+    border-color: var(--sc-line);
+    min-height: 2.75rem;
+    padding: 0.4rem 0.75rem;
 }
 
 .st-key-coach_context [data-testid="stPopover"] button p {
@@ -286,13 +263,31 @@
     color: var(--sc-accent);
 }
 
+.st-key-coach_secondary:empty,
+[data-testid="stLayoutWrapper"]:has(> .st-key-coach_secondary:empty) {
+    display: none;
+}
+
+.st-key-coach_secondary > div > [data-testid="stExpander"] > details {
+    border-color: var(--sc-line);
+}
+
+.st-key-coach_conversation {
+    padding-top: 0.65rem;
+    gap: clamp(0.65rem, 2vw, 1.3rem);
+}
+
 .st-key-coach_empty {
     align-items: center;
     text-align: center;
-    padding-block: clamp(1.5rem, 6vh, 3.5rem) 1rem;
+    padding-block: clamp(2.5rem, 14vh, 7.5rem) 1.25rem;
 }
 
-.st-key-coach_empty h3 { padding-bottom: 0.1rem; }
+.st-key-coach_empty h3 {
+    font-size: clamp(1.7rem, 1.38rem + 1.25vw, 2.4rem);
+    padding-bottom: 0.15rem;
+    letter-spacing: -0.035em;
+}
 
 .st-key-coach_suggestions {
     width: 100%;
@@ -307,7 +302,7 @@
     border-color: var(--sc-line);
 }
 
-.st-key-coach_suggestions button [data-testid="stIconMaterial"] { color: var(--sc-accent); }
+.st-key-coach_suggestions button [data-testid="stIconMaterial"] { color: var(--sc-muted); }
 
 .stMain [data-testid="stChatMessage"] {
     max-width: 100%;
@@ -325,11 +320,31 @@
 
 .stMain [data-testid="stChatMessage"] p { line-height: 1.6; }
 
+.st-key-coach_conversation [data-testid="stChatMessage"] [data-testid="stChatMessageContent"] {
+    min-width: 0;
+    gap: 0.65rem;
+}
+
+.st-key-coach_conversation [data-testid="stChatMessage"]:has([aria-label="Chat message from user"]) {
+    max-width: min(100%, 40rem);
+    border-radius: 0.9rem;
+    padding: 0.6rem 0.85rem;
+}
+
 .stMain [class*="st-key-coach_message_"][class*="_practice_card"] {
     background: var(--sc-card);
     border-radius: 0.75rem;
     padding: 0.85rem 1rem;
     gap: 0.35rem;
+}
+
+.st-key-coach_conversation [class*="st-key-coach_message_"][class*="_resources"] {
+    gap: 0;
+}
+
+.st-key-coach_conversation [class*="st-key-coach_message_"][class*="_resources"] > [data-testid="stLayoutWrapper"] {
+    border-top: 1px solid var(--sc-line);
+    padding: 0.75rem 0;
 }
 
 /* Annotated frames: one consistent aspect ratio, letterboxed rather than cropped. */
@@ -373,11 +388,6 @@
     width: auto;
     min-width: 0;
     flex: 1 1 0;
-}
-
-.st-key-coach_heading [data-testid="stButtonGroup"] button:is(:focus, :focus-visible, :active) {
-    background: transparent;
-    box-shadow: none;
 }
 
 .st-key-practice_cue {
@@ -526,13 +536,16 @@
         justify-content: center;
     }
 
-    .stMain [class*="st-key-coach_visual_"] [data-testid="stHorizontalBlock"] {
+    .stMain :is([class*="st-key-coach_visual_"], .st-key-progress_compare, .st-key-coach_suggestions) [data-testid="stHorizontalBlock"] {
         flex-direction: column;
     }
 
-    .stMain [class*="st-key-coach_visual_"] [data-testid="stColumn"] {
+    .stMain :is([class*="st-key-coach_visual_"], .st-key-progress_compare, .st-key-coach_suggestions) [data-testid="stColumn"] {
         width: 100%;
     }
+
+    .st-key-coach_empty { padding-top: clamp(1.75rem, 6vh, 3.5rem); }
+    .st-key-coach_suggestions button { min-height: 2.75rem; }
 }
 
 @media (min-width: 1024px) {
@@ -578,11 +591,15 @@
 
     .stMain .block-container:has(.st-key-shotcoach_header_coach),
     .stMain [data-testid="stBottomBlockContainer"] {
-        max-width: 52rem;
+        max-width: 58rem;
     }
 
     .stMain [data-testid="stBottom"] {
         bottom: 0;
+    }
+
+    .stMain [data-testid="stBottomBlockContainer"] {
+        padding-inline: clamp(1.5rem, 4vw, 3rem);
     }
 
     .stMain [data-testid="stLayoutWrapper"]:has(> [class*="st-key-shotcoach_header_"]) {

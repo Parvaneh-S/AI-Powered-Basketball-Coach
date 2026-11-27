@@ -5,7 +5,7 @@ from time import sleep
 import requests
 import streamlit as st
 
-from frontend.coach_tabs import render_coach_page
+from frontend.coach_tabs import PANELS, render_coach_page
 from frontend.service import (
     API_URL,
     fetch_job,
@@ -45,6 +45,8 @@ def go(page, session=None, recording=None):
 
 def continue_coaching():
     go("coach", st.session_state.coach_session, st.session_state.coach_recording)
+    if attempt := st.session_state.get("coach_attempt"):
+        st.query_params["attempt"] = attempt
 
 
 def change_player():
@@ -56,6 +58,9 @@ def change_player():
     st.session_state.pop("pending_question", None)
     st.session_state.coach_session = None
     st.session_state.coach_recording = None
+    st.session_state.pop("coach_attempt", None)
+    for key in (*PANELS.values(), "practice_saved", "practice_error"):
+        st.session_state.pop(key, None)
     st.session_state.pop("upload_complete", None)
     st.session_state.pop("clip_results", None)
     current = st.query_params.get("page", "home")

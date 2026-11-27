@@ -97,34 +97,51 @@ def render_frame(api_url, player, ref, key, multiple_videos):
 def render_progress(progress):
     if not progress or progress["status"] != "available":
         return
-    st.markdown("**Measured**")
+    st.markdown("**Measured progress**")
     left, right = st.columns(2)
     sessions = progress.get("kind") == "sessions"
+    field = progress.get("field")
+    unit = " ms" if field == "shooting_motion_ms" else "°"
     for column, title, side in ((left, "Earlier session" if sessions else "Before the focus", "before"),
                                  (right, "Later session" if sessions else "New shots", "after")):
         sample = progress[side]
         with column:
-            st.markdown(f"**{title}**")
-            if session_id := progress.get(f"{side}_session_id"):
-                st.caption(f"Session {session_id}")
+            session_id = progress.get(f"{side}_session_id") or sample.get("session_id")
+            session_label = sample.get("session_name") or (f"Session {session_id}" if session_id else None)
+            st.markdown(f"**{session_label or title}**")
+            if session_label:
+                st.caption(title)
             if "manual_made" in sample:
-                st.write(f"{sample['manual_made']} makes / {sample['manual_labels']} player-confirmed outcomes")
+                if sample["manual_labels"]:
+                    st.write(f"{sample['manual_made']} made of {sample['manual_labels']} player-confirmed outcomes "
+                             f"({sample['manual_made'] / sample['manual_labels']:.0%})")
+                else:
+                    st.caption("No player-confirmed outcomes")
                 estimates = sample["made"] + sample["missed"] - sample["manual_labels"]
                 st.caption(f"{estimates} estimated · {sample['unknown']} unknown")
             else:
                 st.write(f"{sample['made']} makes / {sample['made'] + sample['missed']} labelled shots")
                 st.caption(f"{sample['manual_labels']} player labels · {sample['unknown']} unknown outcomes")
-            if progress["field"]:
-                st.caption(f"{sample['measurement_count']} usable attempts for movement")
+            if field and sample.get("mean") is not None:
+                st.write(f"{sample['mean']:g}{unit} average")
+                if sample.get("spread") is not None:
+                    st.caption(f"{sample['spread']:g}{unit} spread · {sample['measurement_count']} measured attempts")
+                else:
+                    st.caption(f"{sample['measurement_count']} measured attempts")
     assessment = progress.get("assessment") or {}
     if assessment.get("phase"):
-        st.caption(f"Measured phase · {assessment['phase']}")
+        st.caption(f"{field.replace('_', ' ').capitalize()} · {assessment['phase']}" if field else assessment["phase"])
+    for measure, label in (("accuracy", "Player-confirmed accuracy"), ("consistency", "Movement repeatability")):
+        direction = {"higher": "Higher", "lower": "Lower", "similar": "Similar", "mixed": "Mixed",
+                     "insufficient": "Insufficient evidence", "camera_changed": "Camera changed"}.get(assessment.get(measure))
+        if direction:
+            st.caption(f"{label} · {direction}")
     if progress.get("intermediate"):
         reviewed = ", ".join(str(sample["session_id"]) for sample in progress["intermediate"])
         st.caption(f"Intervening session reviewed · {reviewed}")
-    if progress["completed"] or progress.get("player_reported_effect"):
+    if progress.get("completed") or progress.get("player_reported_effect"):
         st.markdown("**Player-reported**")
-        if progress["completed"]:
+        if progress.get("completed"):
             st.caption("Practice completion was reported by the player.")
         if effect := progress.get("player_reported_effect"):
             st.caption(f"Player said the practice {'helped' if effect == 'helped' else 'didn’t help'}.")
@@ -132,7 +149,7 @@ def render_progress(progress):
 
 def render_response(result, player, api_url, key, practice_link=None):
     """Render one coaching reply. With `practice_link`, a recommended practice is shown as a compact
-    card whose full plan lives in the Practice tab."""
+    card with a link to the separate practice panel."""
     st.write(result["message"])
     observations = result.get("strengths", []) + result.get("observations", [])
     refs = {ref["id"]: ref for ref in result.get("video_references", [])}
@@ -168,9 +185,12 @@ def render_response(result, player, api_url, key, practice_link=None):
             st.caption(":material/assignment: Recommended practice")
             st.markdown(f"**{practice['title']}**")
             if dose := practice.get("dose"):
-                st.caption(f"{dose['sets']} {'set' if dose['sets'] == 1 else 'sets'} × {dose['repetitions']} shots")
-            if practice.get("focus") and practice["focus"] != result.get("cue"):
-                st.write(practice["focus"])
+                st.caption(f"{dose['sets']} {'set' if dose['sets'] == 1 else 'sets'} × {dose['repetitions']} reps")
+            spoken = " ".join(str(result.get(field) or "") for field in ("message", "cue", "explanation")).casefold()
+            for detail in (practice.get("focus"), practice.get("evaluation") or practice.get("success_criteria")):
+                if detail and detail.casefold() not in spoken:
+                    st.write(detail)
+                    spoken += " " + detail.casefold()
             practice_link()
     elif practice:
         with st.container(border=True):
@@ -218,11 +238,15 @@ def render_response(result, player, api_url, key, practice_link=None):
                 elif detail.get("outcome_source"):
                     st.caption(detail["outcome_source"])
     resource = result.get("instructional_resource")
-    resources = [item for item in [resource, *result.get("additional_resources", [])] if item]
-    for item in resources:
-        render_resource(item)
-    shown_urls = {item["url"] for item in resources}
-    sources = [source for source in result.get("knowledge_references", []) if source["url"] not in shown_urls]
+    resources = {}
+    for item in [resource, *result.get("additional_resources", [])]:
+        if item:
+            resources.setdefault(item["url"], item)
+    if resources:
+        with st.container(key=f"{key}_resources"):
+            for item in resources.values():
+                render_resource(item)
+    sources = [source for source in result.get("knowledge_references", []) if source["url"] not in resources]
     if sources:
         with st.expander("Supporting coaching sources"):
             for source in sources:
@@ -235,7 +259,7 @@ def render_response(result, player, api_url, key, practice_link=None):
 def render_resource(resource):
     """A recommended video or reading: what it is, why it matters for this player, and a direct link."""
     video = resource["kind"] == "video"
-    with st.container(border=True):
+    with st.container():
         media, text = st.columns([1, 2]) if resource.get("thumbnail_url") else (None, st.container())
         if media is not None:
             # Thumbnails are only present when verified on the publisher's page.
@@ -244,13 +268,15 @@ def render_resource(resource):
             st.markdown(f"[**{resource['title']}**]({resource['url']})")
             attribution = " · ".join(filter(None, (resource["organization"], resource.get("creator"))))
             st.caption(f"{'Instructional video' if video else 'Reading'} · {attribution}")
-            st.write(resource["watch_for"])
+            if watch_for := resource.get("watch_for"):
+                st.write(watch_for)
             if section := resource.get("section"):
                 st.caption(section)
         if relevance := resource.get("relevance"):
             st.markdown(f"**What to watch for:** {relevance}")
         if video and resource.get("embed_url"):
-            st.video(resource["embed_url"])
+            with st.expander("Play here"):
+                st.video(resource["embed_url"])
         st.link_button("Watch video" if video else "Read article", resource["url"])
         if exercise := resource.get("exercise"):
             st.caption(exercise)

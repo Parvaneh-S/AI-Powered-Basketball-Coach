@@ -75,7 +75,7 @@ def test_streamlit_coach_video_and_player_switch(streamlit_app):
     next(button for button in frontend.button if button.label == "Discuss with AI coach").click().run(timeout=20)
     assert not frontend.exception
     assert len(frontend.chat_input) == 1
-    assert "My practice plan" not in {panel.label for panel in frontend.expander}
+    assert not any(panel.label.startswith("My Practice Plan") for panel in frontend.expander)
     assert not {"My shooting goal", "My basketball experience"} & {widget.label for widget in frontend.text_input}
     assert "Save goal and experience" not in {button.label for button in frontend.button}
     frontend.chat_input[0].set_value("Show me my follow through.").run(timeout=20)
@@ -100,10 +100,10 @@ def test_streamlit_coach_video_and_player_switch(streamlit_app):
     frontend.chat_input[0].set_value("What should I practice today?").run(timeout=20)
     assert not frontend.exception
     assert any(element.value == ":material/assignment: Recommended practice" for element in frontend.caption)
-    next(button for button in frontend.button if button.label == "View in Practice").click().run(timeout=20)
+    assert "Mark practice complete" not in {button.label for button in frontend.button}
+    next(button for button in frontend.button if button.label == "Open My Practice Plan").click().run(timeout=20)
     assert not frontend.exception
-    assert frontend.query_params["tab"] == "practice"
-    assert not frontend.chat_input
+    assert frontend.chat_input and frontend.chat_message
     assert "Mark practice complete" in {button.label for button in frontend.button}
     saved_focus = client.get("/api/coach/memory", params={"player_name": "TestPlayer"}).json()["focus"]
     assert any(element.value == f"**{saved_focus['exercise']}**" for element in frontend.markdown)
@@ -124,9 +124,8 @@ def test_streamlit_coach_video_and_player_switch(streamlit_app):
     assert frontend.session_state["messages"] == []
     assert frontend.session_state["coach_session"] is None
     assert "recording" not in frontend.query_params
-    assert any(element.value == "### No practice plan yet" for element in frontend.markdown)
+    assert not any(panel.label.startswith("My Practice Plan") for panel in frontend.expander)
     assert client.get("/api/coach/memory", params={"player_name": "Another player"}).json()["focus"] is None
-    frontend.button(key="practice_back").click().run(timeout=20)
     assert len(frontend.chat_input) == 1
     assert not frontend.chat_message
     player_widget = next(widget for widget in frontend.text_input if widget.label == "Player name")
@@ -203,10 +202,17 @@ def test_load_multi_attempt_recording_and_coach_without_manual_comparison(stream
     frontend.button(key="nav_coach").click().run(timeout=20)
     assert len(frontend.chat_message) == 2
     assert frontend.query_params["session"] == str(session_id)
+    attempt = next(widget for widget in frontend.selectbox if widget.label == "Attempt")
+    attempt.select(f"{video}_shot_2").run(timeout=20)
+    assert frontend.query_params["attempt"] == f"{video}_shot_2"
+    assert len(frontend.chat_message) == 2
     context = next(widget for widget in frontend.selectbox if widget.label == "Recording")
     context.select("").run(timeout=20)
-    assert "session" not in frontend.query_params
+    assert frontend.query_params["session"] == str(session_id)
     assert "recording" not in frontend.query_params
+    assert "attempt" not in frontend.query_params
+    next(widget for widget in frontend.selectbox if widget.label == "Session").select(0).run(timeout=20)
+    assert "session" not in frontend.query_params
     assert len(frontend.chat_message) == 2
 
 
@@ -301,16 +307,25 @@ def test_resource_cards_show_title_creator_note_and_direct_link():
     from streamlit.testing.v1 import AppTest
 
     def page():
-        from frontend.coaching import render_resource
+        from frontend.coaching import render_response
         base = {"kind": "video", "organization": "Jr. NBA", "verified_on": "2026-11-26", "exercise": None,
                 "section": None, "thumbnail_url": None, "embed_url": None}
-        render_resource({**base, "id": "a", "title": "Form Shooting-2 Hands", "creator": "Dale Ellis",
-                         "url": "https://jr.nba.com/video/form-shooting-2-hands/",
-                         "watch_for": "Legs and arm extend through the finish.",
-                         "relevance": "Watch how the knees and shooting arm extend together."})
-        render_resource({**base, "id": "b", "title": "Fundamentals of the Free Throw", "creator": "Megan Griffith",
-                         "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
-                         "watch_for": "A repeatable pre-shot sequence.", "relevance": ""})
+        first = {**base, "id": "a", "title": "Form Shooting-2 Hands", "creator": "Dale Ellis",
+                 "url": "https://jr.nba.com/video/form-shooting-2-hands/",
+                 "watch_for": "Legs and arm extend through the finish.",
+                 "relevance": "Watch how the knees and shooting arm extend together."}
+        second = {**base, "id": "b", "title": "Fundamentals of the Free Throw", "creator": "Megan Griffith",
+                  "url": "https://jr.nba.com/video/fundamentals-of-the-free-throw/",
+                  "watch_for": "A repeatable pre-shot sequence.", "relevance": ""}
+        before = {"made": 5, "missed": 5, "manual_made": 5, "manual_labels": 10, "unknown": 0,
+                  "mean": 124.5, "spread": 5, "measurement_count": 10, "session_name": "First practice"}
+        after = {**before, "made": 7, "missed": 3, "manual_made": 7, "spread": 2, "session_name": "Latest practice"}
+        render_response({"message": "Compare the saved sets.", "instructional_resource": first,
+                         "additional_resources": [second, first], "progress": {
+                             "status": "available", "kind": "sessions", "before": before, "after": after,
+                             "field": "release_elbow_angle", "completed": True, "player_reported_effect": "helped",
+                             "assessment": {"accuracy": "higher", "consistency": "higher"},
+                         }}, "Tester", "", "fixture")
 
     app = AppTest.from_function(page).run(timeout=20)
     assert not app.exception
@@ -323,9 +338,12 @@ def test_resource_cards_show_title_creator_note_and_direct_link():
     assert [button.proto.url for button in buttons] == [
         "https://jr.nba.com/video/form-shooting-2-hands/", "https://jr.nba.com/video/fundamentals-of-the-free-throw/"]
     assert all(button.proto.label == "Watch video" for button in buttons)
+    assert {"**First practice**", "**Latest practice**", "**Measured progress**", "**Player-reported**"} <= set(markdown)
+    captions = {element.value for element in app.caption}
+    assert {"Movement repeatability · Higher", "Player said the practice helped."} <= captions
 
 
-def test_coach_tabs_empty_states_and_ask_error(streamlit_app, monkeypatch):
+def test_coach_tools_empty_states_and_ask_error(streamlit_app, monkeypatch):
     from frontend import service
 
     frontend, _ = streamlit_app
@@ -348,11 +366,11 @@ def test_coach_tabs_empty_states_and_ask_error(streamlit_app, monkeypatch):
     assert "Try again" in {button.label for button in frontend.button}
     assert frontend.session_state["messages"] == []
 
-    frontend.session_state["coach_tab_select"] = "progress"
-    frontend.run(timeout=20)
+    assert not any(panel.label.startswith("My Practice Plan") for panel in frontend.expander)
+    frontend.button(key="open_progress").click().run(timeout=20)
     assert any(element.value == "### No progress to show yet" for element in frontend.markdown)
-    assert not frontend.chat_input
-    frontend.session_state["coach_tab_select"] = "practice"
-    frontend.run(timeout=20)
-    assert any(element.value == "### No practice plan yet" for element in frontend.markdown)
-    assert "Back to Coach" in {button.label for button in frontend.button}
+    assert frontend.chat_input
+    frontend.button(key="open_practice").click().run(timeout=20)
+    assert any(element.value == "No practice plan yet." for element in frontend.caption)
+    assert "Ask what to practise" in {button.label for button in frontend.button}
+    assert frontend.chat_input
