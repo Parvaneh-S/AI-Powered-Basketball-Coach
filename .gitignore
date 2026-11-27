@@ -12,6 +12,10 @@ __pycache__/
 data/uploads/
 data/shotcoach.db
 data/*.backup.db
+data/*_backup.db
+
+# IDE settings
+.idea/
 
 # Analysis outputs: only the shared demo set is tracked.
 # New uploads stay on the machine that processed them.
