@@ -1,0 +1,685 @@
+:root {
+    --sc-control-line: color-mix(in srgb, var(--sc-muted) 65%, var(--sc-line));
+    --sc-accent-hover: color-mix(in srgb, var(--sc-accent) 88%, var(--sc-text));
+    --sc-nav-height: 4.5rem;
+    --sc-rail-width: 232px;
+    --sc-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.stMain .block-container {
+    max-width: 69rem;
+    padding-top: 3.75rem;
+    padding-bottom: calc(var(--sc-nav-height) + var(--sc-safe-bottom) + 1.75rem);
+}
+
+.stMain .block-container:has(.st-key-shotcoach_header_coach) {
+    max-width: 48rem;
+}
+
+.stMain .block-container:has(.st-key-shotcoach_header_upload) {
+    max-width: 58rem;
+}
+
+.stMain h1 {
+    font-size: clamp(2rem, 1.7rem + 1.5vw, 3.15rem);
+    line-height: 1.12;
+    letter-spacing: -0.04em;
+    overflow-wrap: anywhere;
+    padding-top: 0.35rem;
+}
+
+.stMain h3 {
+    font-size: 1.2rem;
+    letter-spacing: -0.018em;
+}
+
+.stApp [data-testid="stCaptionContainer"] {
+    opacity: 1;
+}
+
+.stApp [data-testid="stCaptionContainer"] p {
+    color: var(--sc-muted);
+}
+
+.stMain [class*="st-key-shotcoach_header_"] {
+    border-bottom: 1px solid var(--sc-line);
+    padding-bottom: 0.85rem;
+    margin-bottom: 0.25rem;
+}
+
+/* ShotCoach mark: orange basketball tile followed by the wordmark. */
+.stMain :is(.st-key-header_brand, .st-key-navigation_brand) {
+    flex-wrap: nowrap;
+    gap: 0.6rem;
+}
+
+.stMain :is(.st-key-header_brand, .st-key-navigation_brand) p {
+    color: var(--sc-text);
+    font-size: 1.2rem;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    white-space: nowrap;
+}
+
+.stMain :is(.st-key-header_brand, .st-key-navigation_brand) [role="img"] {
+    display: grid !important;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+    background: var(--sc-accent);
+    color: var(--sc-page);
+    font-size: 1.3rem;
+}
+
+.stApp :is(button[data-testid="stBaseButton-primary"], button[data-testid="stBaseButton-primaryFormSubmit"],
+            button[data-testid="stChatInputSubmitButton"]):enabled {
+    background: var(--sc-accent);
+    border-color: var(--sc-accent);
+    color: var(--sc-page);
+    font-weight: 650;
+}
+
+.stApp :is(button[data-testid="stBaseButton-primary"], button[data-testid="stBaseButton-primaryFormSubmit"],
+            button[data-testid="stChatInputSubmitButton"]):enabled:hover {
+    background: var(--sc-accent-hover);
+    border-color: var(--sc-accent-hover);
+    color: var(--sc-page);
+}
+
+.stMain button:focus-visible {
+    outline: 2px solid var(--sc-accent);
+    outline-offset: 2px;
+}
+
+.stApp :is([data-testid="stSelectbox"], [data-testid="stTextInput"], [data-testid="stChatInput"]) [role="group"] {
+    border-color: var(--sc-control-line);
+}
+
+.stApp :is([data-testid="stSelectbox"], [data-testid="stTextInput"], [data-testid="stChatInput"]) [role="group"]:focus-within {
+    outline: 2px solid var(--sc-accent);
+    outline-offset: 1px;
+}
+
+.st-key-practice_hero {
+    background: var(--sc-card);
+    color: var(--sc-text);
+    padding: clamp(1.3rem, 5vw, 3rem);
+    border: 1px solid var(--sc-line);
+    border-radius: 1rem;
+    margin-bottom: 0.65rem;
+}
+
+.st-key-practice_hero h1 {
+    color: var(--sc-text);
+    max-width: 19ch;
+    padding-block: 0;
+}
+
+.st-key-practice_hero p {
+    color: var(--sc-muted);
+    max-width: 48ch;
+}
+
+.st-key-practice_hero button {
+    min-height: 3rem;
+    padding-inline: 1.1rem;
+}
+
+.st-key-practice_hero button p {
+    color: inherit;
+}
+
+.st-key-practice_overview {
+    background: var(--sc-card);
+    border: 1px solid var(--sc-line);
+    border-radius: 0.9rem;
+    padding: clamp(0.8rem, 2vw, 1.3rem);
+}
+
+.st-key-practice_overview [data-testid="stHorizontalBlock"] {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
+}
+
+.st-key-practice_overview [data-testid="stColumn"] {
+    width: auto;
+    min-width: 0;
+}
+
+.st-key-practice_overview [data-testid="stMetricLabel"] p {
+    color: var(--sc-muted);
+    white-space: normal;
+    overflow: visible;
+    line-height: 1.3;
+}
+
+.st-key-practice_overview [data-testid="stMetricValue"] {
+    font-size: clamp(1.1rem, 0.8rem + 2vw, 2.05rem);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.035em;
+}
+
+.st-key-practice_overview [data-testid="stMetricValue"] > div {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.stMain [class*="st-key-session_list_"] [data-testid="stHorizontalBlock"] {
+    padding-block: 0.75rem;
+    border-bottom: 1px solid var(--sc-line);
+}
+
+.stMain [class*="st-key-session_list_"] [data-testid="stColumn"] {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.stMain [class*="st-key-session_list_"] [data-testid="stColumn"] > [data-testid="stVerticalBlock"] {
+    gap: 0.2rem;
+}
+
+.stMain [class*="st-key-session_list_"] [data-testid="stColumn"]:last-child > [data-testid="stVerticalBlock"] {
+    align-items: flex-end;
+}
+
+.stMain [class*="st-key-session_list_"] button {
+    color: var(--sc-text);
+    text-align: start;
+}
+
+.stMain [class*="st-key-session_list_"] button:hover {
+    color: var(--sc-accent);
+}
+
+.st-key-recording_upload [data-testid="stFileUploaderDropzone"] {
+    background-color: var(--sc-card);
+    border: 1px dashed var(--sc-control-line);
+    border-radius: 0.9rem;
+    padding: clamp(1rem, 4vw, 2.25rem);
+}
+
+.st-key-recording_tips {
+    border-left: 3px solid var(--sc-line);
+    padding: 0.25rem 0.9rem;
+}
+
+.st-key-recording_tips h3 { padding-block: 0; }
+
+.st-key-primary_recording {
+    background: var(--sc-page);
+    border-radius: 0.9rem;
+    overflow: hidden;
+}
+
+.st-key-primary_recording video {
+    display: block;
+    width: 100%;
+    max-height: 64vh;
+    object-fit: contain;
+}
+
+.stMain details {
+    background-color: var(--sc-card);
+}
+
+.st-key-outcome_legend .stMarkdownBadge {
+    font-weight: 650;
+}
+
+/* ---------- AI Coach: heading and Coach / Practice / Progress tabs ---------- */
+.st-key-coach_heading {
+    gap: 0.35rem;
+    border-bottom: 1px solid var(--sc-line);
+    margin-bottom: 0.4rem;
+}
+
+.st-key-coach_heading h1 {
+    font-size: clamp(1.45rem, 1.3rem + 0.6vw, 1.8rem);
+    letter-spacing: -0.025em;
+    padding-block: 0 0.3rem;
+}
+
+.st-key-coach_heading [data-testid="stButtonGroup"] > div {
+    gap: 1.25rem;
+    flex-wrap: nowrap;
+}
+
+.st-key-coach_heading [data-testid="stButtonGroup"] button {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    border-bottom: 2px solid transparent;
+    padding: 0.35rem 0.1rem 0.55rem;
+    min-height: 0;
+    color: var(--sc-muted);
+    font-weight: 600;
+}
+
+.st-key-coach_heading [data-testid="stButtonGroup"] button:hover {
+    color: var(--sc-text);
+}
+
+.st-key-coach_heading [data-testid="stButtonGroup"] button[kind$="Active"] {
+    color: var(--sc-accent);
+    border-bottom-color: var(--sc-accent);
+    background: transparent;
+}
+
+/* Compact recording + attempt selector. */
+.st-key-coach_context [data-testid="stPopover"] button {
+    justify-content: flex-start;
+    text-align: start;
+    background: var(--sc-card);
+    border: 1px solid var(--sc-line);
+    border-radius: 0.75rem;
+    padding: 0.55rem 0.85rem;
+}
+
+.st-key-coach_context [data-testid="stPopover"] button p {
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.st-key-coach_context [data-testid="stPopover"] button [data-testid="stIconMaterial"] {
+    color: var(--sc-accent);
+}
+
+.st-key-coach_empty {
+    align-items: center;
+    text-align: center;
+    padding-block: clamp(1.5rem, 6vh, 3.5rem) 1rem;
+}
+
+.st-key-coach_empty h3 { padding-bottom: 0.1rem; }
+
+.st-key-coach_suggestions {
+    width: 100%;
+    max-width: 40rem;
+    margin-top: 0.6rem;
+}
+
+.st-key-coach_suggestions button {
+    justify-content: flex-start;
+    min-height: 3.1rem;
+    background: var(--sc-card);
+    border-color: var(--sc-line);
+}
+
+.st-key-coach_suggestions button [data-testid="stIconMaterial"] { color: var(--sc-accent); }
+
+.stMain [data-testid="stChatMessage"] {
+    max-width: 100%;
+    background: transparent;
+    color: var(--sc-text);
+    border: 0;
+    padding: 0.35rem 0;
+    overflow-wrap: anywhere;
+}
+
+.stMain [data-testid="stChatMessage"] [data-testid="stChatMessageAvatarCustom"],
+.stMain [data-testid="stChatMessage"] [data-testid^="stChatMessageAvatar"] {
+    color: var(--sc-accent);
+}
+
+.stMain [data-testid="stChatMessage"] p { line-height: 1.6; }
+
+.stMain [class*="st-key-coach_message_"][class*="_practice_card"] {
+    background: var(--sc-card);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    gap: 0.35rem;
+}
+
+/* Annotated frames: one consistent aspect ratio, letterboxed rather than cropped. */
+.stMain :is([class*="st-key-coach_visual_"], .st-key-progress_compare) [data-testid="stImage"] img {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: contain;
+    background: #000;
+    border-radius: 0.6rem;
+}
+
+/* ---------- Practice tab ---------- */
+:is(.st-key-practice_plan, .st-key-progress_overview) {
+    background: var(--sc-card);
+    border-radius: 0.9rem;
+    padding: clamp(0.9rem, 2.5vw, 1.4rem);
+    gap: 0.55rem;
+}
+
+:is(.st-key-practice_plan, .st-key-progress_overview) h4 { padding: 0; }
+
+.st-key-coach_heading ~ * h4,
+.stMain .block-container:has(.st-key-coach_heading) h4 {
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+}
+
+.stMain .block-container:has(.st-key-coach_heading) [data-testid="stMetricValue"] {
+    font-size: 1.5rem;
+}
+
+.st-key-practice_plan hr { margin-block: 0.35rem; }
+
+/* Short label/value pairs stay side by side on phones instead of stacking. */
+:is(.st-key-practice_plan, .st-key-progress_overview) [data-testid="stHorizontalBlock"] {
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+}
+
+:is(.st-key-practice_plan, .st-key-progress_overview) [data-testid="stColumn"] {
+    width: auto;
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.st-key-coach_heading [data-testid="stButtonGroup"] button:is(:focus, :focus-visible, :active) {
+    background: transparent;
+    box-shadow: none;
+}
+
+.st-key-practice_cue {
+    background: var(--sc-selection);
+    border-radius: 0.6rem;
+    padding: 0.6rem 0.85rem;
+    gap: 0.1rem;
+}
+
+.st-key-practice_cue [data-testid="stCaptionContainer"] p {
+    color: var(--sc-accent);
+    font-weight: 650;
+}
+
+:is(.st-key-practice_empty, .st-key-progress_empty) {
+    padding-block: 1.5rem;
+}
+
+.stMain [data-testid="stLayoutWrapper"]:has(> [data-testid="stChatMessage"] [aria-label="Chat message from user"]) {
+    margin-left: auto;
+    max-width: 100%;
+}
+
+.stMain [data-testid="stChatMessage"]:has([aria-label="Chat message from user"]) {
+    background: var(--sc-raised);
+}
+
+.stMain [data-testid="stBottom"] {
+    bottom: calc(var(--sc-nav-height) + var(--sc-safe-bottom) + 0.45rem);
+    background-color: var(--sc-page);
+}
+
+.stMain [data-testid="stBottomBlockContainer"] {
+    max-width: 48rem;
+    padding-bottom: 0.4rem;
+}
+
+.st-key-main_navigation {
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 30;
+    inset: auto 0 0;
+    width: 100%;
+    height: calc(var(--sc-nav-height) + var(--sc-safe-bottom));
+    padding: 0.4rem max(0.4rem, env(safe-area-inset-right, 0px))
+             calc(0.4rem + var(--sc-safe-bottom)) max(0.4rem, env(safe-area-inset-left, 0px));
+    background: var(--sc-card);
+    border-top: 1px solid var(--sc-line);
+}
+
+.st-key-main_navigation > [data-testid="stLayoutWrapper"]:is(:has(> .st-key-navigation_brand),
+                                                              :has(> .st-key-navigation_player)) {
+    display: none;
+}
+
+.st-key-main_navigation [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"]) {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.25rem;
+}
+
+.st-key-main_navigation [data-testid="stColumn"] {
+    min-width: 0;
+    width: auto;
+}
+
+.stMain .st-key-main_navigation button {
+    min-height: 3.55rem;
+    padding: 0.25rem 0.15rem;
+    border: 0;
+    background: transparent;
+    color: var(--sc-muted);
+    font-weight: 650;
+}
+
+.st-key-main_navigation button [data-has-shortcut] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.st-key-main_navigation button p {
+    font-size: 0.82rem;
+    line-height: 1.2;
+}
+
+.st-key-main_navigation button [data-testid="stIconMaterial"] {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+.stMain .st-key-main_navigation button {
+    position: relative;
+}
+
+.stMain .st-key-main_navigation button[data-testid="stBaseButton-primary"],
+.stMain .st-key-main_navigation button[data-testid="stBaseButton-primary"]:hover {
+    background: var(--sc-selection);
+    color: var(--sc-accent);
+    font-weight: 750;
+}
+
+/* Active-page bar: along the top edge in the bottom bar, the left edge in the desktop rail. */
+.stMain .st-key-main_navigation button[data-testid="stBaseButton-primary"]::before {
+    content: "";
+    position: absolute;
+    inset: 0 30% auto;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--sc-accent);
+}
+
+.stMain .st-key-main_navigation button[data-testid="stBaseButton-secondary"]:hover {
+    background: var(--sc-raised);
+    color: var(--sc-text);
+}
+
+@media (max-width: 640px) {
+    .stMain .block-container {
+        padding-top: 4rem;
+        padding-inline: 1rem;
+    }
+
+    .stMain [class*="st-key-session_list_"] [data-testid="stHorizontalBlock"] {
+        gap: 0.35rem;
+    }
+
+    /* Keep the full "Open …" label for screen readers; show only the arrow on narrow screens. */
+    .stMain [class*="st-key-session_list_"] [data-testid="stColumn"]:last-child {
+        flex: 0 0 2.75rem;
+    }
+
+    .stMain [class*="st-key-session_list_"] button [data-testid="stMarkdownContainer"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+    }
+
+    .stMain [class*="st-key-session_list_"] button {
+        min-width: 2.75rem;
+        min-height: 2.75rem;
+        justify-content: center;
+    }
+
+    .stMain [class*="st-key-coach_visual_"] [data-testid="stHorizontalBlock"] {
+        flex-direction: column;
+    }
+
+    .stMain [class*="st-key-coach_visual_"] [data-testid="stColumn"] {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1024px) {
+    .stApp [data-testid="stHeader"] {
+        left: var(--sc-rail-width);
+        right: 0;
+        width: auto;
+    }
+
+    /* Streamlit's optional player settings drawer stays separate from navigation. */
+    .stApp [data-testid="stSidebar"] {
+        position: fixed !important;
+        inset: 0 0 0 auto;
+        height: 100dvh !important;
+        z-index: 1000000;
+    }
+
+    .stApp [data-testid="stSidebar"][data-collapsed="true"] {
+        display: none;
+    }
+
+    .stApp [data-testid="stSidebar"] [data-testid="stSidebarCollapseButton"] {
+        visibility: visible;
+    }
+
+    .stMain {
+        margin-left: var(--sc-rail-width);
+        width: calc(100% - var(--sc-rail-width));
+        min-width: 0;
+    }
+
+    .stMain .block-container {
+        max-width: 76rem;
+        padding-top: 4.25rem;
+        padding-inline: clamp(1.5rem, 4vw, 3rem);
+        padding-bottom: 2.5rem;
+    }
+
+    /* The rail shows player and backend status, so the settings drawer only needs the name field. */
+    .stApp [data-testid="stSidebar"] [data-testid="stLayoutWrapper"]:has(> .st-key-sidebar_backend_status) {
+        display: none;
+    }
+
+    .stMain .block-container:has(.st-key-shotcoach_header_coach),
+    .stMain [data-testid="stBottomBlockContainer"] {
+        max-width: 52rem;
+    }
+
+    .stMain [data-testid="stBottom"] {
+        bottom: 0;
+    }
+
+    .stMain [data-testid="stLayoutWrapper"]:has(> [class*="st-key-shotcoach_header_"]) {
+        display: none;
+    }
+
+    .st-key-main_navigation {
+        inset: 0 auto 0 0;
+        width: var(--sc-rail-width);
+        height: auto;
+        padding: 1.5rem 0.85rem 1.25rem;
+        border-top: 0;
+        border-right: 1px solid var(--sc-line);
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .st-key-main_navigation > [data-testid="stLayoutWrapper"]:is(:has(> .st-key-navigation_brand),
+                                                                  :has(> .st-key-navigation_player)) {
+        display: block;
+    }
+
+    .stMain .st-key-navigation_brand {
+        padding: 0.1rem 0.6rem 1.15rem;
+        border-bottom: 1px solid var(--sc-line);
+    }
+
+    .stMain .st-key-navigation_brand p {
+        font-size: 1.35rem;
+    }
+
+    .stMain .st-key-navigation_brand [role="img"] {
+        width: 2.35rem;
+        height: 2.35rem;
+        font-size: 1.5rem;
+    }
+
+    .st-key-main_navigation > [data-testid="stLayoutWrapper"],
+    .st-key-navigation_player > * {
+        flex-shrink: 0;
+    }
+
+    .st-key-main_navigation > [data-testid="stLayoutWrapper"]:has(> .st-key-navigation_player) {
+        margin-top: auto;
+    }
+
+    .st-key-navigation_player {
+        gap: 0.15rem;
+        padding: 0.85rem 0.6rem 0;
+        border-top: 1px solid var(--sc-line);
+    }
+
+    .st-key-navigation_player p {
+        overflow-wrap: anywhere;
+    }
+
+    .st-key-navigation_player [data-testid="stMarkdownContainer"] [role="img"] {
+        color: var(--sc-muted);
+        margin-right: 0.35rem;
+    }
+
+    .st-key-navigation_player [data-testid="stCaptionContainer"] [role="img"] {
+        font-size: 0.6rem;
+        vertical-align: 0.1em;
+        margin-right: 0.3rem;
+    }
+
+    .st-key-main_navigation [data-testid="stHorizontalBlock"]:has(> [data-testid="stColumn"]) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0.3rem;
+    }
+
+    .stMain .st-key-main_navigation button {
+        min-height: 2.85rem;
+        padding-inline: 0.85rem;
+        justify-content: flex-start;
+    }
+
+    .stMain .st-key-main_navigation button[data-testid="stBaseButton-primary"]::before {
+        inset: 22% auto 22% 0;
+        width: 3px;
+        height: auto;
+        border-radius: 0 3px 3px 0;
+    }
+
+    .st-key-main_navigation button > div {
+        justify-content: flex-start;
+    }
+
+    .st-key-main_navigation button [data-has-shortcut] {
+        flex-direction: row;
+        gap: 0.75rem;
+    }
+
+    .st-key-main_navigation button p {
+        font-size: 0.95rem;
+    }
+}
