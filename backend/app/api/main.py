@@ -9,13 +9,13 @@ from backend.app.database.outcome_labels import (
 )
 import tempfile
 from pydantic import BaseModel, Field
-from backend.app.agent.coaching_agent import ask_coach
+from backend.app.agent.retrieval import CoachingTools
+from backend.app.agent.video import video_source
+from backend.app.database.recordings import list_recordings, recording_details
+from backend.app.api.coaching import router as coaching_router
 from fastapi import File, Form, UploadFile
 from starlette.concurrency import run_in_threadpool
 
-from backend.app.pipeline.video_pipeline import (
-    process_uploaded_video,
-)
 from backend.app.database.duplicates import (
     DuplicateVideoError,
 )
@@ -36,6 +36,7 @@ from backend.app.ml.form_profile import (
 from backend.app.pipeline.video_input import (
     SUPPORTED_EXTENSIONS,
     UnsupportedVideoError,
+    WrongUploadModeError,
 )
 
 import json
@@ -43,7 +44,7 @@ import re
 from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 
 # Load environment variables
 load_dotenv()
@@ -57,6 +58,9 @@ app = FastAPI(
     description="Backend API for basketball shot analysis and AI coaching",
     version="0.1.0",
 )
+
+
+app.include_router(coaching_router)
 
 
 @app.get("/")
@@ -172,17 +176,18 @@ def release_analysis_slot():
 
 
 @app.post("/api/shots/upload")
+@app.post("/api/recordings/upload", name="upload_recording")
 async def upload_shot(
+    request: Request,
     file: UploadFile = File(...),
     player_name: str = Form(...),
     shooting_arm: str = Form("right"),
     session_id: int | None = Form(None),
+    session_name: str | None = Form(None, max_length=100),
+    background: bool = Form(False),
 ):
     """
-    Upload one free-throw video, run the complete
-    analysis pipeline, and save the result to SQLite.
-    Without session_id the shot starts a new practice
-    session; with it, the shot joins that session.
+    Analyze an upload and save its results to a practice session.
     """
 
     if not player_name.strip():
@@ -212,6 +217,7 @@ async def upload_shot(
     claim_analysis_slot()
 
     temporary_path = None
+    job_started = False
 
     try:
         # Store the upload temporarily while processing.
@@ -241,21 +247,25 @@ async def upload_shot(
             )
 
         # Run the existing nine-stage video pipeline.
-        result = await run_in_threadpool(
-            process_uploaded_video,
-            str(temporary_path),
-            player_name.strip(),
-            shooting_arm,
-            Path(file.filename).name,
-            session_id,
-        )
+        from backend.app.pipeline.video_pipeline import process_single_shot_video, process_uploaded_video
 
-        return result
+        upload_args = (str(temporary_path), player_name.strip(), shooting_arm, Path(file.filename).name, session_id)
+        name = (session_name or "").strip() or None
+        if request.scope["route"].name == "upload_recording":
+            if background:
+                validate_session(player_name.strip(), session_id)
+                job_id = queue_analysis_job(
+                    upload_args, name, "recording", start_recording_job_thread,
+                )
+                job_started = True
+                return {"job_id": job_id}
+            return await run_in_threadpool(process_uploaded_video, *upload_args, name)
+        return await run_in_threadpool(process_single_shot_video, *upload_args, session_name=name)
 
     except HTTPException:
         raise
 
-    except (InvalidSessionError, UnsupportedVideoError) as exc:
+    except (InvalidSessionError, UnsupportedVideoError, WrongUploadModeError) as exc:
         raise HTTPException(
             status_code=400,
             detail=str(exc),
@@ -281,22 +291,20 @@ async def upload_shot(
         ) from exc
 
     finally:
-        # Clean up the temporary API upload.
-        await file.close()
-
-        if temporary_path is not None:
-            temporary_path.unlink(missing_ok=True)
-
-        release_analysis_slot()
+        try:
+            await file.close()
+        finally:
+            if not job_started:
+                finish_analysis_upload(temporary_path)
 
 
 
 # -------------------------------------------------------
-# Multi-shot videos
+# Background analysis
 # -------------------------------------------------------
 #
-# Analysing many shots takes minutes, longer than a browser
-# request should wait. The upload starts a background job and
+# Analysing a practice recording can outlast a browser
+# request. The upload starts a background job and
 # returns its ID at once; the app then asks for its progress.
 # Jobs are kept in memory, so they are lost if the server
 # restarts. The job holds the analysis slot (see
@@ -311,46 +319,95 @@ def update_job(job_id, **fields):
         jobs[job_id].update(fields)
 
 
-def run_multi_shot_job(job_id, video_path, player_name,
-                       shooting_arm, original_filename, session_id):
+def finish_analysis_upload(video_path):
+    try:
+        if video_path is not None:
+            Path(video_path).unlink(missing_ok=True)
+    finally:
+        release_analysis_slot()
 
-    def progress(stage, done=0, total=0):
+
+def queue_analysis_job(upload_args, session_name, mode, start):
+    _, player_name, _, filename, _ = upload_args
+    job_id = f"job_{uuid4().hex[:12]}"
+    with jobs_lock:
+        jobs[job_id] = {
+            "job_id": job_id,
+            "mode": mode,
+            "status": "queued",
+            "stage": "Starting analysis",
+            "done": 0,
+            "total": 0,
+            "player_name": player_name,
+            "original_filename": filename,
+        }
+    try:
+        start(job_id, *upload_args, session_name)
+    except Exception:
+        with jobs_lock:
+            jobs.pop(job_id, None)
+        raise
+    return job_id
+
+
+def run_multi_shot_job(job_id, video_path, player_name,
+                       shooting_arm, original_filename, session_id, session_name=None):
+    run_analysis_job(process_multi_shot_video, job_id, video_path, player_name,
+                     shooting_arm, original_filename, session_id, session_name)
+
+
+def run_recording_job(job_id, video_path, player_name, shooting_arm, original_filename,
+                      session_id, session_name):
+    from backend.app.pipeline.video_pipeline import process_uploaded_video
+
+    run_analysis_job(process_uploaded_video, job_id, video_path, player_name,
+                     shooting_arm, original_filename, session_id, session_name)
+
+
+def run_analysis_job(analyze, job_id, video_path, player_name, shooting_arm,
+                     original_filename, session_id, session_name):
+    stage = "Starting analysis"
+
+    def progress(current_stage, done=0, total=0):
+        nonlocal stage
+        stage = current_stage
         update_job(job_id, stage=stage, done=done, total=total)
 
     try:
         update_job(job_id, status="running")
 
-        summary = process_multi_shot_video(
+        session_options = {"session_name": session_name} if session_name else {}
+        summary = analyze(
             video_path,
             player_name,
             shooting_arm,
             original_filename,
             session_id,
             progress=progress,
+            **session_options,
         )
 
         update_job(job_id, status="completed", result=summary)
 
     except (InvalidSessionError, UnsupportedVideoError,
-            DuplicateVideoError, NoShotsFoundError) as exc:
+            DuplicateVideoError, NoShotsFoundError, WrongUploadModeError) as exc:
         update_job(job_id, status="failed", error=str(exc))
 
     except Exception:
         import logging
-        logging.exception("Multi-shot processing failed")
+        logging.exception("Video processing failed during %s", stage)
 
         update_job(
             job_id,
             status="failed",
             error=(
-                "Video processing failed. "
-                "Check the server logs for details."
+                f"Video processing failed during “{stage}”. "
+                "Check the backend logs for details."
             ),
         )
 
     finally:
-        Path(video_path).unlink(missing_ok=True)
-        release_analysis_slot()
+        finish_analysis_upload(video_path)
 
 
 @app.post("/api/shots/upload-multi")
@@ -359,6 +416,7 @@ async def upload_multi_shot(
     player_name: str = Form(...),
     shooting_arm: str = Form("right"),
     session_id: int | None = Form(None),
+    session_name: str | None = Form(None, max_length=100),
 ):
     """
     Upload a video with several free throws. Every shot is
@@ -431,38 +489,17 @@ async def upload_multi_shot(
                 detail="Uploaded video is empty.",
             )
 
-        job_id = f"job_{uuid4().hex[:12]}"
-
-        with jobs_lock:
-            jobs[job_id] = {
-                "job_id": job_id,
-                "status": "queued",
-                "stage": "Starting",
-                "done": 0,
-                "total": 0,
-                "player_name": player_name.strip(),
-                "original_filename": Path(file.filename).name,
-            }
-
-        # The background job deletes the temporary file and
-        # releases the analysis slot when done.
-        start_job_thread(
-            job_id,
-            str(temporary_path),
-            player_name.strip(),
-            shooting_arm,
-            Path(file.filename).name,
-            session_id,
-        )
+        upload_args = (str(temporary_path), player_name.strip(), shooting_arm, Path(file.filename).name, session_id)
+        name = (session_name or "").strip() or None
+        job_id = queue_analysis_job(upload_args, name, "multi", start_job_thread)
         job_started = True
 
     finally:
-        await file.close()
-
-        if not job_started:
-            if temporary_path is not None:
-                temporary_path.unlink(missing_ok=True)
-            release_analysis_slot()
+        try:
+            await file.close()
+        finally:
+            if not job_started:
+                finish_analysis_upload(temporary_path)
 
     return {"job_id": job_id}
 
@@ -473,6 +510,10 @@ def start_job_thread(*args):
         args=args,
         daemon=True,
     ).start()
+
+
+def start_recording_job_thread(*args):
+    threading.Thread(target=run_recording_job, args=args, daemon=True).start()
 
 
 @app.get("/api/jobs/{job_id}")
@@ -494,51 +535,48 @@ def get_job(job_id: str):
         return dict(job)
 
 
-class CoachingRequest(BaseModel):
-    player_name: str = Field(min_length=1)
-    question: str = Field(min_length=1)
+@app.get("/api/players/{player_name}/recordings")
+def get_player_recordings(player_name: str):
+    return list_recordings(player_name.strip())
 
 
-@app.post("/api/coach/ask")
-async def ask_coaching_agent(request: CoachingRequest):
-    """
-    Ask the Gemini agent a question about a player's
-    shots, measurements, history, or shooting technique.
-    """
-
-    player_name = request.player_name.strip()
-    question = request.question.strip()
-
-    if not player_name or not question:
-        raise HTTPException(
-            status_code=400,
-            detail="Player name and question cannot be empty.",
-        )
-
-    try:
-        answer = await run_in_threadpool(
-            ask_coach,
-            player_name,
-            question,
-        )
-
-        return {
-            "player_name": player_name,
-            "question": question,
-            "answer": answer,
-        }
-
-    except Exception as exc:
-        import logging
-        logging.exception("Gemini coaching request failed")
-
-        raise HTTPException(
-            status_code=500,
-            detail="Unable to generate coaching feedback.",
-        ) from exc
+@app.get("/api/players/{player_name}/recordings/{video_id}")
+def get_recording(player_name: str, video_id: str):
+    player = player_name.strip()
+    recording = recording_details(player, video_id)
+    if not recording:
+        raise HTTPException(status_code=404, detail="Recording unavailable.")
+    tools = CoachingTools(player, video_id, session_id=recording["session_id"])
+    attempts = []
+    for shot in tools.session_shots:
+        if shot.video_id != video_id:
+            continue
+        analysis = dict(shot.analysis)
+        analysis.update(shot_id=shot.shot_id, shot_number=shot.shot_number)
+        analysis["shot_outcome"] = {**analysis.get("shot_outcome", {}), "final_outcome": shot.outcome,
+                                    "outcome_source": shot.outcome_source}
+        attempts.append(analysis)
+    return {**recording, "attempts": attempts, "summary": tools.session_summary(),
+            "video_available": video_source(video_id) is not None}
 
 
+@app.get("/api/players/{player_name}/recordings/{video_id}/video")
+def get_recording_video(player_name: str, video_id: str):
+    from fastapi.responses import FileResponse
 
+    recording = recording_details(player_name.strip(), video_id)
+    source = video_source(video_id) if recording else None
+    if not source:
+        raise HTTPException(status_code=404, detail="Video unavailable.")
+    return FileResponse(source[1], media_type="video/mp4", headers={"Cache-Control": "private, no-store"})
+
+
+@app.get("/api/players/{player_name}/sessions/{session_id}/summary")
+def get_session_summary(player_name: str, session_id: int):
+    summary = CoachingTools(player_name.strip(), session_id=session_id).session_summary()
+    if summary["status"] != "available":
+        raise HTTPException(status_code=404, detail="Session unavailable.")
+    return summary
 
 
 @app.get("/api/players/{player_name}/sessions")
@@ -598,16 +636,6 @@ async def get_player_shots(player_name: str):
         )
 
         return history
-
-    except Exception as exc:
-        import logging
-        logging.exception("Failed to retrieve player history")
-
-        raise HTTPException(
-            status_code=500,
-            detail="Unable to retrieve player history.",
-        ) from exc
-
 
     except Exception as exc:
         import logging
