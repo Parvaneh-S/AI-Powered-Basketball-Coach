@@ -1,6 +1,12 @@
 
 import numpy as np
 
+POSE_FILENAME = "pose_landmarks.json"
+JOINT_LANDMARKS = {
+    "left": {"elbow": (11, 13, 15), "knee": (23, 25, 27), "alignment": (11, 23, 27)},
+    "right": {"elbow": (12, 14, 16), "knee": (24, 26, 28), "alignment": (12, 24, 28)},
+}
+
 
 def calculate_angle(point_a, point_b, point_c):
     """

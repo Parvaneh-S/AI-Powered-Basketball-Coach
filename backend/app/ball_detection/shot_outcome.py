@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from backend.app.ball_detection.ball_tracker import frames_per_30fps_frame
 from backend.app.ball_detection.hoop_tracker import (
     load_hoop_track,
 )
@@ -14,7 +15,9 @@ from backend.app.ball_detection.hoop_tracker import (
 # passes through the hoop. A missing stretch of up to this
 # many frames is bridged with a straight line between the
 # last point above the rim and the first point below it.
-# At 30 fps, 20 frames is about 0.67 seconds.
+# At 30 fps, 20 frames is about 0.67 seconds. Both frame
+# limits below are counted at 30 fps and scaled to the video's
+# frame rate, so a 60 fps video bridges 40 frames.
 MAX_BRIDGE_FRAMES = 20
 
 # "Made" needs two pieces of evidence (v3):
@@ -31,14 +34,22 @@ MADE_MAX_OFFSET_RIM_WIDTHS = 0.35
 MADE_MIN_HIDDEN_FRAMES = 3
 
 
-def analyze_outcome(video_name, output_dir):
+def analyze_outcome(video_name, output_dir, *, hoop_dir=None, release_frame=None):
     output_dir = Path(output_dir)
 
     trajectory_file = output_dir / "ball_trajectory.csv"
-    hoop_file = output_dir / "hoop_detection.json"
+    hoop_dir = Path(hoop_dir) if hoop_dir is not None else output_dir
+    hoop_file = hoop_dir / "hoop_detection.json"
     result_file = output_dir / "shot_outcome.json"
 
     trajectory = pd.read_csv(trajectory_file)
+    if release_frame is not None:
+        trajectory = trajectory[trajectory.frame >= release_frame]
+    if not hoop_file.is_file():
+        result = {"outcome": "unknown", "observation": "hoop_detection_unavailable",
+                  "method": "2d_trajectory_rim_crossing_v3"}
+        result_file.write_text(json.dumps(result, indent=2), encoding="utf-8")
+        return result
 
     with hoop_file.open("r", encoding="utf-8") as file:
         hoop = json.load(file)
@@ -55,7 +66,7 @@ def analyze_outcome(video_name, output_dir):
     # With a moving camera the rim moves in the picture.
     # If the hoop was followed through the video, compare the
     # ball with the rim position in the same frame.
-    hoop_track = load_hoop_track(output_dir / "hoop_track.csv")
+    hoop_track = load_hoop_track(hoop_dir / "hoop_track.csv")
 
     def rim_at(frame):
         if hoop_track and int(frame) in hoop_track:
@@ -63,6 +74,9 @@ def analyze_outcome(video_name, output_dir):
         return rim_x, rim_y, rim_width
 
     trajectory = trajectory.sort_values("frame")
+    scale = frames_per_30fps_frame(trajectory)
+    max_bridge_frames = round(MAX_BRIDGE_FRAMES * scale)
+    min_hidden_frames = round(MADE_MIN_HIDDEN_FRAMES * scale)
 
     points = trajectory[
         ["frame", "center_x", "center_y"]
@@ -79,7 +93,7 @@ def analyze_outcome(video_name, output_dir):
 
         # Bridge short detection gaps only. Longer gaps
         # could hide a rim bounce or a rebound.
-        if frame_gap < 1 or frame_gap > MAX_BRIDGE_FRAMES:
+        if frame_gap < 1 or frame_gap > max_bridge_frames:
             continue
 
         # Ball positions relative to the rim centre in the
@@ -148,7 +162,7 @@ def analyze_outcome(video_name, output_dir):
 
         if (
             distance <= MADE_MAX_OFFSET_RIM_WIDTHS * width
-            and hidden_frames >= MADE_MIN_HIDDEN_FRAMES
+            and hidden_frames >= min_hidden_frames
         ):
             outcome = "made"
             observation = "made_hidden_in_net"
@@ -172,9 +186,9 @@ def analyze_outcome(video_name, output_dir):
     result = {
         "video": video_name,
         "method": "2d_trajectory_rim_crossing_v3",
-        "max_bridge_frames": MAX_BRIDGE_FRAMES,
+        "max_bridge_frames": max_bridge_frames,
         "made_max_offset_rim_widths": MADE_MAX_OFFSET_RIM_WIDTHS,
-        "made_min_hidden_frames": MADE_MIN_HIDDEN_FRAMES,
+        "made_min_hidden_frames": min_hidden_frames,
         "hoop_tracked": hoop_track is not None,
         "outcome": outcome,
         "observation": observation,
@@ -205,6 +219,8 @@ def analyze_outcome(video_name, output_dir):
     print(f"Observation: {observation}")
     print(f"Crossings found: {len(candidates)}")
     print(f"Saved: {result_file}")
+
+    return result
 
 
 if __name__ == "__main__":

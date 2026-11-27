@@ -2,6 +2,7 @@
 from pathlib import Path
 import csv
 import json
+import math
 import sys
 
 
@@ -44,7 +45,7 @@ def extract_shot_features(
         end_source = "provisional_follow_through_window"
     else:
         end = int(predicted_end)
-        end_source = "shot_events"
+        end_source = shot.get("end_frame_source", "shot_events")
 
     if not (0 <= start < release < end):
         raise ValueError("Invalid shot boundaries")
@@ -81,7 +82,8 @@ def extract_shot_features(
         if raw in ("", None):
             return None
 
-        return float(raw)
+        value = float(raw)
+        return value if math.isfinite(value) else None
 
     def get_values(first, last, column):
         return [
@@ -155,6 +157,11 @@ def extract_shot_features(
     if video_id is None:
         video_id = Path(angles_path).parent.name
 
+    def extreme_frame(first, last, column, extreme):
+        samples = [(value, frame) for frame in range(first, last + 1)
+                   if (value := get_angle(frame, column)) is not None]
+        return extreme(samples, key=lambda pair: pair[0])[1] if samples else None
+
     features = {
         "video": video_id,
         "shot_id": shot.get(
@@ -187,6 +194,13 @@ def extract_shot_features(
         "elbow_extension_after_release": rounded(
             elbow_extension
         ),
+        "measurement_frames": {
+            "knee_dip": extreme_frame(start, release, knee_col, min),
+            "knee_max": extreme_frame(start, release, knee_col, max),
+            "elbow_min": extreme_frame(start, elbow_end, elbow_col, min),
+            "elbow_max": extreme_frame(start, elbow_end, elbow_col, max),
+            "post_release_extension": extreme_frame(release, elbow_end, elbow_col, max),
+        },
         "valid_knee_frames": len(knee_angles),
         "valid_elbow_frames": len(elbow_angles),
         "knee_coverage_pct": rounded(

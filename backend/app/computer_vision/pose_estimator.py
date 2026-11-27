@@ -1,11 +1,13 @@
 
 from pathlib import Path
 import csv
+import json
+from tempfile import NamedTemporaryFile
 
 import cv2
 import mediapipe as mp
 
-from backend.app.measurements.joint_angles import calculate_angle
+from backend.app.measurements.joint_angles import JOINT_LANDMARKS, POSE_FILENAME, calculate_angle
 
 
 SKELETON_CONNECTIONS = [
@@ -17,6 +19,9 @@ SKELETON_CONNECTIONS = [
     (23, 25), (25, 27),
     (24, 26), (26, 28),
 ]
+
+COACHING_LANDMARKS = sorted({index for side in JOINT_LANDMARKS.values()
+                             for joint in side.values() for index in joint})
 
 
 
@@ -80,22 +85,18 @@ def process_video(input_path, output_path, model_path, csv_path):
         cap.release()
         raise RuntimeError("Invalid video properties")
 
-    output_path = Path(output_path)
     csv_path = Path(csv_path)
-
-    output_path.parent.mkdir(parents=True, exist_ok=True)
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
-    writer = cv2.VideoWriter(
-        str(output_path),
-        cv2.VideoWriter_fourcc(*"mp4v"),
-        fps,
-        (width, height),
-    )
-
-    if not writer.isOpened():
-        cap.release()
-        raise RuntimeError("Cannot create output video")
+    writer = None
+    if output_path is not None:
+        output_path = Path(output_path)
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        writer = cv2.VideoWriter(str(output_path), cv2.VideoWriter_fourcc(*"mp4v"), fps, (width, height))
+        if not writer.isOpened():
+            cap.release()
+            writer.release()
+            raise RuntimeError("Cannot create output video")
 
     options = mp.tasks.vision.PoseLandmarkerOptions(
         base_options=mp.tasks.BaseOptions(
@@ -106,6 +107,7 @@ def process_video(input_path, output_path, model_path, csv_path):
     )
 
     measurements = []
+    pose_frames = {}
     frame_index = 0
     detected_frames = 0
 
@@ -143,27 +145,28 @@ def process_video(input_path, output_path, model_path, csv_path):
                 if result.pose_landmarks:
                     detected_frames += 1
                     landmarks = result.pose_landmarks[0]
+                    pose_frames[frame_index] = {
+                        index: [round(landmarks[index].x, 6), round(landmarks[index].y, 6)]
+                        for index in COACHING_LANDMARKS if landmarks[index].visibility >= 0.5
+                    }
+                    if writer is None:
+                        frame_index += 1
+                        continue
 
-                    # MediaPipe landmark indices:
-                    # Left shoulder=11, elbow=13, wrist=15
-                    # Right shoulder=12, elbow=14, wrist=16
-                    # Left hip=23, knee=25, ankle=27
-                    # Right hip=24, knee=26, ankle=28
-                    
                     left_elbow = get_joint_angle(
-                        landmarks, 11, 13, 15, width, height
+                        landmarks, *JOINT_LANDMARKS["left"]["elbow"], width, height
                     )
 
                     right_elbow = get_joint_angle(
-                        landmarks, 12, 14, 16, width, height
+                        landmarks, *JOINT_LANDMARKS["right"]["elbow"], width, height
                     )
 
                     left_knee = get_joint_angle(
-                        landmarks, 23, 25, 27, width, height
+                        landmarks, *JOINT_LANDMARKS["left"]["knee"], width, height
                     )
 
                     right_knee = get_joint_angle(
-                        landmarks, 24, 26, 28, width, height
+                        landmarks, *JOINT_LANDMARKS["right"]["knee"], width, height
                     )
 
                     # Wrist positions in pixels, used to find the
@@ -238,12 +241,27 @@ def process_video(input_path, output_path, model_path, csv_path):
                     **wrists,
                 })
 
-                writer.write(frame)
+                if writer is not None:
+                    writer.write(frame)
                 frame_index += 1
 
     finally:
         cap.release()
-        writer.release()
+        if writer is not None:
+            writer.release()
+
+    # Publish only a complete pose pass. Readers may be serving an older analysis.
+    with NamedTemporaryFile(mode="w", encoding="utf-8", dir=csv_path.parent, delete=False) as stream:
+        temporary = Path(stream.name)
+    try:
+        temporary.write_text(json.dumps(pose_frames, separators=(",", ":")), encoding="utf-8")
+        temporary.replace(csv_path.with_name(POSE_FILENAME))
+    finally:
+        temporary.unlink(missing_ok=True)
+
+    if writer is None:
+        print(f"Saved landmarks for {detected_frames} frames to {csv_path.with_name(POSE_FILENAME)}")
+        return
 
     # Save measurements after processing
     with open(csv_path, "w", newline="", encoding="utf-8") as file:
@@ -280,8 +298,10 @@ if __name__ == "__main__":
 
     parser.add_argument(
         "video",
-        help="Video filename inside sample_videos/"
+        help="Video filename inside sample_videos/ or, with --landmarks-only, data/uploads/"
     )
+    parser.add_argument("--landmarks-only", action="store_true",
+                        help="Save pose coordinates for existing sample analysis.")
 
     args = parser.parse_args()
 
@@ -291,6 +311,8 @@ if __name__ == "__main__":
     video_stem = Path(video_name).stem
 
     input_path = project_root / "sample_videos" / video_name
+    if args.landmarks_only and not input_path.is_file():
+        input_path = project_root / "data" / "uploads" / video_name
     output_dir = project_root / "outputs" / video_stem
 
     if not input_path.is_file():
@@ -298,7 +320,7 @@ if __name__ == "__main__":
 
     process_video(
         input_path=input_path,
-        output_path=output_dir / "annotated_angles.mp4",
+        output_path=None if args.landmarks_only else output_dir / "annotated_angles.mp4",
         model_path=(
             project_root
             / "backend/models/pose_landmarker_lite.task"

@@ -78,3 +78,20 @@ def test_without_release_frame_old_behaviour_is_kept(tmp_path):
 
     path = pd.read_csv(tmp_path / "ball_trajectory.csv")
     assert list(path["center_x"]) == [100.0, 110.0, 120.0]
+
+
+def test_link_gap_is_measured_in_time_not_frames():
+    from backend.app.ball_detection.ball_tracker import link_paths
+
+    def points(fps):
+        # One ball, unseen for 30 frames (hidden by the net).
+        frames = [0, 1, 2, 33, 34]
+        return pd.DataFrame({
+            "frame": frames, "timestamp_ms": [round(f * 1000 / fps) for f in frames],
+            "stable_x": [100.0, 105, 110, 120, 121], "stable_y": [100.0] * 5,
+            "center_x": [100.0, 105, 110, 120, 121], "center_y": [100.0] * 5,
+            "confidence": [0.9] * 5, "x1": 95.0, "x2": 105.0,
+        })
+
+    assert len(link_paths(points(60), max_distance=200)) == 1
+    assert len(link_paths(points(30), max_distance=200)) == 2

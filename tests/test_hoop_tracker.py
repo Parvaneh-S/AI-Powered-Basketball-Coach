@@ -99,3 +99,27 @@ def test_steady_camera_gives_same_outcome_as_fixed_rim(tmp_path):
         fixed["selected_crossing"]["distance_from_rim_center_px"]
         == tracked["selected_crossing"]["distance_from_rim_center_px"]
     )
+
+
+def test_rim_anchors_correct_drift_between_detections(tmp_path):
+    # A second rim detection 12 px away from where camera motion
+    # alone puts the rim (accumulated drift). The track must
+    # match each detection on its own frame and blend in between.
+    video = tmp_path / "pan.mp4"
+    make_panning_video(video)
+    anchors = []
+    for frame, offset in ((0, 0.0), (FRAMES - 1, 12.0)):
+        dx, dy = camera_shift(frame)
+        x1, y1, x2, y2 = RIM
+        anchors.append({"frame": frame, "rim_bbox": [x1 + dx + offset, y1 + dy, x2 + dx + offset, y2 + dy]})
+    (tmp_path / "hoop_detection.json").write_text(json.dumps({
+        "reference_frame": 0, "rim_bbox": anchors[0]["rim_bbox"], "anchors": anchors,
+    }))
+
+    track_hoop(video, tmp_path / "hoop_detection.json", tmp_path / "hoop_track.csv")
+
+    track = pd.read_csv(tmp_path / "hoop_track.csv").set_index("frame")
+    for frame in (0, 20, FRAMES - 1):
+        dx, _ = camera_shift(frame)
+        expected_offset = 12.0 * frame / (FRAMES - 1)
+        assert abs(track.loc[frame, "x1"] - (RIM[0] + dx + expected_offset)) < 3

@@ -82,8 +82,28 @@ START_MARGIN_FRAMES = 3
 
 # A ball path may continue after a gap of up to this many
 # frames without a detection (e.g. hidden by the net). Same as
-# the outcome rule's MAX_BRIDGE_FRAMES.
+# the outcome rule's MAX_BRIDGE_FRAMES. Counted at 30 fps and
+# scaled to the video's frame rate (see frames_per_30fps_frame).
 MAX_LINK_GAP_FRAMES = 20
+
+
+def frames_per_30fps_frame(table):
+    """
+    How many of this video's frames last as long as one frame
+    at 30 fps (2.0 for a 60 fps phone video), from the
+    timestamp_ms and frame columns. 1.0 when unknown. Frame
+    limits tuned on 30 fps videos are multiplied by this.
+    """
+
+    if "timestamp_ms" not in table or table.empty:
+        return 1.0
+    rows = table[table["frame"] > 0]
+    if rows.empty:
+        return 1.0
+    ms_per_frame = float(np.median(rows["timestamp_ms"] / rows["frame"]))
+    if not ms_per_frame > 0:
+        return 1.0
+    return max(1.0, (1000 / 30) / ms_per_frame)
 
 # During a gap the ball may change direction (rim, net), so the
 # search area grows by this many pixels per missing frame.
@@ -115,6 +135,9 @@ def to_camera_stable(detections, hoop_track_path):
     track["cy"] = (track.y1 + track.y2) / 2
     track["w"] = track.x2 - track.x1
 
+    track = track[track.w > 0]
+    if track.empty:
+        return detections
     reference = track.iloc[0]
 
     for index, row in detections.iterrows():
@@ -148,6 +171,8 @@ def link_paths(detections, max_distance):
     """
 
     paths = []
+    scale = frames_per_30fps_frame(detections)
+    max_gap = round(MAX_LINK_GAP_FRAMES * scale)
 
     for frame, group in detections.groupby("frame"):
         frame = int(frame)
@@ -166,7 +191,7 @@ def link_paths(detections, max_distance):
                 last = path[-1]
                 gap = frame - last["frame"]
 
-                if number in taken or not 1 <= gap <= MAX_LINK_GAP_FRAMES:
+                if number in taken or not 1 <= gap <= max_gap:
                     continue
 
                 velocity = np.zeros(2)
@@ -185,7 +210,7 @@ def link_paths(detections, max_distance):
                     np.linalg.norm(position - predicted),
                     np.linalg.norm(position - last["position"]),
                 )
-                gate = max_distance + GAP_GROWTH_PX * (gap - 1)
+                gate = max_distance + GAP_GROWTH_PX * (gap - 1) / scale
 
                 if distance <= gate and (
                     best_distance is None or distance < best_distance
@@ -200,6 +225,7 @@ def link_paths(detections, max_distance):
                     float(detection["center_y"]),
                 ),
                 "confidence": float(detection["confidence"]),
+                "radius": (detection.get("x2", 0) - detection.get("x1", 0)) / 2,
             }
 
             if best is None:
@@ -265,6 +291,7 @@ def track_ball(
     max_distance=200,
     start_frame=None,
     hoop_track_path=None,
+    trajectory=None,
 ):
     """
     Follow the shot's ball through the video.
@@ -286,66 +313,69 @@ def track_ball(
         exist_ok=True,
     )
 
-    detections = pd.read_csv(csv_path)
+    if trajectory is not None:
+        filtered = trajectory.sort_values("frame").drop_duplicates("frame")
+    else:
+        detections = pd.read_csv(csv_path)
 
-    if detections.empty:
-        print("No ball detections found.")
-        return
+        if detections.empty:
+            print("No ball detections found.")
+            return
 
-    detections = to_camera_stable(detections, hoop_track_path)
+        detections = to_camera_stable(detections, hoop_track_path)
 
-    # The stationary filter clusters on the stable positions.
-    stationary = remove_stationary_detections(
-        detections.assign(
-            center_x=detections["stable_x"],
-            center_y=detections["stable_y"],
+        # The stationary filter clusters on the stable positions.
+        stationary = remove_stationary_detections(
+            detections.assign(
+                center_x=detections["stable_x"],
+                center_y=detections["stable_y"],
+            )
+        )["stationary"]
+
+        detections["stationary"] = stationary
+
+        filtered = detections[
+            ~detections["stationary"]
+        ].copy()
+
+        shot_path = None
+
+        if start_frame is not None:
+            after_start = filtered[
+                filtered["frame"]
+                >= start_frame - START_MARGIN_FRAMES
+            ]
+
+            shot_path = choose_shot_path(
+                link_paths(after_start, max_distance)
+            )
+
+            if shot_path is None:
+                print("No rising ball found in this shot.")
+
+            # Only the chosen path's detections are kept.
+            filtered = pd.DataFrame(
+                [
+                    {
+                        "frame": point["frame"],
+                        "center_x": point["picture_position"][0],
+                        "center_y": point["picture_position"][1],
+                        "confidence": point["confidence"],
+                    }
+                    for point in (shot_path or [])
+                ],
+                columns=["frame", "center_x", "center_y", "confidence"],
+            )
+
+        print(
+            "Stationary detections removed:",
+            int(detections["stationary"].sum())
         )
-    )["stationary"]
 
-    detections["stationary"] = stationary
-
-    filtered = detections[
-        ~detections["stationary"]
-    ].copy()
-
-    shot_path = None
-
-    if start_frame is not None:
-        after_start = filtered[
-            filtered["frame"]
-            >= start_frame - START_MARGIN_FRAMES
-        ]
-
-        shot_path = choose_shot_path(
-            link_paths(after_start, max_distance)
+        print(
+            "Ball positions used:",
+            len(filtered)
         )
-
-        if shot_path is None:
-            print("No rising ball found in this shot.")
-
-        # Only the chosen path's detections are kept.
-        filtered = pd.DataFrame(
-            [
-                {
-                    "frame": point["frame"],
-                    "center_x": point["picture_position"][0],
-                    "center_y": point["picture_position"][1],
-                    "confidence": point["confidence"],
-                }
-                for point in (shot_path or [])
-            ],
-            columns=["frame", "center_x", "center_y", "confidence"],
-        )
-
-    print(
-        "Stationary detections removed:",
-        int(detections["stationary"].sum())
-    )
-
-    print(
-        "Ball positions used:",
-        len(filtered)
-    )
 
     video = cv2.VideoCapture(
         str(video_path)
@@ -390,6 +420,7 @@ def track_ball(
         )
 
     previous_position = None
+    supplied_trajectory = trajectory is not None
     trajectory = []
     frame_index = 0
 
@@ -410,8 +441,8 @@ def track_ball(
             selected = None
 
             if candidates is not None:
-                if start_frame is not None:
-                    # Already linked into one path above.
+                if start_frame is not None or supplied_trajectory:
+                    # Already linked to the owning attempt.
                     selected = candidates.iloc[0]
 
                 elif previous_position is None:

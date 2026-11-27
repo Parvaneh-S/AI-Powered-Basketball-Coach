@@ -61,3 +61,35 @@ def test_clearly_beside_the_rim_is_missed(tmp_path, x):
         tmp_path, [9, 10, 11, 12], [x, x, x, x], [150, 190, 210, 240]
     )
     assert result["outcome"] == "missed"
+
+
+def test_frame_limits_scale_with_frame_rate(tmp_path):
+    # At 60 fps the same 0.13 s hidden in the net spans 8 frames,
+    # and a 0.6 s gap spans 36 frames (more than 20).
+    (tmp_path / "hoop_detection.json").write_text(
+        json.dumps({"reference_frame": 0, "rim_bbox": RIM})
+    )
+    frames = [100, 101, 137, 138]
+    pd.DataFrame({
+        "frame": frames, "timestamp_ms": [round(f * 1000 / 60) for f in frames],
+        "center_x": [505] * 4, "center_y": [150, 170, 240, 260],
+    }).to_csv(tmp_path / "ball_trajectory.csv", index=False)
+
+    result = analyze_outcome("sixty", tmp_path)
+
+    assert result["outcome"] == "made"
+    assert result["max_bridge_frames"] == 40 and result["made_min_hidden_frames"] == 6
+
+
+def test_short_hidden_gap_at_60fps_is_not_made(tmp_path):
+    # 3 hidden frames at 60 fps is only 0.05 s: not enough evidence.
+    (tmp_path / "hoop_detection.json").write_text(
+        json.dumps({"reference_frame": 0, "rim_bbox": RIM})
+    )
+    frames = [100, 101, 105, 106]
+    pd.DataFrame({
+        "frame": frames, "timestamp_ms": [round(f * 1000 / 60) for f in frames],
+        "center_x": [505] * 4, "center_y": [150, 170, 240, 260],
+    }).to_csv(tmp_path / "ball_trajectory.csv", index=False)
+
+    assert analyze_outcome("sixty", tmp_path)["outcome"] == "unknown"

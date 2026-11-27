@@ -6,7 +6,7 @@ import cv2
 from ultralytics import YOLO
 
 
-def detect_basketball(video_path, output_dir, write_video=True):
+def detect_basketball(video_path, output_dir, write_video=True, *, progress=None):
     """
     Detect ball candidates in every frame and save them to
     ball_detections.csv. With write_video=False no annotated
@@ -18,7 +18,7 @@ def detect_basketball(video_path, output_dir, write_video=True):
 
     # Load pretrained YOLO object detection model.
     # We use the sports ball category.
-    model = YOLO("yolo26s.pt")
+    model = YOLO(str(Path(__file__).resolve().parents[3] / "yolo26s.pt"))
 
     ball_class_ids = [
         class_id
@@ -69,6 +69,9 @@ def detect_basketball(video_path, output_dir, write_video=True):
     detected_frames = 0
 
     try:
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        if progress is not None:
+            progress(0, total_frames)
         while True:
             success, frame = cap.read()
 
@@ -131,32 +134,26 @@ def detect_basketball(video_path, output_dir, write_video=True):
                     "y2": round(y2, 2),
                 })
 
-                # Draw a green bounding box.
-                point1 = (int(x1), int(y1))
-                point2 = (int(x2), int(y2))
-
-                cv2.rectangle(
-                    frame,
-                    point1,
-                    point2,
-                    (0, 255, 0),
-                    2,
-                )
-
-                cv2.putText(
-                    frame,
-                    f"Ball? {confidence:.2f}",
-                    (point1[0], max(20, point1[1] - 10)),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.6,
-                    (0, 255, 0),
-                    2,
-                )
+                if writer is not None:
+                    point1 = (int(x1), int(y1))
+                    point2 = (int(x2), int(y2))
+                    cv2.rectangle(frame, point1, point2, (0, 255, 0), 2)
+                    cv2.putText(
+                        frame,
+                        f"Ball? {confidence:.2f}",
+                        (point1[0], max(20, point1[1] - 10)),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.6,
+                        (0, 255, 0),
+                        2,
+                    )
 
             if writer is not None:
                 writer.write(frame)
 
             frame_index += 1
+            if progress is not None:
+                progress(frame_index, total_frames)
 
     finally:
         cap.release()

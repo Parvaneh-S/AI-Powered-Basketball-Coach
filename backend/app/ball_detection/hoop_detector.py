@@ -164,6 +164,74 @@ def detect_hoop(video_path, output_dir, frame_number=40):
     print(f"Saved image: {image_path}")
 
 
+# A handheld camera drifts away from a single reference frame
+# (the rim track was 160 px off after a minute of video), so
+# longer videos also get a rim detection every few seconds.
+ANCHOR_INTERVAL_SECONDS = 5
+MIN_ANCHOR_CONFIDENCE = 0.5
+
+
+def _rim_box(prediction):
+    x, y = float(prediction["x"]), float(prediction["y"])
+    w, h = float(prediction["width"]), float(prediction["height"])
+    return [round(x - w / 2, 2), round(y - h / 2, 2), round(x + w / 2, 2), round(y + h / 2, 2)]
+
+
+def add_rim_anchors(video_path, output_dir, interval_seconds=ANCHOR_INTERVAL_SECONDS):
+    """
+    Detect the rim on one frame every interval_seconds and store
+    the boxes as "anchors" in hoop_detection.json, so the hoop
+    tracker can correct camera-motion drift. Frames without a
+    confident rim, or with a box far from the expected size,
+    are skipped. Returns the number of anchors.
+    """
+
+    json_path = Path(output_dir) / "hoop_detection.json"
+    hoop = json.loads(json_path.read_text(encoding="utf-8"))
+    reference = int(hoop["reference_frame"])
+    anchors = [{"frame": reference, "rim_bbox": hoop["rim_bbox"],
+                "confidence": hoop.get("confidence")}]
+    reference_width = hoop["rim_bbox"][2] - hoop["rim_bbox"][0]
+
+    capture = cv2.VideoCapture(str(video_path))
+    if not capture.isOpened():
+        raise RuntimeError(f"Cannot open video: {video_path}")
+    fps = capture.get(cv2.CAP_PROP_FPS) or 30
+    total = int(capture.get(cv2.CAP_PROP_FRAME_COUNT))
+    step = max(1, round(fps * interval_seconds))
+    client = InferenceHTTPClient(
+        api_url="https://serverless.roboflow.com",
+        api_key=os.getenv("ROBOFLOW_API_KEY"),
+    ).configure(InferenceConfiguration(api_key_transport="header"))
+
+    try:
+        for frame_number in range(reference + step, total, step):
+            capture.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+            ok, frame = capture.read()
+            if not ok:
+                continue
+            try:
+                result = client.infer(frame, model_id=MODEL_ID)
+            except Exception as error:
+                print(f"Rim anchor at frame {frame_number} skipped ({error})")
+                continue
+            rims = [p for p in result.get("predictions", [])
+                    if p.get("class", "").lower() == "rim"
+                    and p["confidence"] >= MIN_ANCHOR_CONFIDENCE
+                    and 0.6 <= p["width"] / reference_width <= 1.6]
+            if rims:
+                rim = max(rims, key=lambda p: p["confidence"])
+                anchors.append({"frame": frame_number, "rim_bbox": _rim_box(rim),
+                                "confidence": round(float(rim["confidence"]), 4)})
+    finally:
+        capture.release()
+
+    hoop["anchors"] = anchors
+    json_path.write_text(json.dumps(hoop, indent=4), encoding="utf-8")
+    print(f"Rim anchors: {len(anchors)}")
+    return len(anchors)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("video")

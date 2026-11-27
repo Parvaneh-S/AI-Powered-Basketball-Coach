@@ -1,9 +1,9 @@
 """
 Follow the hoop through the video when the camera moves.
 
-The hoop is found by Roboflow on one reference frame only
-(see hoop_detector.py). With a handheld camera the hoop then
-drifts away from that position in the other frames, and the
+The hoop is found by Roboflow on a reference frame, and on
+longer videos on a frame every few seconds (see hoop_detector.py). With a handheld camera the hoop then
+drifts away from those positions in the other frames, and the
 made/missed check compares the ball with a rim that is no
 longer there.
 
@@ -144,33 +144,51 @@ def track_hoop(video_path, hoop_json_path, output_csv):
             f"Reference frame {reference} is outside the video"
         )
 
-    # Transform from the reference frame to every frame.
-    to_frame = [None] * total_frames
-    to_frame[reference] = np.eye(3)
+    # cumulative[i] maps frame 0 to frame i.
+    cumulative = [np.eye(3)]
+    for step in steps[1:]:
+        cumulative.append(step @ cumulative[-1])
 
-    for index in range(reference + 1, total_frames):
-        to_frame[index] = steps[index] @ to_frame[index - 1]
+    # Rim detections on several frames (see add_rim_anchors). Each
+    # frame uses the anchors on either side, carried along by the
+    # camera motion and blended by distance, so tracking error
+    # cannot build up over more than one anchor interval.
+    anchors = sorted(
+        (int(a["frame"]), [float(v) for v in a["rim_bbox"]])
+        for a in hoop.get("anchors") or [{"frame": reference, "rim_bbox": hoop["rim_bbox"]}]
+        if 0 <= int(a["frame"]) < total_frames
+    )
+    if not anchors:
+        anchors = [(reference, [x1, y1, x2, y2])]
+    inverse = {frame: np.linalg.inv(cumulative[frame]) for frame, _ in anchors}
 
-    for index in range(reference - 1, -1, -1):
-        to_frame[index] = (
-            np.linalg.inv(steps[index + 1]) @ to_frame[index + 1]
-        )
-
-    center = np.array([(x1 + x2) / 2, (y1 + y2) / 2, 1.0])
-    half_w, half_h = (x2 - x1) / 2, (y2 - y1) / 2
-
-    rows = []
-    for index, transform in enumerate(to_frame):
-        cx, cy, _ = transform @ center
+    def carry(anchor, index):
+        frame, (ax1, ay1, ax2, ay2) = anchor
+        transform = cumulative[index] @ inverse[frame]
+        cx, cy, _ = transform @ np.array([(ax1 + ax2) / 2, (ay1 + ay2) / 2, 1.0])
         # Similarity transform: same zoom in x and y.
         zoom = float(np.sqrt(abs(np.linalg.det(transform[:2, :2]))))
+        return np.array([cx, cy, (ax2 - ax1) / 2 * zoom, (ay2 - ay1) / 2 * zoom])
+
+    anchor_frames = [frame for frame, _ in anchors]
+    rows = []
+    for index in range(total_frames):
+        after = int(np.searchsorted(anchor_frames, index))
+        if after == 0 or after == len(anchors):
+            cx, cy, half_w, half_h = carry(anchors[min(after, len(anchors) - 1)], index)
+        else:
+            before_anchor, after_anchor = anchors[after - 1], anchors[after]
+            weight = (index - before_anchor[0]) / (after_anchor[0] - before_anchor[0])
+            cx, cy, half_w, half_h = (
+                (1 - weight) * carry(before_anchor, index) + weight * carry(after_anchor, index)
+            )
 
         rows.append({
             "frame": index,
-            "x1": round(cx - half_w * zoom, 2),
-            "y1": round(cy - half_h * zoom, 2),
-            "x2": round(cx + half_w * zoom, 2),
-            "y2": round(cy + half_h * zoom, 2),
+            "x1": round(cx - half_w, 2),
+            "y1": round(cy - half_h, 2),
+            "x2": round(cx + half_w, 2),
+            "y2": round(cy + half_h, 2),
         })
 
     track = pd.DataFrame(rows)
@@ -185,6 +203,7 @@ def track_hoop(video_path, hoop_json_path, output_csv):
         "frames": total_frames,
         "reference_frame": reference,
         "max_shift_px": round(float(shift.max()), 1),
+        "anchors": len(anchors),
         "motion_failed_frames": failed_frames,
     }
 
