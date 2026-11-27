@@ -50,8 +50,9 @@ def summarize_trajectory(csv_path):
     }
 
 
-def build_shot_analysis(video_id):
-    output_dir = ROOT / "outputs" / video_id
+def build_shot_analysis(video_id, output_dir=None, *, hoop_dir=None):
+    output_dir = Path(output_dir) if output_dir is not None else ROOT / "outputs" / video_id
+    hoop_dir = Path(hoop_dir) if hoop_dir is not None else output_dir
 
     features = load_json(
         output_dir / "shot_features.json"
@@ -61,9 +62,8 @@ def build_shot_analysis(video_id):
         output_dir / "predicted_shot_events.json"
     )
 
-    hoop = load_json(
-        output_dir / "hoop_detection.json"
-    )
+    hoop_path = hoop_dir / "hoop_detection.json"
+    hoop = load_json(hoop_path) if hoop_path.is_file() else {}
 
     outcome = load_json(
         output_dir / "shot_outcome.json"
@@ -76,10 +76,18 @@ def build_shot_analysis(video_id):
     analysis = {
         "video_id": video_id,
         "shot_id": features["shot_id"],
+        "shot_number": events.get("shot_number", 1),
         "shot_type": "free_throw",
 
         "shot_events": {
             "start_frame": features["start_frame"],
+            "start_time_ms": events.get("start_time_ms"),
+            "release_time_ms": events.get("release_time_ms"),
+            "end_time_ms": events.get("end_time_ms"),
+            "flight_end_frame": events.get("flight_end_frame"),
+            "flight_end_time_ms": events.get("flight_end_time_ms"),
+            "release_method": events.get("release_method"),
+            "measurement_frames": features.get("measurement_frames", {}),
             "release_frame": features["release_frame"],
             "end_frame": features["end_frame"],
             "end_frame_source": features[
@@ -124,6 +132,9 @@ def build_shot_analysis(video_id):
             "elbow_coverage_pct": features[
                 "elbow_coverage_pct"
             ],
+            "valid_knee_frames": features.get("valid_knee_frames"),
+            "valid_elbow_frames": features.get("valid_elbow_frames"),
+            "release_angle_valid": features.get("release_angle_valid"),
             "measurement_quality": features[
                 "measurement_quality"
             ],
@@ -161,8 +172,7 @@ def build_shot_analysis(video_id):
     ) as file:
         json.dump(analysis, file, indent=2)
 
-    print(json.dumps(analysis, indent=2))
-    print(f"\nSaved: {output_path}")
+    return analysis
 
 
 if __name__ == "__main__":

@@ -23,6 +23,7 @@ def save_shot(
     session_id=None,
     video_sha256=None,
     original_filename=None,
+    session_name=None,
 ):
     analysis_path = (
         ROOT / "outputs" / video_id / "shot_analysis.json"
@@ -78,7 +79,7 @@ def save_shot(
                 )
         else:
             practice_session = PracticeSession(
-                player_id=player.id
+                player_id=player.id, name=session_name
             )
             db.add(practice_session)
             db.flush()

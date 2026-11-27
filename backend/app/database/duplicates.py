@@ -7,6 +7,7 @@ from sqlalchemy import select
 from backend.app.database.models import (
     Player,
     PracticeSession,
+    Recording,
     SessionLocal,
     Shot,
 )
@@ -39,37 +40,26 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
+def find_duplicate_in_session(db, player_name, fingerprint):
+    recording = db.scalar(select(Recording).join(Player).where(
+        Player.name == player_name, Recording.video_sha256 == fingerprint
+    ))
+    if recording:
+        return {"video_id": recording.video_id, "session_id": recording.session_id,
+                "original_filename": recording.original_filename}
+    shot = db.scalar(select(Shot).join(PracticeSession).join(Player).where(
+        Player.name == player_name, Shot.video_sha256 == fingerprint
+    ).limit(1))
+    if shot:
+        return {"video_id": shot.video_id, "shot_id": shot.shot_id, "session_id": shot.session_id,
+                "original_filename": shot.original_filename}
+    return None
+
+
 def find_duplicate(player_name, video_sha256):
-    """
-    Return the player's existing shot with this video
-    fingerprint, or None if the video is new for them.
-    """
+    """Find an existing owned recording, including records from before the recording table."""
+    from backend.app.database.recordings import ensure_recordings
 
+    ensure_recordings()
     with SessionLocal() as db:
-        statement = (
-            select(Shot)
-            .join(
-                PracticeSession,
-                Shot.session_id == PracticeSession.id,
-            )
-            .join(
-                Player,
-                PracticeSession.player_id == Player.id,
-            )
-            .where(
-                Player.name == player_name,
-                Shot.video_sha256 == video_sha256,
-            )
-            .limit(1)
-        )
-
-        shot = db.scalar(statement)
-
-        if shot is None:
-            return None
-
-        return {
-            "video_id": shot.video_id,
-            "shot_id": shot.shot_id,
-            "original_filename": shot.original_filename,
-        }
+        return find_duplicate_in_session(db, player_name, video_sha256)

@@ -34,10 +34,6 @@ def list_player_sessions(player_name):
     """
     Return the player's practice sessions, newest first,
     with their local date and number of shots.
-
-    session_id is unique across all players (used by the
-    API); session_number counts the player's own sessions
-    from 1 (oldest), for showing in the app.
     """
 
     with SessionLocal() as db:
@@ -45,6 +41,8 @@ def list_player_sessions(player_name):
             select(
                 PracticeSession,
                 func.count(Shot.id),
+                func.count().filter(Shot.outcome == "made"),
+                func.count().filter(Shot.outcome == "missed"),
             )
             .join(
                 Player,
@@ -66,14 +64,13 @@ def list_player_sessions(player_name):
         sessions = []
 
         rows = db.execute(statement).all()
-
-        for index, (session, shot_count) in enumerate(rows):
+        for index, (session, shot_count, made, missed) in enumerate(rows):
             session_date = local_date(session.created_at)
 
             sessions.append({
                 "session_id": session.id,
-                # Newest first, so the oldest gets number 1.
                 "session_number": len(rows) - index,
+                "name": session.name,
                 "date": (
                     session_date.isoformat()
                     if session_date
@@ -81,6 +78,10 @@ def list_player_sessions(player_name):
                 ),
                 "is_today": session_date == today,
                 "shot_count": shot_count,
+                "made": made,
+                "missed": missed,
+                "unknown": shot_count - made - missed,
+                "accuracy_pct": round(100 * made / (made + missed), 1) if made + missed else None,
             })
 
         return sessions
@@ -110,3 +111,11 @@ def validate_session(player_name, session_id):
                 f"Session {session_id} belongs to a "
                 "different player."
             )
+
+
+def owns_session(player_name, session_id):
+    with SessionLocal() as db:
+        statement = select(PracticeSession.id).join(Player).where(
+            Player.name == player_name, PracticeSession.id == session_id,
+        )
+        return db.scalar(statement) is not None

@@ -37,7 +37,7 @@ from backend.app.pipeline.video_input import (
 )
 from backend.app.pipeline.video_pipeline import (
     ROOT,
-    process_uploaded_video,
+    process_single_shot_video as process_uploaded_video,
 )
 from backend.app.shot_detection.ball_shot_finder import (
     find_ball_shots,
@@ -114,6 +114,8 @@ def process_multi_shot_video(
     original_filename=None,
     session_id=None,
     progress=no_progress,
+    *,
+    session_name=None,
 ):
     """
     Find, cut and analyse every shot in the video.
@@ -173,8 +175,9 @@ def process_multi_shot_video(
 
         if not shots:
             raise NoShotsFoundError(
-                "No shots were found in the video. Make sure "
-                "the player's whole body is visible."
+                "No shots were found by the separate-clips detector. "
+                "Try 'Full recording with session coaching' or use a video "
+                "with the player's whole body visible."
             )
 
         if len(shots) == 1:
@@ -208,6 +211,7 @@ def process_multi_shot_video(
                     shot["first_frame"], shot["last_frame"],
                 )
 
+                session_options = {"session_name": session_name} if session_name and session_id is None else {}
                 result = process_uploaded_video(
                     video_path=str(clip),
                     player_name=player_name,
@@ -223,6 +227,7 @@ def process_multi_shot_video(
                         if "arrival_frame" in shot
                         else None
                     ),
+                    **session_options,
                 )
 
                 # The first shot creates the session if needed;

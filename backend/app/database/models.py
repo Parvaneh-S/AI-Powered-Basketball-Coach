@@ -10,6 +10,7 @@ from sqlalchemy import (
     Integer,
     String,
     Text,
+    UniqueConstraint,
     create_engine,
     inspect,
     text,
@@ -72,6 +73,7 @@ class PracticeSession(Base):
     player_id: Mapped[int] = mapped_column(
         ForeignKey("players.id")
     )
+    name: Mapped[str | None] = mapped_column(String(100), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime,
         default=lambda: datetime.now(timezone.utc),
@@ -83,6 +85,19 @@ class PracticeSession(Base):
     shots: Mapped[list["Shot"]] = relationship(
         back_populates="session"
     )
+
+
+class Recording(Base):
+    __tablename__ = "recordings"
+    __table_args__ = (UniqueConstraint("player_id", "video_sha256"),)
+
+    video_id: Mapped[str] = mapped_column(String(150), primary_key=True)
+    player_id: Mapped[int] = mapped_column(ForeignKey("players.id"))
+    session_id: Mapped[int] = mapped_column(ForeignKey("practice_sessions.id"), index=True)
+    video_sha256: Mapped[str] = mapped_column(String(64))
+    original_filename: Mapped[str] = mapped_column(String(255))
+    processing_json: Mapped[str] = mapped_column(Text)
+    uploaded_at: Mapped[datetime] = mapped_column(DateTime)
 
 
 class Shot(Base):
@@ -188,6 +203,19 @@ def ensure_shot_columns():
 
 
 ensure_shot_columns()
+
+
+def ensure_session_name():
+    with engine.begin() as connection:
+        connection.exec_driver_sql("BEGIN IMMEDIATE")
+        schema = inspect(connection)
+        if schema.has_table("practice_sessions") and not any(
+            column["name"] == "name" for column in schema.get_columns("practice_sessions")
+        ):
+            connection.execute(text("ALTER TABLE practice_sessions ADD COLUMN name VARCHAR(100)"))
+
+
+ensure_session_name()
 
 
 if __name__ == "__main__":

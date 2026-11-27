@@ -3,6 +3,8 @@ import subprocess
 import imageio_ffmpeg
 import argparse
 import json
+import logging
+import os
 import shutil
 from pathlib import Path
 from uuid import uuid4
@@ -26,6 +28,7 @@ from backend.app.ball_detection.ball_tracker import (
     track_ball,
 )
 from backend.app.ball_detection.hoop_detector import (
+    add_rim_anchors,
     detect_hoop,
 )
 from backend.app.ball_detection.hoop_tracker import (
@@ -55,6 +58,8 @@ from backend.app.database.duplicates import (
 from backend.app.database.sessions import (
     validate_session,
 )
+from backend.app.database.recordings import save_recording
+from backend.app.pipeline.analyze_recording import analyze_attempts
 from backend.app.pipeline.video_input import (
     WrongUploadModeError,
     prepare_video,
@@ -80,6 +85,21 @@ def require_file(path: Path):
         raise FileNotFoundError(
             f"Expected output was not created: {path}"
         )
+
+
+def prepare_hoop_tracking(video_path, output_dir):
+    if os.getenv("ROBOFLOW_API_KEY"):
+        try:
+            detect_hoop(video_path=video_path, output_dir=output_dir)
+            if (output_dir / "hoop_detection.json").is_file():
+                add_rim_anchors(video_path, output_dir)
+        except Exception as exc:
+            logging.warning("Hoop detection unavailable (%s)", type(exc).__name__)
+    else:
+        logging.warning("ROBOFLOW_API_KEY is not set: shot outcomes will be unknown")
+    hoop_path = output_dir / "hoop_detection.json"
+    if hoop_path.is_file():
+        track_hoop(video_path=video_path, hoop_json_path=hoop_path, output_csv=output_dir / "hoop_track.csv")
 
 
 def convert_video_for_web(source_path: Path) -> Path:
@@ -122,6 +142,18 @@ def convert_video_for_web(source_path: Path) -> Path:
 
     return destination
 
+def convert_feedback_videos(output_dir):
+    # The analysis is usable even if browser-compatible video encoding fails.
+    previews = []
+    for filename in ("annotated_angles.mp4", "ball_tracking.mp4"):
+        try:
+            previews.append(convert_video_for_web(output_dir / filename))
+        except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
+            logging.warning("Unable to convert %s: %s", filename, error)
+            previews.append(None)
+    return previews
+
+
 def refuse_multi_shot_video(video_path):
     """
     Raise WrongUploadModeError if the video contains more than
@@ -145,13 +177,15 @@ def refuse_multi_shot_video(video_path):
         )
 
 
-def process_uploaded_video(
+def process_single_shot_video(
     video_path: str,
     player_name: str,
     shooting_arm: str = "right",
     original_filename: str | None = None,
     session_id: int | None = None,
     source_sha256: str | None = None,
+    *,
+    session_name: str | None = None,
     ball_arrival_frame: int | None = None,
 ) -> dict:
     """
@@ -294,22 +328,7 @@ def process_uploaded_video(
 
     print("\n[4/9] Detecting basketball hoop...")
 
-    detect_hoop(
-        video_path=stored_video,
-        output_dir=output_dir,
-    )
-
-    require_file(
-        output_dir / "hoop_detection.json"
-    )
-
-    # Follow the hoop in every frame, in case the camera
-    # moves (runs locally; nothing is sent to Roboflow).
-    track_hoop(
-        video_path=stored_video,
-        hoop_json_path=output_dir / "hoop_detection.json",
-        output_csv=output_dir / "hoop_track.csv",
-    )
+    prepare_hoop_tracking(stored_video, output_dir)
 
     # --------------------------------------------------
     # 5. Ball tracking
@@ -431,6 +450,7 @@ def process_uploaded_video(
         session_id=session_id,
         video_sha256=video_sha256,
         original_filename=original_filename,
+        session_name=session_name,
     )
 
 
@@ -438,33 +458,7 @@ def process_uploaded_video(
     # 10. Convert visual feedback videos for browsers
     # --------------------------------------------------
 
-    print("\nConverting visual feedback videos for browsers...")
-
-    pose_web_video = output_dir / "annotated_angles_web.mp4"
-    ball_web_video = output_dir / "ball_tracking_web.mp4"
-
-    # Conversion is optional for the shot analysis.
-    # If conversion fails, the analysis remains valid
-    # and the shot is still saved in SQLite.
-    try:
-        pose_web_video = convert_video_for_web(
-            output_dir / "annotated_angles.mp4"
-        )
-        print(f"Pose video converted: {pose_web_video}")
-
-    except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
-        print(f"WARNING: Pose video conversion failed: {error}")
-        pose_web_video = None
-
-    try:
-        ball_web_video = convert_video_for_web(
-            output_dir / "ball_tracking.mp4"
-        )
-        print(f"Ball tracking video converted: {ball_web_video}")
-
-    except (OSError, RuntimeError, subprocess.CalledProcessError) as error:
-        print(f"WARNING: Ball tracking video conversion failed: {error}")
-        ball_web_video = None
+    pose_web_video, ball_web_video = convert_feedback_videos(output_dir)
 
     print("\n=== PIPELINE COMPLETED ===")
 
@@ -480,6 +474,180 @@ def process_uploaded_video(
             "shot_outcome", {}
         ),
         "analysis_file": str(analysis_path),
+
+        # Original OpenCV videos
+        "annotated_video": str(
+            output_dir / "annotated_angles.mp4"
+        ),
+        "ball_tracking_video": str(
+            output_dir / "ball_tracking.mp4"
+        ),
+
+        # Browser-compatible H.264 videos
+        "annotated_video_web": (
+            str(pose_web_video)
+            if pose_web_video is not None
+            else None
+        ),
+        "ball_tracking_video_web": (
+            str(ball_web_video)
+            if ball_web_video is not None
+            else None
+        ),
+    }
+
+    return result
+
+
+
+def process_uploaded_video(
+    video_path: str,
+    player_name: str,
+    shooting_arm: str = "right",
+    original_filename: str | None = None,
+    session_id: int | None = None,
+    session_name: str | None = None,
+    *,
+    progress=None,
+) -> dict:
+    """Analyze attempts in a continuous recording and save them in SQLite."""
+
+    def report(stage, done=0, total=0):
+        if progress is not None:
+            progress(stage, done, total)
+
+    report("Checking the recording")
+    source_video = Path(video_path).resolve()
+
+    if not source_video.is_file():
+        raise FileNotFoundError(
+            f"Video file not found: {source_video}"
+        )
+
+    if not POSE_MODEL.is_file():
+        raise FileNotFoundError(
+            f"MediaPipe model not found: {POSE_MODEL}"
+        )
+
+    if not player_name.strip():
+        raise ValueError("Player name cannot be empty.")
+
+    if shooting_arm not in ("left", "right"):
+        raise ValueError(
+            "shooting_arm must be 'left' or 'right'."
+        )
+
+    if original_filename is None:
+        original_filename = source_video.name
+
+    # A chosen session must exist and belong to this player.
+    # None starts a new session.
+    validate_session(player_name, session_id)
+
+    # Stop early if this player already has this exact video,
+    # before spending minutes on the analysis.
+    video_sha256 = file_sha256(source_video)
+    existing = find_duplicate(player_name, video_sha256)
+
+    if existing is not None:
+        raise DuplicateVideoError(existing)
+
+    # Create a unique identifier for this upload.
+    video_id = f"shot_{uuid4().hex[:12]}"
+
+    # Keep a processing copy in a predictable location,
+    # always as an H.264 MP4 that OpenCV can read. MOV and
+    # unreadable MP4 files (e.g. HEVC from iPhones) are
+    # converted; readable MP4 files are copied unchanged.
+    upload_dir = ROOT / "data" / "uploads"
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    stored_video = upload_dir / f"{video_id}.mp4"
+
+    report("Preparing the video")
+    converted = prepare_video(source_video, stored_video)
+
+    if converted:
+        print(f"Converted {original_filename} to H.264 MP4")
+
+    output_dir = ROOT / "outputs" / video_id
+    output_dir.mkdir(parents=True, exist_ok=False)
+
+    print("\n=== BASKETBALL VIDEO PIPELINE ===")
+    print(f"Player: {player_name}")
+    print(f"Video ID: {video_id}")
+
+    # --------------------------------------------------
+    # 1. Pose estimation
+    # --------------------------------------------------
+
+    report("Measuring shooting form")
+    print("\n[1/9] Running pose estimation...")
+
+    process_video(
+        input_path=stored_video,
+        output_path=(
+            output_dir / "annotated_angles.mp4"
+        ),
+        model_path=POSE_MODEL,
+        csv_path=output_dir / "joint_angles.csv",
+    )
+
+    require_file(output_dir / "joint_angles.csv")
+
+    report("Detecting the basketball")
+    print("Detecting basketballs across the recording...")
+    detect_basketball(
+        video_path=stored_video,
+        output_dir=output_dir,
+        write_video=False,
+        progress=lambda done, total: report("Detecting the basketball", done, total),
+    )
+    require_file(output_dir / "ball_detections.csv")
+
+    report("Tracking the rim")
+    print("Finding and tracking the rim...")
+    prepare_hoop_tracking(stored_video, output_dir)
+
+    report("Measuring shooting attempts")
+    print("Separating attempts and measuring each shot...")
+    analyses, processing, trajectory = analyze_attempts(video_id, output_dir, shooting_arm)
+    analysis = analyses[0] if analyses else {}
+    analysis_path = output_dir / "shot_analysis.json"
+    report("Saving the recording")
+    session_id = save_recording(
+        video_id, player_name, session_id, video_sha256, original_filename, analyses, processing,
+        session_name=session_name,
+    )
+    report("Preparing video previews")
+    if not trajectory.empty:
+        try:
+            track_ball(stored_video, output_dir / "ball_detections.csv", output_dir, trajectory=trajectory)
+        except (OSError, RuntimeError) as exc:
+            logging.warning("Tracking preview unavailable (%s)", type(exc).__name__)
+
+    # --------------------------------------------------
+    # 10. Convert visual feedback videos for browsers
+    # --------------------------------------------------
+
+    pose_web_video, ball_web_video = convert_feedback_videos(output_dir)
+
+    print("\n=== PIPELINE COMPLETED ===")
+
+    result = {
+        "status": "success",
+        "player_name": player_name,
+        "video_id": video_id,
+        "session_id": session_id,
+        "attempt_count": processing["attempt_count"],
+        "review_candidate_count": processing["review_candidate_count"],
+        "analysis_status": analysis.get(
+            "analysis_status", "unknown"
+        ),
+        "shot_outcome": analysis.get(
+            "shot_outcome", {}
+        ),
+        "analysis_file": str(analysis_path) if analysis_path.is_file() else None,
 
         # Original OpenCV videos
         "annotated_video": str(
@@ -538,10 +706,12 @@ if __name__ == "__main__":
         help="Add the shot to this practice session "
              "(default: start a new session)",
     )
+    parser.add_argument("--full-recording", action="store_true", help="Analyze attempts in one continuous recording")
 
     args = parser.parse_args()
 
-    result = process_uploaded_video(
+    analyze = process_uploaded_video if args.full_recording else process_single_shot_video
+    result = analyze(
         video_path=args.video_path,
         player_name=args.player_name,
         shooting_arm=args.shooting_arm,
